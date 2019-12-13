@@ -1,0 +1,985 @@
+swagger: "2.0"
+info:
+  description: "Server Definition for the Governor. "
+  version: "1.0.0"
+  title: "Governor"
+  termsOfService: "http://servec.com/terms/"
+  contact:
+    email: "ivamsiravi@gmail.com"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+host: "servec.com"
+basePath: "/v2"
+tags:
+- name: "vitals"
+  description: "Health check, Heartbeat and Overall status of Governor"
+- name: "user"
+  description: "User Authentication"
+- name: "role"
+  description: "Authorization Management"
+- name: "project"
+  description: "Project Details"
+- name: "plan"
+  description: "Plan Details"
+- name: "stage"
+  description: "Stage Details"
+- name: "job"
+  description: "Job Details"
+- name: "task"
+  description: "Task Details"
+- name: "action"
+  description: "Actions to be executed on a Task, Job, Stage, Plan and Project"
+schemes:
+- "https"
+- "http"
+paths:
+  /roles:
+    post:
+      tags:
+      - "role"
+      summary: "Create New Role"
+      operationId: "addRole"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Role object"
+        required: true
+        schema:
+          $ref: "#/definitions/Role"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Role"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "role"
+      summary: "Retrieve All Roles"
+      operationId: "getRoles"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Role"
+  /roles/{roleId}:
+    put:
+      tags:
+      - "role"
+      summary: "Update existing role"
+      operationId: "updateRoleById"
+      parameters:
+      - name: "roleId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Role"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+      - "role"
+      summary: "Delete existing role"
+      operationId: "deleteRoleById"
+      parameters:
+      - name: "roleId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Role"
+        404:
+          description: "Not Found"
+    get:
+      tags:
+      - "role"
+      summary: "Retrieve Existing Role"
+      operationId: "getRoleById"
+      parameters:
+      - name: "roleId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Role"
+        404:
+          description: "Not Found"
+  /projects:
+    post:
+      tags:
+      - "project"
+      summary: "Create New Project"
+      operationId: "addProject"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Project object"
+        required: true
+        schema:
+          $ref: "#/definitions/Project"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Project"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "project"
+      summary: "Retrieve All Projects"
+      operationId: "getProjects"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Project"
+  /projects/{projectId}:
+    put:
+      tags:
+      - "project"
+      summary: "Update existing Project"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Project"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+      - "project"
+      summary: "Delete existing Project"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Project"
+        404:
+          description: "Not Found"
+    get:
+      tags:
+      - "project"
+      summary: "Retrieve Existing Project"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Project"
+        404:
+          description: "Not Found"
+  /plans:
+    post:
+      tags:
+      - "plan"
+      summary: "Create New Plan"
+      operationId: "addPlan"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Plan object"
+        required: true
+        schema:
+          $ref: "#/definitions/Plan"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Plan"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "plan"
+      summary: "Retrieve All Plans"
+      operationId: "getPlans"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Plan"
+  /plans/{planId}:
+    put:
+      tags:
+      - "plan"
+      summary: "Update existing Plan"
+      operationId: "updatePlanById"
+      parameters:
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Plan"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+      - "plan"
+      summary: "Delete existing plan"
+      operationId: "deletePlanById"
+      parameters:
+      - name: "planId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Plan"
+        404:
+          description: "Not Found"
+    get:
+      tags:
+      - "plan"
+      summary: "Retrieve Existing Plan"
+      operationId: "getPlanById"
+      parameters:
+      - name: "planId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Plan"
+        404:
+          description: "Not Found"
+  /stages:
+    post:
+      tags:
+      - "stage"
+      summary: "Create New Stage"
+      operationId: "addStage"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Stage object"
+        required: true
+        schema:
+          $ref: "#/definitions/Stage"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Stage"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "stage"
+      summary: "Retrieve All Stages"
+      operationId: "getStages"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Stage"
+  /stages/{stageId}:
+    put:
+      tags:
+      - "stage"
+      summary: "Update existing Stage"
+      parameters:
+      - name: "stageId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Stage"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+      - "stage"
+      summary: "Delete existing Stage"
+      parameters:
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Stage"
+        404:
+          description: "Not Found"
+    get:
+      tags:
+      - "stage"
+      summary: "Retrieve Existing Stage"
+      parameters:
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Stage"
+        404:
+          description: "Not Found"
+  /jobs:
+    post:
+      tags:
+      - "job"
+      summary: "Create New Job"
+      operationId: "addJob"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Job object"
+        required: true
+        schema:
+          $ref: "#/definitions/Job"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Job"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "job"
+      summary: "Retrieve All Jobs"
+      operationId: "getJobs"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Job"
+  /jobs/{jobId}:
+    put:
+      tags:
+      - "job"
+      summary: "Update existing job"
+      operationId: "updateJobById"
+      parameters:
+      - name: "jobId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Job"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+      - "job"
+      summary: "Delete existing Job"
+      operationId: "deleteJobById"
+      parameters:
+      - name: "jobId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Job"
+        404:
+          description: "Not Found"
+    get:
+      tags:
+      - "job"
+      summary: "Retrieve Existing Job"
+      operationId: "getJobById"
+      parameters:
+      - name: "jobId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Job"
+        404:
+          description: "Not Found"
+  /tasks:
+    post:
+      tags:
+      - "task"
+      summary: "Create New Task"
+      operationId: "addTask"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Task object"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Task"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "task"
+      summary: "Retrieve All Tasks"
+      operationId: "getTasks"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Task"
+  /tasks/{taskId}:
+    put:
+      tags:
+      - "task"
+      summary: "Update existing Task"
+      parameters:
+      - name: "taskId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Task"
+        400:
+          description: "Bad Request"
+          schema:
+            $ref: "#/definitions/BadRequest"
+        404:
+          description: "Not Found"
+    delete:
+      tags:
+      - "task"
+      summary: "Delete existing Task"
+      parameters:
+      - name: "taskId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Task"
+        404:
+          description: "Not Found"
+    get:
+      tags:
+      - "task"
+      summary: "Retrieve Existing Task"
+      parameters:
+      - name: "taskId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Task"
+        404:
+          description: "Not Found"
+  /user:
+    post:
+      tags:
+      - "user"
+      summary: "Create user"
+      description: "This can only be done by the logged in user."
+      operationId: "createUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Created user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+  /user/createWithArray:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithArrayInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+  /user/createWithList:
+    post:
+      tags:
+      - "user"
+      summary: "Creates list of users with given input array"
+      description: ""
+      operationId: "createUsersWithListInput"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "List of user object"
+        required: true
+        schema:
+          type: "array"
+          items:
+            $ref: "#/definitions/User"
+      responses:
+        default:
+          description: "successful operation"
+  /user/login:
+    get:
+      tags:
+      - "user"
+      summary: "Logs user into the system"
+      description: ""
+      operationId: "loginUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "query"
+        description: "The user name for login"
+        required: true
+        type: "string"
+      - name: "password"
+        in: "query"
+        description: "The password for login in clear text"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            type: "string"
+          headers:
+            X-Rate-Limit:
+              type: "integer"
+              format: "int32"
+              description: "calls per hour allowed by the user"
+            X-Expires-After:
+              type: "string"
+              format: "date-time"
+              description: "date in UTC when token expires"
+        400:
+          description: "Invalid username/password supplied"
+  /user/logout:
+    get:
+      tags:
+      - "user"
+      summary: "Logs out current logged in user session"
+      description: ""
+      operationId: "logoutUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters: []
+      responses:
+        default:
+          description: "successful operation"
+  /user/{username}:
+    get:
+      tags:
+      - "user"
+      summary: "Get user by user name"
+      description: ""
+      operationId: "getUserByName"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be fetched. Use user1 for testing. "
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+    put:
+      tags:
+      - "user"
+      summary: "Updated user"
+      description: "This can only be done by the logged in user."
+      operationId: "updateUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "name that need to be updated"
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        description: "Updated user object"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        400:
+          description: "Invalid user supplied"
+        404:
+          description: "User not found"
+    delete:
+      tags:
+      - "user"
+      summary: "Delete user"
+      description: "This can only be done by the logged in user."
+      operationId: "deleteUser"
+      produces:
+      - "application/xml"
+      - "application/json"
+      parameters:
+      - name: "username"
+        in: "path"
+        description: "The name that needs to be deleted"
+        required: true
+        type: "string"
+      responses:
+        400:
+          description: "Invalid username supplied"
+        404:
+          description: "User not found"
+  /health:
+    get:
+      tags:
+      - "vitals"
+      summary: "Get Health of Governor Application"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Health"
+  /heartbeat:
+    get:
+      tags:
+      - "vitals"
+      summary: "Get Heartbeat of Governor Application"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Heartbeat"
+  /status:
+    get:
+      tags:
+      - "vitals"
+      summary: "Get Status of Governor Application"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Status"
+definitions:
+  Status:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Heartbeat:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Health:
+    type: "object"
+    required:
+    - "id"
+    - "name"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Role:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      status:
+        type: "string"
+        description: "Role Status"
+        enum:
+        - "active"
+        - "pending"
+        - "suspended"
+  Project:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Plan:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Stage:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Job:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Task:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  BadRequest:
+    type: "object"
+    properties:
+      code:
+        type: "integer"
+        format: "int32"
+      type:
+        type: "string"
+      message:
+        type: "string"
+  User:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      username:
+        type: "string"
+      firstName:
+        type: "string"
+      lastName:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+      phone:
+        type: "string"
+      userStatus:
+        type: "integer"
+        format: "int32"
+        description: "User Status"
