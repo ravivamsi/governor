@@ -15,7 +15,7 @@ tags:
 - name: "vitals"
   description: "Health check, Heartbeat and Overall status of Governor"
 - name: "user"
-  description: "User Authentication"
+  description: "User Authentication Management"
 - name: "role"
   description: "Authorization Management"
 - name: "project"
@@ -28,15 +28,220 @@ tags:
   description: "Job Details"
 - name: "task"
   description: "Task Details"
+- name: "plugin"
+  description: "Details of Plugins supported"
+- name: "trigger"
+  description: "Trigger Details"
+- name: "notification"
+  description: "Notification Details"
 - name: "action"
   description: "Actions to be executed on a Task, Job, Stage, Plan and Project"
 schemes:
 - "https"
 - "http"
 paths:
+  /triggers:
+    post:
+      tags: 
+      - "trigger"
+      summary: "Create New Trigger"
+      operationId: "addTrigger"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Trigger object"
+        required: true
+        schema:
+          $ref: "#/definitions/Trigger"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Trigger"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "trigger"
+      summary: "Retrieve All Triggers"
+      operationId: "getTriggers"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Trigger"
+  /triggers/{triggerId}:
+    put:
+      tags:
+      - "role"
+      summary: "Update existing Trigger"
+      operationId: "updateTriggerById"
+      parameters:
+      - name: "triggerId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Trigger"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+        404: 
+          description: "Not Found"
+    delete:
+      tags:
+      - "trigger"
+      summary: "Delete existing Trigger"
+      operationId: "deleteTriggerById"
+      parameters:
+      - name: "triggerId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Trigger"
+        404: 
+          description: "Not Found"
+    get:
+      tags:
+      - "trigger"
+      summary: "Retrieve Existing Trigger"
+      operationId: "getTriggerById"
+      parameters:
+      - name: "triggerId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Trigger"
+        404: 
+          description: "Not Found"
+  /notifications:
+    post:
+      tags: 
+      - "notification"
+      summary: "Create New Notification"
+      operationId: "addNotification"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Notification object"
+        required: true
+        schema:
+          $ref: "#/definitions/Notification"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Notification"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "notification"
+      summary: "Retrieve All Notifications"
+      operationId: "getNotifications"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Notification"
+  /notifications/{notificationId}:
+    put:
+      tags:
+      - "notification"
+      summary: "Update existing Notification"
+      parameters:
+      - name: "notificationId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Notification"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+        404: 
+          description: "Not Found"
+    delete:
+      tags:
+      - "notification"
+      summary: "Delete existing Notification"
+      parameters:
+      - name: "notificationId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Notification"
+        404: 
+          description: "Not Found"
+    get:
+      tags:
+      - "notification"
+      summary: "Retrieve Existing Notification"
+      parameters:
+      - name: "notificationId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Notification"
+        404: 
+          description: "Not Found"
   /roles:
     post:
-      tags:
+      tags: 
       - "role"
       summary: "Create New Role"
       operationId: "addRole"
@@ -56,9 +261,9 @@ paths:
           description: "Created"
           schema:
             $ref: "#/definitions/Role"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
         409:
           description: "Conflict"
@@ -91,11 +296,11 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Role"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
-        404:
+        404: 
           description: "Not Found"
     delete:
       tags:
@@ -114,7 +319,7 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Role"
-        404:
+        404: 
           description: "Not Found"
     get:
       tags:
@@ -133,11 +338,11 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Role"
-        404:
+        404: 
           description: "Not Found"
   /projects:
     post:
-      tags:
+      tags: 
       - "project"
       summary: "Create New Project"
       operationId: "addProject"
@@ -157,9 +362,9 @@ paths:
           description: "Created"
           schema:
             $ref: "#/definitions/Project"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
         409:
           description: "Conflict"
@@ -186,16 +391,22 @@ paths:
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Project object"
+        required: true
+        schema:
+          $ref: "#/definitions/Project"
       responses:
         204:
           description: "No Content"
           schema:
             $ref: "#/definitions/Project"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
-        404:
+        404: 
           description: "Not Found"
     delete:
       tags:
@@ -213,7 +424,7 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Project"
-        404:
+        404: 
           description: "Not Found"
     get:
       tags:
@@ -231,11 +442,11 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Project"
-        404:
+        404: 
           description: "Not Found"
-  /plans:
+  /projects/{projectId}/plans:
     post:
-      tags:
+      tags: 
       - "plan"
       summary: "Create New Plan"
       operationId: "addPlan"
@@ -244,6 +455,11 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - in: "body"
         name: "body"
         description: "Plan object"
@@ -255,9 +471,9 @@ paths:
           description: "Created"
           schema:
             $ref: "#/definitions/Plan"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
         409:
           description: "Conflict"
@@ -266,6 +482,12 @@ paths:
       - "plan"
       summary: "Retrieve All Plans"
       operationId: "getPlans"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: OK
@@ -273,28 +495,39 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Plan"
-  /plans/{planId}:
+  /projects/{projectId}/plans/{planId}:
     put:
       tags:
       - "plan"
       summary: "Update existing Plan"
       operationId: "updatePlanById"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "planId"
         in: "path"
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Plan object"
+        required: true
+        schema:
+          $ref: "#/definitions/Plan"
       responses:
         204:
           description: "No Content"
           schema:
             $ref: "#/definitions/Plan"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
-        404:
+        404: 
           description: "Not Found"
     delete:
       tags:
@@ -302,6 +535,11 @@ paths:
       summary: "Delete existing plan"
       operationId: "deletePlanById"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "planId"
         in: "path"
         description: ""
@@ -313,7 +551,7 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Plan"
-        404:
+        404: 
           description: "Not Found"
     get:
       tags:
@@ -321,6 +559,11 @@ paths:
       summary: "Retrieve Existing Plan"
       operationId: "getPlanById"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "planId"
         in: "path"
         description: ""
@@ -332,11 +575,11 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Plan"
-        404:
+        404: 
           description: "Not Found"
-  /stages:
+  /projects/{projectId}/plans/{planId}/stages:
     post:
-      tags:
+      tags: 
       - "stage"
       summary: "Create New Stage"
       operationId: "addStage"
@@ -345,6 +588,16 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - in: "body"
         name: "body"
         description: "Stage object"
@@ -356,9 +609,9 @@ paths:
           description: "Created"
           schema:
             $ref: "#/definitions/Stage"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
         409:
           description: "Conflict"
@@ -367,6 +620,17 @@ paths:
       - "stage"
       summary: "Retrieve All Stages"
       operationId: "getStages"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: OK
@@ -374,33 +638,59 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Stage"
-  /stages/{stageId}:
+  /projects/{projectId}/plans/{planId}/stages/{stageId}:
     put:
       tags:
       - "stage"
       summary: "Update existing Stage"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "stageId"
         in: "path"
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Stage object"
+        required: true
+        schema:
+          $ref: "#/definitions/Stage"
       responses:
         204:
           description: "No Content"
           schema:
             $ref: "#/definitions/Stage"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
-        404:
+        404: 
           description: "Not Found"
     delete:
       tags:
       - "stage"
       summary: "Delete existing Stage"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "stageId"
         in: "path"
         description: ""
@@ -412,13 +702,23 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Stage"
-        404:
+        404: 
           description: "Not Found"
     get:
       tags:
       - "stage"
       summary: "Retrieve Existing Stage"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "stageId"
         in: "path"
         description: ""
@@ -430,11 +730,11 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Stage"
-        404:
+        404: 
           description: "Not Found"
-  /jobs:
+  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs:
     post:
-      tags:
+      tags: 
       - "job"
       summary: "Create New Job"
       operationId: "addJob"
@@ -443,6 +743,22 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - in: "body"
         name: "body"
         description: "Job object"
@@ -454,9 +770,9 @@ paths:
           description: "Created"
           schema:
             $ref: "#/definitions/Job"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
         409:
           description: "Conflict"
@@ -465,6 +781,23 @@ paths:
       - "job"
       summary: "Retrieve All Jobs"
       operationId: "getJobs"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: OK
@@ -472,28 +805,50 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Job"
-  /jobs/{jobId}:
+  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}:
     put:
       tags:
       - "job"
       summary: "Update existing job"
       operationId: "updateJobById"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "jobId"
         in: "path"
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Job object"
+        required: true
+        schema:
+          $ref: "#/definitions/Job"
       responses:
         204:
           description: "No Content"
           schema:
             $ref: "#/definitions/Job"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
-        404:
+        404: 
           description: "Not Found"
     delete:
       tags:
@@ -501,6 +856,22 @@ paths:
       summary: "Delete existing Job"
       operationId: "deleteJobById"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "jobId"
         in: "path"
         required: true
@@ -511,7 +882,7 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Job"
-        404:
+        404: 
           description: "Not Found"
     get:
       tags:
@@ -519,6 +890,22 @@ paths:
       summary: "Retrieve Existing Job"
       operationId: "getJobById"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "jobId"
         in: "path"
         description: ""
@@ -530,11 +917,11 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Job"
-        404:
+        404: 
           description: "Not Found"
-  /tasks:
+  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}/tasks:
     post:
-      tags:
+      tags: 
       - "task"
       summary: "Create New Task"
       operationId: "addTask"
@@ -543,6 +930,28 @@ paths:
       produces:
       - "application/json"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "jobId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - in: "body"
         name: "body"
         description: "Task object"
@@ -554,9 +963,9 @@ paths:
           description: "Created"
           schema:
             $ref: "#/definitions/Task"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
         409:
           description: "Conflict"
@@ -565,6 +974,29 @@ paths:
       - "task"
       summary: "Retrieve All Tasks"
       operationId: "getTasks"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "jobId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       responses:
         200:
           description: OK
@@ -572,33 +1004,82 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Task"
-  /tasks/{taskId}:
+  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}/tasks/{taskId}:
     put:
       tags:
       - "task"
       summary: "Update existing Task"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "jobId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "taskId"
         in: "path"
         required: true
         type: "integer"
         format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Task object"
+        required: true
+        schema:
+          $ref: "#/definitions/Task"
       responses:
         204:
           description: "No Content"
           schema:
             $ref: "#/definitions/Task"
-        400:
+        400: 
           description: "Bad Request"
-          schema:
+          schema: 
             $ref: "#/definitions/BadRequest"
-        404:
+        404: 
           description: "Not Found"
     delete:
       tags:
       - "task"
       summary: "Delete existing Task"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "jobId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "taskId"
         in: "path"
         description: ""
@@ -610,13 +1091,35 @@ paths:
           description: "No Content"
           schema:
             $ref: "#/definitions/Task"
-        404:
+        404: 
           description: "Not Found"
     get:
       tags:
       - "task"
       summary: "Retrieve Existing Task"
       parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "planId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "stageId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "jobId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
       - name: "taskId"
         in: "path"
         description: ""
@@ -628,7 +1131,39 @@ paths:
           description: "OK"
           schema:
             $ref: "#/definitions/Task"
-        404:
+        404: 
+          description: "Not Found"
+  /plugins:
+    get:
+      tags:
+      - "plugin"
+      summary: "Retrieve All Plugins"
+      operationId: "getPlugins"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Plugin"
+  /plugins/{pluginId}:
+    get:
+      tags:
+      - "plugin"
+      summary: "Retrieve Existing Plugin"
+      parameters:
+      - name: "pluginId"
+        in: "path"
+        description: ""
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Plugin"
+        404: 
           description: "Not Found"
   /user:
     post:
@@ -867,23 +1402,20 @@ definitions:
   Heartbeat:
     type: "object"
     required:
-    - "id"
-    - "name"
+    - "pulse"
     properties:
-      id:
-        type: "integer"
-        format: "int64"
-      name:
+      pulse:
         type: "string"
   Health:
     type: "object"
     required:
-    - "id"
-    - "name"
+    - "version"
+    - "appname"
+    - "buildtime"
+    - "releasetime"
     properties:
-      id:
-        type: "integer"
-        format: "int64"
+      version:
+        type: "string"
       name:
         type: "string"
   Role:
@@ -901,6 +1433,36 @@ definitions:
         - "active"
         - "pending"
         - "suspended"
+  Plugin:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Trigger:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
+  Notification:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      enabled:
+        type: "boolean"
   Project:
     type: "object"
     properties:
@@ -980,6 +1542,8 @@ definitions:
       phone:
         type: "string"
       userStatus:
-        type: "integer"
-        format: "int32"
-        description: "User Status"
+        type: "string"
+        enum:
+        - "active"
+        - "pending"
+        - "suspended"
