@@ -1541,7 +1541,7 @@ definitions:
         type: "string"
       phone:
         type: "string"
-      userStatus:
+      status:
         type: "string"
         enum:
         - "active"
