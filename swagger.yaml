@@ -29,7 +29,7 @@ tags:
 - name: "task"
   description: "Task Details"
 - name: "dimage"
-  description: "Details of Dimages supported"
+  description: "Details of DImages supported"
 - name: "variable"
   description: "Variable"
 - name: "trigger"
@@ -1141,20 +1141,20 @@ paths:
     get:
       tags:
       - "dimage"
-      summary: "Retrieve All Dimages"
-      operationId: "getDimages"
+      summary: "Retrieve All DImages"
+      operationId: "getDImages"
       responses:
         200:
           description: OK
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Dimage"
+              $ref: "#/definitions/DImage"
   /dimages/{dimageId}:
     get:
       tags:
       - "dimage"
-      summary: "Retrieve Existing Dimage"
+      summary: "Retrieve Existing DImage"
       parameters:
       - name: "dimageId"
         in: "path"
@@ -1166,7 +1166,7 @@ paths:
         200:
           description: "OK"
           schema:
-            $ref: "#/definitions/Dimage"
+            $ref: "#/definitions/DImage"
         404: 
           description: "Not Found"
   /variable/{variableId}:
@@ -1586,7 +1586,11 @@ definitions:
     properties:
       version:
         type: "string"
-      name:
+      appname:
+        type: "string"
+      buildtime:
+        type: "string"
+      releasetime:
         type: "string"
   Role:
     type: "object"
@@ -1603,7 +1607,7 @@ definitions:
         - "active"
         - "pending"
         - "suspended"
-  Dimage:
+  DImage:
     type: "object"
     properties:
       id:
@@ -1611,8 +1615,20 @@ definitions:
         format: "int64"
       name:
         type: "string"
-      enabled:
-        type: "boolean"
+      fields:
+        type: "array"
+        items:
+          $ref: "#/definitions/Field"
+  Field:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      key:
+        type: "string"
+      value:
+        type: "string"
   Trigger:
     type: "object"
     properties:
