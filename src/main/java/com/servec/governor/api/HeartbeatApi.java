@@ -24,7 +24,6 @@ public interface HeartbeatApi {
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Heartbeat.class) })
     @RequestMapping(value = "/heartbeat",
-        produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<Heartbeat> heartbeatGet();
 

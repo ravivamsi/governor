@@ -22,26 +22,21 @@ public class HeartbeatApiController implements HeartbeatApi {
 
     private final ObjectMapper objectMapper;
 
-    private final HttpServletRequest request;
+    
 
     @org.springframework.beans.factory.annotation.Autowired
     public HeartbeatApiController(ObjectMapper objectMapper, HttpServletRequest request) {
         this.objectMapper = objectMapper;
-        this.request = request;
     }
 
     public ResponseEntity<Heartbeat> heartbeatGet() {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
+        
             try {
                 return new ResponseEntity<Heartbeat>(objectMapper.readValue("{  \"pulse\" : \"ok\"}", Heartbeat.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Heartbeat>(HttpStatus.INTERNAL_SERVER_ERROR);
             }
-        }
-
-        return new ResponseEntity<Heartbeat>(HttpStatus.NOT_IMPLEMENTED);
     }
 
 }
