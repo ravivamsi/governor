@@ -10,8 +10,8 @@
 	</parent>
 	<groupId>com.servec</groupId>
 	<artifactId>governor</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
-	<name>springboot</name>
+	<version>0.0.2-SNAPSHOT</version>
+	<name>governor</name>
 	<description>Springboot for Governor</description>
 
 	<properties>
