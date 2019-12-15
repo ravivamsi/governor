@@ -8,7 +8,7 @@ package com.servec.governor.commons;
  *
  */
 public class Associate {
-	
+
 	public void Worker() {
 //		TODO
 	}
