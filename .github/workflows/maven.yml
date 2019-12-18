@@ -15,3 +15,9 @@ jobs:
         java-version: 1.8
     - name: Build with Maven
       run: mvn -B package --file pom.xml
+    - name: Deploy to Github Package Registry
+      env:
+        GITHUB_TOKEN: 80a50728d7584c2025970001ad8298c300653b56
+      run: 
+        echo "<settings><servers><server><id>github</id><username>ravivamsi</username><password>${GITHUB_TOKEN}</password></server></servers></settings>" > ~/.m2/settings.xml
+        mvn deploy
