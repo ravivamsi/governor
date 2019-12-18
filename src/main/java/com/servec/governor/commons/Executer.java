@@ -19,6 +19,7 @@ import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.io.PrintWriter;
 import java.net.URI;
+import java.util.List;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -43,7 +44,7 @@ public class Executer {
 	private static final String SSH = "ssh";
 	private static final String FILE = "file";
 
-	public void onWorkerSingleCommand(String hostname, String username, String password, String command)
+	public static void onWorkerSingleCommand(String hostname, String username, String password, String command)
 			throws JSchException, IOException {
 
 		java.util.Properties config = new java.util.Properties();
@@ -79,6 +80,49 @@ public class Executer {
 			}
 		}
 		channel.disconnect();
+		session.disconnect();
+
+	}
+
+	public static void onWorkerMultipleCommands(String hostname, String username, String password,
+			List<String> commands) throws JSchException, IOException {
+
+		java.util.Properties config = new java.util.Properties();
+		config.put("StrictHostKeyChecking", "no");
+		JSch jsch = new JSch();
+		Session session = jsch.getSession(username, hostname, 22);
+		session.setPassword(password);
+		session.setConfig(config);
+		session.connect();
+
+		for (String command : commands) {
+			Channel channel = session.openChannel("exec");
+			((ChannelExec) channel).setCommand(command);
+			channel.setInputStream(null);
+			((ChannelExec) channel).setErrStream(System.err);
+
+			InputStream in = channel.getInputStream();
+			channel.connect();
+			byte[] tmp = new byte[1024];
+			while (true) {
+				while (in.available() > 0) {
+					int i = in.read(tmp, 0, 1024);
+					if (i < 0)
+						break;
+					System.out.print(new String(tmp, 0, i));
+				}
+				if (channel.isClosed()) {
+					System.out.println("exit-status: " + channel.getExitStatus());
+					break;
+				}
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ee) {
+				}
+			}
+			channel.disconnect();
+		}
+
 		session.disconnect();
 
 	}
