@@ -15,17 +15,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-15T06:26:02.812Z")
 
 @Api(value = "health", description = "the health API")
 public interface HealthApi {
 
-    @ApiOperation(value = "Get Health of Governor Application", nickname = "healthGet", notes = "", response = Health.class, tags={ "vitals", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Health.class) })
-    @RequestMapping(value = "/health",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<Health> healthGet();
+	@ApiOperation(value = "Get Health of Governor Application", nickname = "healthGet", notes = "", response = Health.class, tags = {
+			"vitals", })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Health.class) })
+	@RequestMapping(value = "/health", produces = { "application/json" }, method = RequestMethod.GET)
+	ResponseEntity<Health> healthGet();
 
 }
