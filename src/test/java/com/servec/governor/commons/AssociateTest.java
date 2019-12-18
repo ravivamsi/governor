@@ -32,7 +32,7 @@ class AssociateTest {
 	@Test
 	void test() {
 		assertTrue(true);
-		
+
 	}
 
 }

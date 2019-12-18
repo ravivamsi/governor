@@ -2,6 +2,18 @@
 
 
 
+## Build
+
+```
+$ mvn clean install
+```
+
+## Run
+
+```
+$ java -jar target/governor-X.X.X-SNAPSHOT.jar -Dspring.profiles.active=prod
+```
+
 ## To-Do
 
 - [] Upload File

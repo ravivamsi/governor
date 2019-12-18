@@ -49,7 +49,7 @@ class ExecuterTest {
 	void testSingleCommandExecution() throws JSchException, IOException {
 		Executer.onWorkerSingleCommand("test.rebex.net", "demo", "password", "ls -alrt");
 	}
-	
+
 	@Test
 	void testWorkerHeartBeat() throws JSchException {
 		Executer.getWorkerHeartBeat("test.rebex.net", "demo", "password");
