@@ -25,6 +25,21 @@ public class Executer {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Executer.class);
 
+	
+	public static void getWorkerHeartBeat(String hostname, String username, String password) throws JSchException {
+
+		java.util.Properties config = new java.util.Properties();
+		config.put("StrictHostKeyChecking", "no");
+		JSch jsch = new JSch();
+		Session session = jsch.getSession(username, hostname, 22);
+		session.setPassword(password);
+		session.setConfig(config);
+		session.connect();
+		
+		
+		
+		session.disconnect();
+	}
 	public static void onWorkerSingleCommand(String hostname, String username, String password, String command)
 			throws JSchException, IOException {
 

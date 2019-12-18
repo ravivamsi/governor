@@ -4,10 +4,20 @@
 
 ## To-Do
 
+- [] Upload File
+- [] Download File
+- [] Execution Logs asList
+- [] Workspace Operations
+- [] Folder Structure in Worker
+- [] Generic SFTP Implementation
+- [] Scheduler
+- [] Mongo Database
+- [] Application Properties
+- [] Swagger Updates
+- [] API Implementation
+
 ## Swagger
 
-## Publish Package
+Refer to swagger.yaml in following location.
 
-```
-mvn deploy -Dregistry=https://maven.pkg.github.com/ravivamsi -Dtoken=1729bfd4ff8b8c1bd3d27ed49f5b90ed5ca8d50d
-```
+[Swagger](https://github.com/ravivamsi/governor/blob/master/swagger.yaml)
