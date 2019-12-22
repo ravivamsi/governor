@@ -5,6 +5,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -44,7 +45,7 @@ public class StatusApiController implements StatusApi {
 			
 			// MongoDB Component
 			Dependency mongoDependency = new Dependency();
-			mongoDependency.setId(new Random().nextLong());
+			mongoDependency.setId(new ObjectId());
 			mongoDependency.setName("Mongo Connection");
 			if (MongoConnector.testConnection()) {
 				mongoDependency.setStatus(StatusEnum.UP);
@@ -57,7 +58,7 @@ public class StatusApiController implements StatusApi {
 			
 			Status status = new Status();
 
-			status.setId(new Random().nextLong());
+			status.setId(new ObjectId());
 			status.setOverallstatus(OverallstatusEnum.UP);
 			
 			status.setDependencies(dependencies);
