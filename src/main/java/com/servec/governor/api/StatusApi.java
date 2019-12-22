@@ -15,17 +15,16 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
 
 @Api(value = "status", description = "the status API")
 public interface StatusApi {
 
-    @ApiOperation(value = "Get Status of Governor Application", nickname = "statusGet", notes = "", response = Status.class, tags={ "vitals", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Status.class) })
-    @RequestMapping(value = "/status",
-        produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    ResponseEntity<Status> statusGet();
+	@ApiOperation(value = "Get Status of Governor Application", nickname = "statusGet", notes = "", response = Status.class, tags = {
+			"vitals", })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Status.class) })
+	@RequestMapping(value = "/status", produces = { "application/json" }, method = RequestMethod.GET)
+	ResponseEntity<Status> statusGet();
 
 }

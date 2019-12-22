@@ -13,31 +13,28 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Dependency
+ * Component
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
-public class Dependency {
+public class Component {
 	@JsonProperty("id")
 	private Long id = null;
 
-	@JsonProperty("name")
-	private String name = null;
-
 	/**
-	 * Gets or Sets status
+	 * Gets or Sets type
 	 */
-	public enum StatusEnum {
-		UP("up"),
+	public enum TypeEnum {
+		PLAN("plan"),
 
-		DOWN("down"),
+		TRIGGER("trigger"),
 
-		UNKNOWN("unknown");
+		NOTIFICATION("notification");
 
 		private String value;
 
-		StatusEnum(String value) {
+		TypeEnum(String value) {
 			this.value = value;
 		}
 
@@ -48,8 +45,8 @@ public class Dependency {
 		}
 
 		@JsonCreator
-		public static StatusEnum fromValue(String text) {
-			for (StatusEnum b : StatusEnum.values()) {
+		public static TypeEnum fromValue(String text) {
+			for (TypeEnum b : TypeEnum.values()) {
 				if (String.valueOf(b.value).equals(text)) {
 					return b;
 				}
@@ -58,10 +55,13 @@ public class Dependency {
 		}
 	}
 
-	@JsonProperty("status")
-	private StatusEnum status = null;
+	@JsonProperty("type")
+	private TypeEnum type = null;
 
-	public Dependency id(Long id) {
+	@JsonProperty("sequence")
+	private Long sequence = null;
+
+	public Component id(Long id) {
 		this.id = id;
 		return this;
 	}
@@ -82,45 +82,44 @@ public class Dependency {
 		this.id = id;
 	}
 
-	public Dependency name(String name) {
-		this.name = name;
+	public Component type(TypeEnum type) {
+		this.type = type;
 		return this;
 	}
 
 	/**
-	 * Get name
+	 * Get type
 	 * 
-	 * @return name
-	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public Dependency status(StatusEnum status) {
-		this.status = status;
-		return this;
-	}
-
-	/**
-	 * Get status
-	 * 
-	 * @return status
+	 * @return type
 	 **/
 	@ApiModelProperty(value = "")
 
-	public StatusEnum getStatus() {
-		return status;
+	public TypeEnum getType() {
+		return type;
 	}
 
-	public void setStatus(StatusEnum status) {
-		this.status = status;
+	public void setType(TypeEnum type) {
+		this.type = type;
+	}
+
+	public Component sequence(Long sequence) {
+		this.sequence = sequence;
+		return this;
+	}
+
+	/**
+	 * Get sequence
+	 * 
+	 * @return sequence
+	 **/
+	@ApiModelProperty(value = "")
+
+	public Long getSequence() {
+		return sequence;
+	}
+
+	public void setSequence(Long sequence) {
+		this.sequence = sequence;
 	}
 
 	@Override
@@ -131,24 +130,24 @@ public class Dependency {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Dependency dependency = (Dependency) o;
-		return Objects.equals(this.id, dependency.id) && Objects.equals(this.name, dependency.name)
-				&& Objects.equals(this.status, dependency.status);
+		Component component = (Component) o;
+		return Objects.equals(this.id, component.id) && Objects.equals(this.type, component.type)
+				&& Objects.equals(this.sequence, component.sequence);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, status);
+		return Objects.hash(id, type, sequence);
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("class Dependency {\n");
+		sb.append("class Component {\n");
 
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    name: ").append(toIndentedString(name)).append("\n");
-		sb.append("    status: ").append(toIndentedString(status)).append("\n");
+		sb.append("    type: ").append(toIndentedString(type)).append("\n");
+		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

@@ -2,8 +2,6 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -13,12 +11,12 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import io.swagger.annotations.ApiModelProperty;
 
 /**
- * Dependency
+ * Role
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
-public class Dependency {
+public class Role {
 	@JsonProperty("id")
 	private Long id = null;
 
@@ -26,14 +24,14 @@ public class Dependency {
 	private String name = null;
 
 	/**
-	 * Gets or Sets status
+	 * Role Status
 	 */
 	public enum StatusEnum {
-		UP("up"),
+		ACTIVE("active"),
 
-		DOWN("down"),
+		PENDING("pending"),
 
-		UNKNOWN("unknown");
+		SUSPENDED("suspended");
 
 		private String value;
 
@@ -61,7 +59,7 @@ public class Dependency {
 	@JsonProperty("status")
 	private StatusEnum status = null;
 
-	public Dependency id(Long id) {
+	public Role id(Long id) {
 		this.id = id;
 		return this;
 	}
@@ -71,8 +69,7 @@ public class Dependency {
 	 * 
 	 * @return id
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
+	@ApiModelProperty(value = "")
 
 	public Long getId() {
 		return id;
@@ -82,7 +79,7 @@ public class Dependency {
 		this.id = id;
 	}
 
-	public Dependency name(String name) {
+	public Role name(String name) {
 		this.name = name;
 		return this;
 	}
@@ -92,8 +89,7 @@ public class Dependency {
 	 * 
 	 * @return name
 	 **/
-	@ApiModelProperty(required = true, value = "")
-	@NotNull
+	@ApiModelProperty(value = "")
 
 	public String getName() {
 		return name;
@@ -103,17 +99,17 @@ public class Dependency {
 		this.name = name;
 	}
 
-	public Dependency status(StatusEnum status) {
+	public Role status(StatusEnum status) {
 		this.status = status;
 		return this;
 	}
 
 	/**
-	 * Get status
+	 * Role Status
 	 * 
 	 * @return status
 	 **/
-	@ApiModelProperty(value = "")
+	@ApiModelProperty(value = "Role Status")
 
 	public StatusEnum getStatus() {
 		return status;
@@ -131,9 +127,9 @@ public class Dependency {
 		if (o == null || getClass() != o.getClass()) {
 			return false;
 		}
-		Dependency dependency = (Dependency) o;
-		return Objects.equals(this.id, dependency.id) && Objects.equals(this.name, dependency.name)
-				&& Objects.equals(this.status, dependency.status);
+		Role role = (Role) o;
+		return Objects.equals(this.id, role.id) && Objects.equals(this.name, role.name)
+				&& Objects.equals(this.status, role.status);
 	}
 
 	@Override
@@ -144,7 +140,7 @@ public class Dependency {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("class Dependency {\n");
+		sb.append("class Role {\n");
 
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");

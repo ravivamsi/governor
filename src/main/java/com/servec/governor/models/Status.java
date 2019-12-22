@@ -21,161 +21,159 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
 
-public class Status   {
-  @JsonProperty("id")
-  private Long id = null;
+public class Status {
+	@JsonProperty("id")
+	private Long id = null;
 
-  /**
-   * Gets or Sets overallstatus
-   */
-  public enum OverallstatusEnum {
-    UP("up"),
-    
-    DOWN("down"),
-    
-    UNKNOWN("unknown");
+	/**
+	 * Gets or Sets overallstatus
+	 */
+	public enum OverallstatusEnum {
+		UP("up"),
 
-    private String value;
+		DOWN("down"),
 
-    OverallstatusEnum(String value) {
-      this.value = value;
-    }
+		UNKNOWN("unknown");
 
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
+		private String value;
 
-    @JsonCreator
-    public static OverallstatusEnum fromValue(String text) {
-      for (OverallstatusEnum b : OverallstatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
+		OverallstatusEnum(String value) {
+			this.value = value;
+		}
 
-  @JsonProperty("overallstatus")
-  private OverallstatusEnum overallstatus = null;
+		@Override
+		@JsonValue
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-  @JsonProperty("dependencies")
-  @Valid
-  private List<Dependency> dependencies = null;
+		@JsonCreator
+		public static OverallstatusEnum fromValue(String text) {
+			for (OverallstatusEnum b : OverallstatusEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
+	}
 
-  public Status id(Long id) {
-    this.id = id;
-    return this;
-  }
+	@JsonProperty("overallstatus")
+	private OverallstatusEnum overallstatus = null;
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+	@JsonProperty("dependencies")
+	@Valid
+	private List<Dependency> dependencies = null;
 
+	public Status id(Long id) {
+		this.id = id;
+		return this;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(required = true, value = "")
+	@NotNull
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  public Status overallstatus(OverallstatusEnum overallstatus) {
-    this.overallstatus = overallstatus;
-    return this;
-  }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  /**
-   * Get overallstatus
-   * @return overallstatus
-  **/
-  @ApiModelProperty(value = "")
+	public Status overallstatus(OverallstatusEnum overallstatus) {
+		this.overallstatus = overallstatus;
+		return this;
+	}
 
+	/**
+	 * Get overallstatus
+	 * 
+	 * @return overallstatus
+	 **/
+	@ApiModelProperty(value = "")
 
-  public OverallstatusEnum getOverallstatus() {
-    return overallstatus;
-  }
+	public OverallstatusEnum getOverallstatus() {
+		return overallstatus;
+	}
 
-  public void setOverallstatus(OverallstatusEnum overallstatus) {
-    this.overallstatus = overallstatus;
-  }
+	public void setOverallstatus(OverallstatusEnum overallstatus) {
+		this.overallstatus = overallstatus;
+	}
 
-  public Status dependencies(List<Dependency> dependencies) {
-    this.dependencies = dependencies;
-    return this;
-  }
+	public Status dependencies(List<Dependency> dependencies) {
+		this.dependencies = dependencies;
+		return this;
+	}
 
-  public Status addDependenciesItem(Dependency dependenciesItem) {
-    if (this.dependencies == null) {
-      this.dependencies = new ArrayList<Dependency>();
-    }
-    this.dependencies.add(dependenciesItem);
-    return this;
-  }
+	public Status addDependenciesItem(Dependency dependenciesItem) {
+		if (this.dependencies == null) {
+			this.dependencies = new ArrayList<Dependency>();
+		}
+		this.dependencies.add(dependenciesItem);
+		return this;
+	}
 
-  /**
-   * Get dependencies
-   * @return dependencies
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get dependencies
+	 * 
+	 * @return dependencies
+	 **/
+	@ApiModelProperty(value = "")
 
-  @Valid
+	@Valid
 
-  public List<Dependency> getDependencies() {
-    return dependencies;
-  }
+	public List<Dependency> getDependencies() {
+		return dependencies;
+	}
 
-  public void setDependencies(List<Dependency> dependencies) {
-    this.dependencies = dependencies;
-  }
+	public void setDependencies(List<Dependency> dependencies) {
+		this.dependencies = dependencies;
+	}
 
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Status status = (Status) o;
+		return Objects.equals(this.id, status.id) && Objects.equals(this.overallstatus, status.overallstatus)
+				&& Objects.equals(this.dependencies, status.dependencies);
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Status status = (Status) o;
-    return Objects.equals(this.id, status.id) &&
-        Objects.equals(this.overallstatus, status.overallstatus) &&
-        Objects.equals(this.dependencies, status.dependencies);
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, overallstatus, dependencies);
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, overallstatus, dependencies);
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Status {\n");
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Status {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    overallstatus: ").append(toIndentedString(overallstatus)).append("\n");
-    sb.append("    dependencies: ").append(toIndentedString(dependencies)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    overallstatus: ").append(toIndentedString(overallstatus)).append("\n");
+		sb.append("    dependencies: ").append(toIndentedString(dependencies)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
-
