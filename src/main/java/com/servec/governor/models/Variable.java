@@ -2,6 +2,7 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Variable {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("key")
 	private String key = null;
@@ -24,7 +25,7 @@ public class Variable {
 	@JsonProperty("value")
 	private String value = null;
 
-	public Variable id(Long id) {
+	public Variable id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -36,11 +37,11 @@ public class Variable {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

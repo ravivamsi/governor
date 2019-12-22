@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Component {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	/**
 	 * Gets or Sets type
@@ -61,7 +62,7 @@ public class Component {
 	@JsonProperty("sequence")
 	private Long sequence = null;
 
-	public Component id(Long id) {
+	public Component id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -74,11 +75,11 @@ public class Component {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

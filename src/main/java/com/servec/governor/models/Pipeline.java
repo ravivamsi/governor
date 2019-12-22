@@ -7,6 +7,7 @@ import java.util.Objects;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Pipeline {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -33,7 +34,7 @@ public class Pipeline {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Pipeline id(Long id) {
+	public Pipeline id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -46,11 +47,11 @@ public class Pipeline {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

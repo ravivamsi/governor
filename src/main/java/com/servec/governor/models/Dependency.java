@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.validation.constraints.NotNull;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -20,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Dependency {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -61,7 +62,7 @@ public class Dependency {
 	@JsonProperty("status")
 	private StatusEnum status = null;
 
-	public Dependency id(Long id) {
+	public Dependency id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -74,11 +75,11 @@ public class Dependency {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

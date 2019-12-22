@@ -2,6 +2,7 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -18,7 +19,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Role {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -59,7 +60,7 @@ public class Role {
 	@JsonProperty("status")
 	private StatusEnum status = null;
 
-	public Role id(Long id) {
+	public Role id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -71,11 +72,11 @@ public class Role {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

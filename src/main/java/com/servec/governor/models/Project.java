@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Project {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -35,7 +36,7 @@ public class Project {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Project id(Long id) {
+	public Project id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -47,11 +48,11 @@ public class Project {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

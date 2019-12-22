@@ -2,6 +2,7 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -16,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class DImage {
 	@JsonProperty("id")
-	private Long id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("shortname")
 	private String shortname = null;
@@ -30,7 +31,7 @@ public class DImage {
 	@JsonProperty("imagetag")
 	private String imagetag = null;
 
-	public DImage id(Long id) {
+	public DImage id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -42,11 +43,11 @@ public class DImage {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Long getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

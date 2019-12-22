@@ -1,6 +1,7 @@
 package com.servec.governor.controller;
 
-import java.io.IOException;
+import java.util.List;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +13,11 @@ import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.servec.governor.api.StatusApi;
+import com.servec.governor.commons.MongoConnector;
+import com.servec.governor.models.Dependency;
+import com.servec.governor.models.Dependency.StatusEnum;
 import com.servec.governor.models.Status;
+import com.servec.governor.models.Status.OverallstatusEnum;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
 
@@ -23,7 +28,9 @@ public class StatusApiController implements StatusApi {
 
 	private final ObjectMapper objectMapper;
 
-	private final HttpServletRequest request;
+	public final HttpServletRequest request;
+
+	public List<Dependency> dependencies;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public StatusApiController(ObjectMapper objectMapper, HttpServletRequest request) {
@@ -34,14 +41,28 @@ public class StatusApiController implements StatusApi {
 	public ResponseEntity<Status> statusGet() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Status>(objectMapper.readValue(
-						"{  \"overallstatus\" : \"up\",  \"id\" : 0,  \"dependencies\" : [ {    \"name\" : \"name\",    \"id\" : 6,    \"status\" : \"up\"  }, {    \"name\" : \"name\",    \"id\" : 6,    \"status\" : \"up\"  } ]}",
-						Status.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Status>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			// MongoDB Component
+			Dependency mongoDependency = new Dependency();
+			mongoDependency.setId(new Random().nextLong());
+			mongoDependency.setName("Mongo Connection");
+			if (MongoConnector.testConnection()) {
+				mongoDependency.setStatus(StatusEnum.UP);
+			} else {
+				mongoDependency.setStatus(StatusEnum.DOWN);
 			}
+
+			dependencies.add(mongoDependency);
+			
+			
+			Status status = new Status();
+
+			status.setId(new Random().nextLong());
+			status.setOverallstatus(OverallstatusEnum.UP);
+			
+			status.setDependencies(dependencies);
+
+			return new ResponseEntity<Status>(status, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<Status>(HttpStatus.NOT_IMPLEMENTED);
