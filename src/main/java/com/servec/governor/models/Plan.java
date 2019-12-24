@@ -22,270 +22,276 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Plan {
 
-	@JsonProperty("id")
-	private Object id = null;
+	
 
-	@JsonProperty("name")
-	private String name = null;
+	  @JsonProperty("id")
+	  private Object id = null;
 
-	/**
-	 * Gets or Sets type
-	 */
-	public enum TypeEnum {
-		BUILD("build"),
+	  @JsonProperty("name")
+	  private String name = null;
 
-		DEPLOY("deploy"),
+	  /**
+	   * Gets or Sets type
+	   */
+	  public enum TypeEnum {
+	    BUILD("build"),
+	    
+	    DEPLOY("deploy"),
+	    
+	    TEST("test"),
+	    
+	    MONITOR("monitor"),
+	    
+	    VALIDATE("validate");
 
-		TEST("test"),
+	    private String value;
 
-		MONITOR("monitor"),
+	    TypeEnum(String value) {
+	      this.value = value;
+	    }
 
-		VALIDATE("validate");
+	    @Override
+	    @JsonValue
+	    public String toString() {
+	      return String.valueOf(value);
+	    }
 
-		private String value;
+	    @JsonCreator
+	    public static TypeEnum fromValue(String text) {
+	      for (TypeEnum b : TypeEnum.values()) {
+	        if (String.valueOf(b.value).equals(text)) {
+	          return b;
+	        }
+	      }
+	      return null;
+	    }
+	  }
 
-		TypeEnum(String value) {
-			this.value = value;
-		}
+	  @JsonProperty("type")
+	  private TypeEnum type = null;
 
-		@Override
-		@JsonValue
-		public String toString() {
-			return String.valueOf(value);
-		}
+	  @JsonProperty("shortname")
+	  private String shortname = null;
 
-		@JsonCreator
-		public static TypeEnum fromValue(String text) {
-			for (TypeEnum b : TypeEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-	}
+	  @JsonProperty("stages")
+	  @Valid
+	  private List<Index> stages = null;
 
-	@JsonProperty("type")
-	private TypeEnum type = null;
+	  @JsonProperty("variables")
+	  @Valid
+	  private List<Variable> variables = null;
 
-	@JsonProperty("shortname")
-	private String shortname = null;
+	  @JsonProperty("enabled")
+	  private Boolean enabled = null;
 
-	@JsonProperty("stages")
-	@Valid
-	private List<Stage> stages = null;
+	  public Plan id(Object id) {
+	    this.id = id;
+	    return this;
+	  }
 
-	@JsonProperty("variables")
-	@Valid
-	private List<Variable> variables = null;
+	  /**
+	   * Get id
+	   * @return id
+	  **/
+	  @ApiModelProperty(value = "")
 
-	@JsonProperty("enabled")
-	private Boolean enabled = null;
 
-	public Plan id(Object id) {
-		this.id = id;
-		return this;
-	}
+	  public Object getId() {
+	    return id;
+	  }
 
-	/**
-	 * Get id
-	 * 
-	 * @return id
-	 **/
-	@ApiModelProperty(value = "")
+	  public void setId(Object id) {
+	    this.id = id;
+	  }
 
-	public Object getId() {
-		return id;
-	}
+	  public Plan name(String name) {
+	    this.name = name;
+	    return this;
+	  }
 
-	public void setId(Object id) {
-		this.id = id;
-	}
+	  /**
+	   * Get name
+	   * @return name
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public Plan name(String name) {
-		this.name = name;
-		return this;
-	}
 
-	/**
-	 * Get name
-	 * 
-	 * @return name
-	 **/
-	@ApiModelProperty(value = "")
+	  public String getName() {
+	    return name;
+	  }
 
-	public String getName() {
-		return name;
-	}
+	  public void setName(String name) {
+	    this.name = name;
+	  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	  public Plan type(TypeEnum type) {
+	    this.type = type;
+	    return this;
+	  }
 
-	public Plan type(TypeEnum type) {
-		this.type = type;
-		return this;
-	}
+	  /**
+	   * Get type
+	   * @return type
+	  **/
+	  @ApiModelProperty(value = "")
 
-	/**
-	 * Get type
-	 * 
-	 * @return type
-	 **/
-	@ApiModelProperty(value = "")
 
-	public TypeEnum getType() {
-		return type;
-	}
+	  public TypeEnum getType() {
+	    return type;
+	  }
 
-	public void setType(TypeEnum type) {
-		this.type = type;
-	}
+	  public void setType(TypeEnum type) {
+	    this.type = type;
+	  }
 
-	public Plan shortname(String shortname) {
-		this.shortname = shortname;
-		return this;
-	}
+	  public Plan shortname(String shortname) {
+	    this.shortname = shortname;
+	    return this;
+	  }
 
-	/**
-	 * Get shortname
-	 * 
-	 * @return shortname
-	 **/
-	@ApiModelProperty(value = "")
+	  /**
+	   * Get shortname
+	   * @return shortname
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public String getShortname() {
-		return shortname;
-	}
 
-	public void setShortname(String shortname) {
-		this.shortname = shortname;
-	}
+	  public String getShortname() {
+	    return shortname;
+	  }
 
-	public Plan stages(List<Stage> stages) {
-		this.stages = stages;
-		return this;
-	}
+	  public void setShortname(String shortname) {
+	    this.shortname = shortname;
+	  }
 
-	public Plan addStagesItem(Stage stagesItem) {
-		if (this.stages == null) {
-			this.stages = new ArrayList<Stage>();
-		}
-		this.stages.add(stagesItem);
-		return this;
-	}
+	  public Plan stages(List<Index> stages) {
+	    this.stages = stages;
+	    return this;
+	  }
 
-	/**
-	 * Get stages
-	 * 
-	 * @return stages
-	 **/
-	@ApiModelProperty(value = "")
+	  public Plan addStagesItem(Index stagesItem) {
+	    if (this.stages == null) {
+	      this.stages = new ArrayList<Index>();
+	    }
+	    this.stages.add(stagesItem);
+	    return this;
+	  }
 
-	@Valid
+	  /**
+	   * Get stages
+	   * @return stages
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public List<Stage> getStages() {
-		return stages;
-	}
+	  @Valid
 
-	public void setStages(List<Stage> stages) {
-		this.stages = stages;
-	}
+	  public List<Index> getStages() {
+	    return stages;
+	  }
 
-	public Plan variables(List<Variable> variables) {
-		this.variables = variables;
-		return this;
-	}
+	  public void setStages(List<Index> stages) {
+	    this.stages = stages;
+	  }
 
-	public Plan addVariablesItem(Variable variablesItem) {
-		if (this.variables == null) {
-			this.variables = new ArrayList<Variable>();
-		}
-		this.variables.add(variablesItem);
-		return this;
-	}
+	  public Plan variables(List<Variable> variables) {
+	    this.variables = variables;
+	    return this;
+	  }
 
-	/**
-	 * Get variables
-	 * 
-	 * @return variables
-	 **/
-	@ApiModelProperty(value = "")
+	  public Plan addVariablesItem(Variable variablesItem) {
+	    if (this.variables == null) {
+	      this.variables = new ArrayList<Variable>();
+	    }
+	    this.variables.add(variablesItem);
+	    return this;
+	  }
 
-	@Valid
+	  /**
+	   * Get variables
+	   * @return variables
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public List<Variable> getVariables() {
-		return variables;
-	}
+	  @Valid
 
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
+	  public List<Variable> getVariables() {
+	    return variables;
+	  }
 
-	public Plan enabled(Boolean enabled) {
-		this.enabled = enabled;
-		return this;
-	}
+	  public void setVariables(List<Variable> variables) {
+	    this.variables = variables;
+	  }
 
-	/**
-	 * Get enabled
-	 * 
-	 * @return enabled
-	 **/
-	@ApiModelProperty(value = "")
+	  public Plan enabled(Boolean enabled) {
+	    this.enabled = enabled;
+	    return this;
+	  }
 
-	public Boolean isEnabled() {
-		return enabled;
-	}
+	  /**
+	   * Get enabled
+	   * @return enabled
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
 
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Plan plan = (Plan) o;
-		return Objects.equals(this.id, plan.id) && Objects.equals(this.name, plan.name)
-				&& Objects.equals(this.type, plan.type) && Objects.equals(this.shortname, plan.shortname)
-				&& Objects.equals(this.stages, plan.stages) && Objects.equals(this.variables, plan.variables)
-				&& Objects.equals(this.enabled, plan.enabled);
-	}
+	  public Boolean isEnabled() {
+	    return enabled;
+	  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, name, type, shortname, stages, variables, enabled);
-	}
+	  public void setEnabled(Boolean enabled) {
+	    this.enabled = enabled;
+	  }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Plan {\n");
 
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    name: ").append(toIndentedString(name)).append("\n");
-		sb.append("    type: ").append(toIndentedString(type)).append("\n");
-		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-		sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
-		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
-		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
+	  @Override
+	  public boolean equals(java.lang.Object o) {
+	    if (this == o) {
+	      return true;
+	    }
+	    if (o == null || getClass() != o.getClass()) {
+	      return false;
+	    }
+	    Plan plan = (Plan) o;
+	    return Objects.equals(this.id, plan.id) &&
+	        Objects.equals(this.name, plan.name) &&
+	        Objects.equals(this.type, plan.type) &&
+	        Objects.equals(this.shortname, plan.shortname) &&
+	        Objects.equals(this.stages, plan.stages) &&
+	        Objects.equals(this.variables, plan.variables) &&
+	        Objects.equals(this.enabled, plan.enabled);
+	  }
 
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
+	  @Override
+	  public int hashCode() {
+	    return Objects.hash(id, name, type, shortname, stages, variables, enabled);
+	  }
+
+	  @Override
+	  public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("class Plan {\n");
+	    
+	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+	    sb.append("    type: ").append(toIndentedString(type)).append("\n");
+	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+	    sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
+	    sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
+	    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+	    sb.append("}");
+	    return sb.toString();
+	  }
+
+	  /**
+	   * Convert the given object to string with each line indented by 4 spaces
+	   * (except the first line).
+	   */
+	  private String toIndentedString(java.lang.Object o) {
+	    if (o == null) {
+	      return "null";
+	    }
+	    return o.toString().replace("\n", "\n    ");
+	  }
+	
+	
 }

@@ -1733,12 +1733,25 @@ definitions:
         type: "string"
       shortname:
         type: "string"
+      plans:
+        type: "array"
+        items:
+          $ref: "#/definitions/Index"
       variables:
         type: "array"
         items:
           $ref: "#/definitions/Variable"
       enabled:
         type: "boolean"
+  Index:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      sequence:
+        type: "integer"
+        format: "int64"
   Variable:
     type: "object"
     properties:
@@ -1767,6 +1780,10 @@ definitions:
         - "validate"
       shortname:
         type: "string"
+      stages:
+        type: "array"
+        items:
+          $ref: "#/definitions/Index"
       variables:
         type: "array"
         items:
@@ -1786,6 +1803,10 @@ definitions:
       sequence:
         type: "integer"
         format: "int64"
+      stages:
+        type: "array"
+        items:
+          $ref: "#/definitions/Index"
       variables:
         type: "array"
         items:
@@ -1802,6 +1823,10 @@ definitions:
         type: "string"
       shortname:
         type: "string"
+      tasks:
+        type: "array"
+        items:
+          $ref: "#/definitions/Index"
       variables:
         type: "array"
         items:
