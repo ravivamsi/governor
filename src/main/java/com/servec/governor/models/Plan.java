@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -22,8 +21,9 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
 public class Plan {
+
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private Object id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -71,6 +71,10 @@ public class Plan {
 	@JsonProperty("shortname")
 	private String shortname = null;
 
+	@JsonProperty("stages")
+	@Valid
+	private List<Stage> stages = null;
+
 	@JsonProperty("variables")
 	@Valid
 	private List<Variable> variables = null;
@@ -78,7 +82,7 @@ public class Plan {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Plan id(ObjectId id) {
+	public Plan id(Object id) {
 		this.id = id;
 		return this;
 	}
@@ -90,11 +94,11 @@ public class Plan {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public Object getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(Object id) {
 		this.id = id;
 	}
 
@@ -158,6 +162,36 @@ public class Plan {
 		this.shortname = shortname;
 	}
 
+	public Plan stages(List<Stage> stages) {
+		this.stages = stages;
+		return this;
+	}
+
+	public Plan addStagesItem(Stage stagesItem) {
+		if (this.stages == null) {
+			this.stages = new ArrayList<Stage>();
+		}
+		this.stages.add(stagesItem);
+		return this;
+	}
+
+	/**
+	 * Get stages
+	 * 
+	 * @return stages
+	 **/
+	@ApiModelProperty(value = "")
+
+	@Valid
+
+	public List<Stage> getStages() {
+		return stages;
+	}
+
+	public void setStages(List<Stage> stages) {
+		this.stages = stages;
+	}
+
 	public Plan variables(List<Variable> variables) {
 		this.variables = variables;
 		return this;
@@ -219,12 +253,13 @@ public class Plan {
 		Plan plan = (Plan) o;
 		return Objects.equals(this.id, plan.id) && Objects.equals(this.name, plan.name)
 				&& Objects.equals(this.type, plan.type) && Objects.equals(this.shortname, plan.shortname)
-				&& Objects.equals(this.variables, plan.variables) && Objects.equals(this.enabled, plan.enabled);
+				&& Objects.equals(this.stages, plan.stages) && Objects.equals(this.variables, plan.variables)
+				&& Objects.equals(this.enabled, plan.enabled);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, type, shortname, variables, enabled);
+		return Objects.hash(id, name, type, shortname, stages, variables, enabled);
 	}
 
 	@Override
@@ -236,6 +271,7 @@ public class Plan {
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("    type: ").append(toIndentedString(type)).append("\n");
 		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
 		sb.append("}");

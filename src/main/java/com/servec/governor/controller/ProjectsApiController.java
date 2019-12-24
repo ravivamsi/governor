@@ -1,6 +1,7 @@
 package com.servec.governor.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -250,14 +251,11 @@ public class ProjectsApiController implements ProjectsApi {
 	public ResponseEntity<List<Project>> getProjects() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<List<Project>>(objectMapper.readValue(
-						"[ {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Project>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			List<Project> projects = new ArrayList<Project>();
+
+//			TODO
+
+			return new ResponseEntity<List<Project>>(projects, HttpStatus.NOT_IMPLEMENTED);
 		}
 
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);

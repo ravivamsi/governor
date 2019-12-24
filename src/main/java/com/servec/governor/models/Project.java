@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,14 +19,19 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
 public class Project {
+
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private Object id = null;
 
 	@JsonProperty("name")
 	private String name = null;
 
 	@JsonProperty("shortname")
 	private String shortname = null;
+
+	@JsonProperty("plans")
+	@Valid
+	private List<Plan> plans = null;
 
 	@JsonProperty("variables")
 	@Valid
@@ -36,7 +40,7 @@ public class Project {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Project id(ObjectId id) {
+	public Project id(Object id) {
 		this.id = id;
 		return this;
 	}
@@ -48,11 +52,11 @@ public class Project {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public Object getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(Object id) {
 		this.id = id;
 	}
 
@@ -94,6 +98,36 @@ public class Project {
 
 	public void setShortname(String shortname) {
 		this.shortname = shortname;
+	}
+
+	public Project plans(List<Plan> plans) {
+		this.plans = plans;
+		return this;
+	}
+
+	public Project addPlansItem(Plan plansItem) {
+		if (this.plans == null) {
+			this.plans = new ArrayList<Plan>();
+		}
+		this.plans.add(plansItem);
+		return this;
+	}
+
+	/**
+	 * Get plans
+	 * 
+	 * @return plans
+	 **/
+	@ApiModelProperty(value = "")
+
+	@Valid
+
+	public List<Plan> getPlans() {
+		return plans;
+	}
+
+	public void setPlans(List<Plan> plans) {
+		this.plans = plans;
 	}
 
 	public Project variables(List<Variable> variables) {
@@ -156,13 +190,13 @@ public class Project {
 		}
 		Project project = (Project) o;
 		return Objects.equals(this.id, project.id) && Objects.equals(this.name, project.name)
-				&& Objects.equals(this.shortname, project.shortname)
+				&& Objects.equals(this.shortname, project.shortname) && Objects.equals(this.plans, project.plans)
 				&& Objects.equals(this.variables, project.variables) && Objects.equals(this.enabled, project.enabled);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, shortname, variables, enabled);
+		return Objects.hash(id, name, shortname, plans, variables, enabled);
 	}
 
 	@Override
@@ -173,6 +207,7 @@ public class Project {
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    plans: ").append(toIndentedString(plans)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
 		sb.append("}");

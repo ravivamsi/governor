@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,13 +20,17 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Job {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private Object id = null;
 
 	@JsonProperty("name")
 	private String name = null;
 
 	@JsonProperty("shortname")
 	private String shortname = null;
+
+	@JsonProperty("tasks")
+	@Valid
+	private List<Task> tasks = null;
 
 	@JsonProperty("variables")
 	@Valid
@@ -36,7 +39,7 @@ public class Job {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Job id(ObjectId id) {
+	public Job id(Object id) {
 		this.id = id;
 		return this;
 	}
@@ -48,11 +51,11 @@ public class Job {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public Object getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(Object id) {
 		this.id = id;
 	}
 
@@ -94,6 +97,36 @@ public class Job {
 
 	public void setShortname(String shortname) {
 		this.shortname = shortname;
+	}
+
+	public Job tasks(List<Task> tasks) {
+		this.tasks = tasks;
+		return this;
+	}
+
+	public Job addTasksItem(Task tasksItem) {
+		if (this.tasks == null) {
+			this.tasks = new ArrayList<Task>();
+		}
+		this.tasks.add(tasksItem);
+		return this;
+	}
+
+	/**
+	 * Get tasks
+	 * 
+	 * @return tasks
+	 **/
+	@ApiModelProperty(value = "")
+
+	@Valid
+
+	public List<Task> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<Task> tasks) {
+		this.tasks = tasks;
 	}
 
 	public Job variables(List<Variable> variables) {
@@ -156,13 +189,13 @@ public class Job {
 		}
 		Job job = (Job) o;
 		return Objects.equals(this.id, job.id) && Objects.equals(this.name, job.name)
-				&& Objects.equals(this.shortname, job.shortname) && Objects.equals(this.variables, job.variables)
-				&& Objects.equals(this.enabled, job.enabled);
+				&& Objects.equals(this.shortname, job.shortname) && Objects.equals(this.tasks, job.tasks)
+				&& Objects.equals(this.variables, job.variables) && Objects.equals(this.enabled, job.enabled);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, shortname, variables, enabled);
+		return Objects.hash(id, name, shortname, tasks, variables, enabled);
 	}
 
 	@Override
@@ -173,6 +206,7 @@ public class Job {
 		sb.append("    id: ").append(toIndentedString(id)).append("\n");
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
 		sb.append("}");

@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Stage {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private Object id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -32,6 +31,10 @@ public class Stage {
 	@JsonProperty("sequence")
 	private Long sequence = null;
 
+	@JsonProperty("stages")
+	@Valid
+	private List<Job> stages = null;
+
 	@JsonProperty("variables")
 	@Valid
 	private List<Variable> variables = null;
@@ -39,7 +42,7 @@ public class Stage {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Stage id(ObjectId id) {
+	public Stage id(Object id) {
 		this.id = id;
 		return this;
 	}
@@ -51,11 +54,11 @@ public class Stage {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public Object getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(Object id) {
 		this.id = id;
 	}
 
@@ -119,6 +122,36 @@ public class Stage {
 		this.sequence = sequence;
 	}
 
+	public Stage stages(List<Job> stages) {
+		this.stages = stages;
+		return this;
+	}
+
+	public Stage addStagesItem(Job stagesItem) {
+		if (this.stages == null) {
+			this.stages = new ArrayList<Job>();
+		}
+		this.stages.add(stagesItem);
+		return this;
+	}
+
+	/**
+	 * Get stages
+	 * 
+	 * @return stages
+	 **/
+	@ApiModelProperty(value = "")
+
+	@Valid
+
+	public List<Job> getStages() {
+		return stages;
+	}
+
+	public void setStages(List<Job> stages) {
+		this.stages = stages;
+	}
+
 	public Stage variables(List<Variable> variables) {
 		this.variables = variables;
 		return this;
@@ -180,12 +213,13 @@ public class Stage {
 		Stage stage = (Stage) o;
 		return Objects.equals(this.id, stage.id) && Objects.equals(this.name, stage.name)
 				&& Objects.equals(this.shortname, stage.shortname) && Objects.equals(this.sequence, stage.sequence)
-				&& Objects.equals(this.variables, stage.variables) && Objects.equals(this.enabled, stage.enabled);
+				&& Objects.equals(this.stages, stage.stages) && Objects.equals(this.variables, stage.variables)
+				&& Objects.equals(this.enabled, stage.enabled);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, shortname, sequence, variables, enabled);
+		return Objects.hash(id, name, shortname, sequence, stages, variables, enabled);
 	}
 
 	@Override
@@ -197,6 +231,7 @@ public class Stage {
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
 		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+		sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
 		sb.append("}");
