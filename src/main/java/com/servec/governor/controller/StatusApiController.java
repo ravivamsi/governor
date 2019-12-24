@@ -1,7 +1,7 @@
 package com.servec.governor.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,11 +14,11 @@ import org.springframework.stereotype.Controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.servec.governor.api.StatusApi;
+import com.servec.governor.commons.Evaluator;
 import com.servec.governor.commons.MongoConnector;
 import com.servec.governor.models.Dependency;
 import com.servec.governor.models.Dependency.StatusEnum;
 import com.servec.governor.models.Status;
-import com.servec.governor.models.Status.OverallstatusEnum;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
 
@@ -31,8 +31,6 @@ public class StatusApiController implements StatusApi {
 
 	public final HttpServletRequest request;
 
-	public List<Dependency> dependencies;
-
 	@org.springframework.beans.factory.annotation.Autowired
 	public StatusApiController(ObjectMapper objectMapper, HttpServletRequest request) {
 		this.objectMapper = objectMapper;
@@ -40,28 +38,33 @@ public class StatusApiController implements StatusApi {
 	}
 
 	public ResponseEntity<Status> statusGet() {
+
+		List<Dependency> dependencies = new ArrayList<Dependency>();
+
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			
+
 			// MongoDB Component
 			Dependency mongoDependency = new Dependency();
 			mongoDependency.setId(new ObjectId());
 			mongoDependency.setName("Mongo Connection");
 			if (MongoConnector.testConnection()) {
-				mongoDependency.setStatus(StatusEnum.UP);
+				mongoDependency.setStatus(StatusEnum.valueOf("UP"));
 			} else {
-				mongoDependency.setStatus(StatusEnum.DOWN);
+				mongoDependency.setStatus(StatusEnum.valueOf("DOWN"));
 			}
 
-			dependencies.add(mongoDependency);
-			
-			
+			if (mongoDependency != null) {
+				dependencies.add(mongoDependency);
+			}
+
 			Status status = new Status();
 
 			status.setId(new ObjectId());
-			status.setOverallstatus(OverallstatusEnum.UP);
-			
-			status.setDependencies(dependencies);
+			status.setOverallstatus(Evaluator.overallStatus(dependencies));
+			if (!dependencies.isEmpty()) {
+				status.setDependencies(dependencies);
+			}
 
 			return new ResponseEntity<Status>(status, HttpStatus.OK);
 		}
