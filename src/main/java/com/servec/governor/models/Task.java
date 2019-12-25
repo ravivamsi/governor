@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +22,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class Task {
 
 	@JsonProperty("id")
-	private Object id = null;
+	private ObjectId id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -39,7 +40,7 @@ public class Task {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Task id(Object id) {
+	public Task id(ObjectId id) {
 		this.id = id;
 		return this;
 	}
@@ -51,11 +52,11 @@ public class Task {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Object getId() {
+	public ObjectId getId() {
 		return id;
 	}
 
-	public void setId(Object id) {
+	public void setId(ObjectId id) {
 		this.id = id;
 	}
 

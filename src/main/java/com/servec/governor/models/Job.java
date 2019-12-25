@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,210 +20,208 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
 public class Job {
-	  @JsonProperty("id")
-	  private Object id = null;
+	@JsonProperty("id")
+	private ObjectId id = null;
 
-	  @JsonProperty("name")
-	  private String name = null;
+	@JsonProperty("name")
+	private String name = null;
 
-	  @JsonProperty("shortname")
-	  private String shortname = null;
+	@JsonProperty("shortname")
+	private String shortname = null;
 
-	  @JsonProperty("tasks")
-	  @Valid
-	  private List<Index> tasks = null;
+	@JsonProperty("tasks")
+	@Valid
+	private List<Index> tasks = null;
 
-	  @JsonProperty("variables")
-	  @Valid
-	  private List<Variable> variables = null;
+	@JsonProperty("variables")
+	@Valid
+	private List<Variable> variables = null;
 
-	  @JsonProperty("enabled")
-	  private Boolean enabled = null;
+	@JsonProperty("enabled")
+	private Boolean enabled = null;
 
-	  public Job id(Object id) {
-	    this.id = id;
-	    return this;
-	  }
+	public Job id(ObjectId id) {
+		this.id = id;
+		return this;
+	}
 
-	  /**
-	   * Get id
-	   * @return id
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(value = "")
 
+	public ObjectId getId() {
+		return id;
+	}
 
-	  public Object getId() {
-	    return id;
-	  }
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-	  public void setId(Object id) {
-	    this.id = id;
-	  }
+	public Job name(String name) {
+		this.name = name;
+		return this;
+	}
 
-	  public Job name(String name) {
-	    this.name = name;
-	    return this;
-	  }
+	/**
+	 * Get name
+	 * 
+	 * @return name
+	 **/
+	@ApiModelProperty(value = "")
 
-	  /**
-	   * Get name
-	   * @return name
-	  **/
-	  @ApiModelProperty(value = "")
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	  public String getName() {
-	    return name;
-	  }
+	public Job shortname(String shortname) {
+		this.shortname = shortname;
+		return this;
+	}
 
-	  public void setName(String name) {
-	    this.name = name;
-	  }
+	/**
+	 * Get shortname
+	 * 
+	 * @return shortname
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Job shortname(String shortname) {
-	    this.shortname = shortname;
-	    return this;
-	  }
+	public String getShortname() {
+		return shortname;
+	}
 
-	  /**
-	   * Get shortname
-	   * @return shortname
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setShortname(String shortname) {
+		this.shortname = shortname;
+	}
 
+	public Job tasks(List<Index> tasks) {
+		this.tasks = tasks;
+		return this;
+	}
 
-	  public String getShortname() {
-	    return shortname;
-	  }
+	public Job addTasksItem(Index tasksItem) {
+		if (this.tasks == null) {
+			this.tasks = new ArrayList<Index>();
+		}
+		this.tasks.add(tasksItem);
+		return this;
+	}
 
-	  public void setShortname(String shortname) {
-	    this.shortname = shortname;
-	  }
+	/**
+	 * Get tasks
+	 * 
+	 * @return tasks
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Job tasks(List<Index> tasks) {
-	    this.tasks = tasks;
-	    return this;
-	  }
+	@Valid
 
-	  public Job addTasksItem(Index tasksItem) {
-	    if (this.tasks == null) {
-	      this.tasks = new ArrayList<Index>();
-	    }
-	    this.tasks.add(tasksItem);
-	    return this;
-	  }
+	public List<Index> getTasks() {
+		return tasks;
+	}
 
-	  /**
-	   * Get tasks
-	   * @return tasks
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setTasks(List<Index> tasks) {
+		this.tasks = tasks;
+	}
 
-	  @Valid
+	public Job variables(List<Variable> variables) {
+		this.variables = variables;
+		return this;
+	}
 
-	  public List<Index> getTasks() {
-	    return tasks;
-	  }
+	public Job addVariablesItem(Variable variablesItem) {
+		if (this.variables == null) {
+			this.variables = new ArrayList<Variable>();
+		}
+		this.variables.add(variablesItem);
+		return this;
+	}
 
-	  public void setTasks(List<Index> tasks) {
-	    this.tasks = tasks;
-	  }
+	/**
+	 * Get variables
+	 * 
+	 * @return variables
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Job variables(List<Variable> variables) {
-	    this.variables = variables;
-	    return this;
-	  }
+	@Valid
 
-	  public Job addVariablesItem(Variable variablesItem) {
-	    if (this.variables == null) {
-	      this.variables = new ArrayList<Variable>();
-	    }
-	    this.variables.add(variablesItem);
-	    return this;
-	  }
+	public List<Variable> getVariables() {
+		return variables;
+	}
 
-	  /**
-	   * Get variables
-	   * @return variables
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setVariables(List<Variable> variables) {
+		this.variables = variables;
+	}
 
-	  @Valid
+	public Job enabled(Boolean enabled) {
+		this.enabled = enabled;
+		return this;
+	}
 
-	  public List<Variable> getVariables() {
-	    return variables;
-	  }
+	/**
+	 * Get enabled
+	 * 
+	 * @return enabled
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setVariables(List<Variable> variables) {
-	    this.variables = variables;
-	  }
+	public Boolean isEnabled() {
+		return enabled;
+	}
 
-	  public Job enabled(Boolean enabled) {
-	    this.enabled = enabled;
-	    return this;
-	  }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
-	  /**
-	   * Get enabled
-	   * @return enabled
-	  **/
-	  @ApiModelProperty(value = "")
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Job job = (Job) o;
+		return Objects.equals(this.id, job.id) && Objects.equals(this.name, job.name)
+				&& Objects.equals(this.shortname, job.shortname) && Objects.equals(this.tasks, job.tasks)
+				&& Objects.equals(this.variables, job.variables) && Objects.equals(this.enabled, job.enabled);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, shortname, tasks, variables, enabled);
+	}
 
-	  public Boolean isEnabled() {
-	    return enabled;
-	  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Job {\n");
 
-	  public void setEnabled(Boolean enabled) {
-	    this.enabled = enabled;
-	  }
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    name: ").append(toIndentedString(name)).append("\n");
+		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
+		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
+		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-
-	  @Override
-	  public boolean equals(java.lang.Object o) {
-	    if (this == o) {
-	      return true;
-	    }
-	    if (o == null || getClass() != o.getClass()) {
-	      return false;
-	    }
-	    Job job = (Job) o;
-	    return Objects.equals(this.id, job.id) &&
-	        Objects.equals(this.name, job.name) &&
-	        Objects.equals(this.shortname, job.shortname) &&
-	        Objects.equals(this.tasks, job.tasks) &&
-	        Objects.equals(this.variables, job.variables) &&
-	        Objects.equals(this.enabled, job.enabled);
-	  }
-
-	  @Override
-	  public int hashCode() {
-	    return Objects.hash(id, name, shortname, tasks, variables, enabled);
-	  }
-
-	  @Override
-	  public String toString() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("class Job {\n");
-	    
-	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-	    sb.append("    tasks: ").append(toIndentedString(tasks)).append("\n");
-	    sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
-	    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-	    sb.append("}");
-	    return sb.toString();
-	  }
-
-	  /**
-	   * Convert the given object to string with each line indented by 4 spaces
-	   * (except the first line).
-	   */
-	  private String toIndentedString(java.lang.Object o) {
-	    if (o == null) {
-	      return "null";
-	    }
-	    return o.toString().replace("\n", "\n    ");
-	  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }

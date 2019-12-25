@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -19,235 +20,233 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
 public class Stage {
-	  @JsonProperty("id")
-	  private Object id = null;
+	@JsonProperty("id")
+	private ObjectId id = null;
 
-	  @JsonProperty("name")
-	  private String name = null;
+	@JsonProperty("name")
+	private String name = null;
 
-	  @JsonProperty("shortname")
-	  private String shortname = null;
+	@JsonProperty("shortname")
+	private String shortname = null;
 
-	  @JsonProperty("sequence")
-	  private Long sequence = null;
+	@JsonProperty("sequence")
+	private Long sequence = null;
 
-	  @JsonProperty("stages")
-	  @Valid
-	  private List<Index> stages = null;
+	@JsonProperty("stages")
+	@Valid
+	private List<Index> stages = null;
 
-	  @JsonProperty("variables")
-	  @Valid
-	  private List<Variable> variables = null;
+	@JsonProperty("variables")
+	@Valid
+	private List<Variable> variables = null;
 
-	  @JsonProperty("enabled")
-	  private Boolean enabled = null;
+	@JsonProperty("enabled")
+	private Boolean enabled = null;
 
-	  public Stage id(Object id) {
-	    this.id = id;
-	    return this;
-	  }
+	public Stage id(ObjectId id) {
+		this.id = id;
+		return this;
+	}
 
-	  /**
-	   * Get id
-	   * @return id
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(value = "")
 
+	public ObjectId getId() {
+		return id;
+	}
 
-	  public Object getId() {
-	    return id;
-	  }
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-	  public void setId(Object id) {
-	    this.id = id;
-	  }
+	public Stage name(String name) {
+		this.name = name;
+		return this;
+	}
 
-	  public Stage name(String name) {
-	    this.name = name;
-	    return this;
-	  }
+	/**
+	 * Get name
+	 * 
+	 * @return name
+	 **/
+	@ApiModelProperty(value = "")
 
-	  /**
-	   * Get name
-	   * @return name
-	  **/
-	  @ApiModelProperty(value = "")
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	  public String getName() {
-	    return name;
-	  }
+	public Stage shortname(String shortname) {
+		this.shortname = shortname;
+		return this;
+	}
 
-	  public void setName(String name) {
-	    this.name = name;
-	  }
+	/**
+	 * Get shortname
+	 * 
+	 * @return shortname
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Stage shortname(String shortname) {
-	    this.shortname = shortname;
-	    return this;
-	  }
+	public String getShortname() {
+		return shortname;
+	}
 
-	  /**
-	   * Get shortname
-	   * @return shortname
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setShortname(String shortname) {
+		this.shortname = shortname;
+	}
 
+	public Stage sequence(Long sequence) {
+		this.sequence = sequence;
+		return this;
+	}
 
-	  public String getShortname() {
-	    return shortname;
-	  }
+	/**
+	 * Get sequence
+	 * 
+	 * @return sequence
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setShortname(String shortname) {
-	    this.shortname = shortname;
-	  }
+	public Long getSequence() {
+		return sequence;
+	}
 
-	  public Stage sequence(Long sequence) {
-	    this.sequence = sequence;
-	    return this;
-	  }
+	public void setSequence(Long sequence) {
+		this.sequence = sequence;
+	}
 
-	  /**
-	   * Get sequence
-	   * @return sequence
-	  **/
-	  @ApiModelProperty(value = "")
+	public Stage stages(List<Index> stages) {
+		this.stages = stages;
+		return this;
+	}
 
+	public Stage addStagesItem(Index stagesItem) {
+		if (this.stages == null) {
+			this.stages = new ArrayList<Index>();
+		}
+		this.stages.add(stagesItem);
+		return this;
+	}
 
-	  public Long getSequence() {
-	    return sequence;
-	  }
+	/**
+	 * Get stages
+	 * 
+	 * @return stages
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setSequence(Long sequence) {
-	    this.sequence = sequence;
-	  }
+	@Valid
 
-	  public Stage stages(List<Index> stages) {
-	    this.stages = stages;
-	    return this;
-	  }
+	public List<Index> getStages() {
+		return stages;
+	}
 
-	  public Stage addStagesItem(Index stagesItem) {
-	    if (this.stages == null) {
-	      this.stages = new ArrayList<Index>();
-	    }
-	    this.stages.add(stagesItem);
-	    return this;
-	  }
+	public void setStages(List<Index> stages) {
+		this.stages = stages;
+	}
 
-	  /**
-	   * Get stages
-	   * @return stages
-	  **/
-	  @ApiModelProperty(value = "")
+	public Stage variables(List<Variable> variables) {
+		this.variables = variables;
+		return this;
+	}
 
-	  @Valid
+	public Stage addVariablesItem(Variable variablesItem) {
+		if (this.variables == null) {
+			this.variables = new ArrayList<Variable>();
+		}
+		this.variables.add(variablesItem);
+		return this;
+	}
 
-	  public List<Index> getStages() {
-	    return stages;
-	  }
+	/**
+	 * Get variables
+	 * 
+	 * @return variables
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setStages(List<Index> stages) {
-	    this.stages = stages;
-	  }
+	@Valid
 
-	  public Stage variables(List<Variable> variables) {
-	    this.variables = variables;
-	    return this;
-	  }
+	public List<Variable> getVariables() {
+		return variables;
+	}
 
-	  public Stage addVariablesItem(Variable variablesItem) {
-	    if (this.variables == null) {
-	      this.variables = new ArrayList<Variable>();
-	    }
-	    this.variables.add(variablesItem);
-	    return this;
-	  }
+	public void setVariables(List<Variable> variables) {
+		this.variables = variables;
+	}
 
-	  /**
-	   * Get variables
-	   * @return variables
-	  **/
-	  @ApiModelProperty(value = "")
+	public Stage enabled(Boolean enabled) {
+		this.enabled = enabled;
+		return this;
+	}
 
-	  @Valid
+	/**
+	 * Get enabled
+	 * 
+	 * @return enabled
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public List<Variable> getVariables() {
-	    return variables;
-	  }
+	public Boolean isEnabled() {
+		return enabled;
+	}
 
-	  public void setVariables(List<Variable> variables) {
-	    this.variables = variables;
-	  }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
-	  public Stage enabled(Boolean enabled) {
-	    this.enabled = enabled;
-	    return this;
-	  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Stage stage = (Stage) o;
+		return Objects.equals(this.id, stage.id) && Objects.equals(this.name, stage.name)
+				&& Objects.equals(this.shortname, stage.shortname) && Objects.equals(this.sequence, stage.sequence)
+				&& Objects.equals(this.stages, stage.stages) && Objects.equals(this.variables, stage.variables)
+				&& Objects.equals(this.enabled, stage.enabled);
+	}
 
-	  /**
-	   * Get enabled
-	   * @return enabled
-	  **/
-	  @ApiModelProperty(value = "")
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, shortname, sequence, stages, variables, enabled);
+	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Stage {\n");
 
-	  public Boolean isEnabled() {
-	    return enabled;
-	  }
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    name: ").append(toIndentedString(name)).append("\n");
+		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+		sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
+		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
+		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-	  public void setEnabled(Boolean enabled) {
-	    this.enabled = enabled;
-	  }
-
-
-	  @Override
-	  public boolean equals(java.lang.Object o) {
-	    if (this == o) {
-	      return true;
-	    }
-	    if (o == null || getClass() != o.getClass()) {
-	      return false;
-	    }
-	    Stage stage = (Stage) o;
-	    return Objects.equals(this.id, stage.id) &&
-	        Objects.equals(this.name, stage.name) &&
-	        Objects.equals(this.shortname, stage.shortname) &&
-	        Objects.equals(this.sequence, stage.sequence) &&
-	        Objects.equals(this.stages, stage.stages) &&
-	        Objects.equals(this.variables, stage.variables) &&
-	        Objects.equals(this.enabled, stage.enabled);
-	  }
-
-	  @Override
-	  public int hashCode() {
-	    return Objects.hash(id, name, shortname, sequence, stages, variables, enabled);
-	  }
-
-	  @Override
-	  public String toString() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("class Stage {\n");
-	    
-	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-	    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
-	    sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
-	    sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
-	    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-	    sb.append("}");
-	    return sb.toString();
-	  }
-
-	  /**
-	   * Convert the given object to string with each line indented by 4 spaces
-	   * (except the first line).
-	   */
-	  private String toIndentedString(java.lang.Object o) {
-	    if (o == null) {
-	      return "null";
-	    }
-	    return o.toString().replace("\n", "\n    ");
-	  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }

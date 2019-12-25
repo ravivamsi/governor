@@ -2,7 +2,6 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,190 +16,187 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class DImage {
 
-	  @JsonProperty("id")
-	  private Object id = null;
+	@JsonProperty("id")
+	private Object id = null;
 
-	  @JsonProperty("shortname")
-	  private String shortname = null;
+	@JsonProperty("shortname")
+	private String shortname = null;
 
-	  @JsonProperty("imagename")
-	  private String imagename = null;
+	@JsonProperty("imagename")
+	private String imagename = null;
 
-	  @JsonProperty("imageversion")
-	  private String imageversion = null;
+	@JsonProperty("imageversion")
+	private String imageversion = null;
 
-	  @JsonProperty("imageid")
-	  private String imageid = null;
+	@JsonProperty("imageid")
+	private String imageid = null;
 
-	  @JsonProperty("imagetag")
-	  private String imagetag = null;
+	@JsonProperty("imagetag")
+	private String imagetag = null;
 
-	  public DImage id(Object id) {
-	    this.id = id;
-	    return this;
-	  }
+	public DImage id(Object id) {
+		this.id = id;
+		return this;
+	}
 
-	  /**
-	   * Get id
-	   * @return id
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(value = "")
 
+	public Object getId() {
+		return id;
+	}
 
-	  public Object getId() {
-	    return id;
-	  }
+	public void setId(Object id) {
+		this.id = id;
+	}
 
-	  public void setId(Object id) {
-	    this.id = id;
-	  }
+	public DImage shortname(String shortname) {
+		this.shortname = shortname;
+		return this;
+	}
 
-	  public DImage shortname(String shortname) {
-	    this.shortname = shortname;
-	    return this;
-	  }
+	/**
+	 * Get shortname
+	 * 
+	 * @return shortname
+	 **/
+	@ApiModelProperty(value = "")
 
-	  /**
-	   * Get shortname
-	   * @return shortname
-	  **/
-	  @ApiModelProperty(value = "")
+	public String getShortname() {
+		return shortname;
+	}
 
+	public void setShortname(String shortname) {
+		this.shortname = shortname;
+	}
 
-	  public String getShortname() {
-	    return shortname;
-	  }
+	public DImage imagename(String imagename) {
+		this.imagename = imagename;
+		return this;
+	}
 
-	  public void setShortname(String shortname) {
-	    this.shortname = shortname;
-	  }
+	/**
+	 * Get imagename
+	 * 
+	 * @return imagename
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public DImage imagename(String imagename) {
-	    this.imagename = imagename;
-	    return this;
-	  }
+	public String getImagename() {
+		return imagename;
+	}
 
-	  /**
-	   * Get imagename
-	   * @return imagename
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setImagename(String imagename) {
+		this.imagename = imagename;
+	}
 
+	public DImage imageversion(String imageversion) {
+		this.imageversion = imageversion;
+		return this;
+	}
 
-	  public String getImagename() {
-	    return imagename;
-	  }
+	/**
+	 * Get imageversion
+	 * 
+	 * @return imageversion
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setImagename(String imagename) {
-	    this.imagename = imagename;
-	  }
+	public String getImageversion() {
+		return imageversion;
+	}
 
-	  public DImage imageversion(String imageversion) {
-	    this.imageversion = imageversion;
-	    return this;
-	  }
+	public void setImageversion(String imageversion) {
+		this.imageversion = imageversion;
+	}
 
-	  /**
-	   * Get imageversion
-	   * @return imageversion
-	  **/
-	  @ApiModelProperty(value = "")
+	public DImage imageid(String imageid) {
+		this.imageid = imageid;
+		return this;
+	}
 
+	/**
+	 * Get imageid
+	 * 
+	 * @return imageid
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public String getImageversion() {
-	    return imageversion;
-	  }
+	public String getImageid() {
+		return imageid;
+	}
 
-	  public void setImageversion(String imageversion) {
-	    this.imageversion = imageversion;
-	  }
+	public void setImageid(String imageid) {
+		this.imageid = imageid;
+	}
 
-	  public DImage imageid(String imageid) {
-	    this.imageid = imageid;
-	    return this;
-	  }
+	public DImage imagetag(String imagetag) {
+		this.imagetag = imagetag;
+		return this;
+	}
 
-	  /**
-	   * Get imageid
-	   * @return imageid
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get imagetag
+	 * 
+	 * @return imagetag
+	 **/
+	@ApiModelProperty(value = "")
 
+	public String getImagetag() {
+		return imagetag;
+	}
 
-	  public String getImageid() {
-	    return imageid;
-	  }
+	public void setImagetag(String imagetag) {
+		this.imagetag = imagetag;
+	}
 
-	  public void setImageid(String imageid) {
-	    this.imageid = imageid;
-	  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		DImage dimage = (DImage) o;
+		return Objects.equals(this.id, dimage.id) && Objects.equals(this.shortname, dimage.shortname)
+				&& Objects.equals(this.imagename, dimage.imagename)
+				&& Objects.equals(this.imageversion, dimage.imageversion)
+				&& Objects.equals(this.imageid, dimage.imageid) && Objects.equals(this.imagetag, dimage.imagetag);
+	}
 
-	  public DImage imagetag(String imagetag) {
-	    this.imagetag = imagetag;
-	    return this;
-	  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, shortname, imagename, imageversion, imageid, imagetag);
+	}
 
-	  /**
-	   * Get imagetag
-	   * @return imagetag
-	  **/
-	  @ApiModelProperty(value = "")
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class DImage {\n");
 
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    imagename: ").append(toIndentedString(imagename)).append("\n");
+		sb.append("    imageversion: ").append(toIndentedString(imageversion)).append("\n");
+		sb.append("    imageid: ").append(toIndentedString(imageid)).append("\n");
+		sb.append("    imagetag: ").append(toIndentedString(imagetag)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-	  public String getImagetag() {
-	    return imagetag;
-	  }
-
-	  public void setImagetag(String imagetag) {
-	    this.imagetag = imagetag;
-	  }
-
-
-	  @Override
-	  public boolean equals(java.lang.Object o) {
-	    if (this == o) {
-	      return true;
-	    }
-	    if (o == null || getClass() != o.getClass()) {
-	      return false;
-	    }
-	    DImage dimage = (DImage) o;
-	    return Objects.equals(this.id, dimage.id) &&
-	        Objects.equals(this.shortname, dimage.shortname) &&
-	        Objects.equals(this.imagename, dimage.imagename) &&
-	        Objects.equals(this.imageversion, dimage.imageversion) &&
-	        Objects.equals(this.imageid, dimage.imageid) &&
-	        Objects.equals(this.imagetag, dimage.imagetag);
-	  }
-
-	  @Override
-	  public int hashCode() {
-	    return Objects.hash(id, shortname, imagename, imageversion, imageid, imagetag);
-	  }
-
-	  @Override
-	  public String toString() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("class DImage {\n");
-	    
-	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-	    sb.append("    imagename: ").append(toIndentedString(imagename)).append("\n");
-	    sb.append("    imageversion: ").append(toIndentedString(imageversion)).append("\n");
-	    sb.append("    imageid: ").append(toIndentedString(imageid)).append("\n");
-	    sb.append("    imagetag: ").append(toIndentedString(imagetag)).append("\n");
-	    sb.append("}");
-	    return sb.toString();
-	  }
-
-	  /**
-	   * Convert the given object to string with each line indented by 4 spaces
-	   * (except the first line).
-	   */
-	  private String toIndentedString(java.lang.Object o) {
-	    if (o == null) {
-	      return "null";
-	    }
-	    return o.toString().replace("\n", "\n    ");
-	  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }

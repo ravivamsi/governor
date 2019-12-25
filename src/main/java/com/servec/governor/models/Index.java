@@ -5,6 +5,7 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
+import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,91 +18,89 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-24T22:37:55.063Z")
 
-public class Index   {
-  @JsonProperty("id")
-  private Object id = null;
+public class Index {
+	@JsonProperty("id")
+	private ObjectId id = null;
 
-  @JsonProperty("sequence")
-  private Long sequence = null;
+	@JsonProperty("sequence")
+	private Long sequence = null;
 
-  public Index id(Object id) {
-    this.id = id;
-    return this;
-  }
+	public Index id(ObjectId id) {
+		this.id = id;
+		return this;
+	}
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(value = "")
 
+	public ObjectId getId() {
+		return id;
+	}
 
-  public Object getId() {
-    return id;
-  }
+	public void setId(ObjectId id) {
+		this.id = id;
+	}
 
-  public void setId(Object id) {
-    this.id = id;
-  }
+	public Index sequence(Long sequence) {
+		this.sequence = sequence;
+		return this;
+	}
 
-  public Index sequence(Long sequence) {
-    this.sequence = sequence;
-    return this;
-  }
+	/**
+	 * Get sequence
+	 * 
+	 * @return sequence
+	 **/
+	@ApiModelProperty(value = "")
 
-  /**
-   * Get sequence
-   * @return sequence
-  **/
-  @ApiModelProperty(value = "")
+	public Long getSequence() {
+		return sequence;
+	}
 
+	public void setSequence(Long sequence) {
+		this.sequence = sequence;
+	}
 
-  public Long getSequence() {
-    return sequence;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Index index = (Index) o;
+		return Objects.equals(this.id, index.id) && Objects.equals(this.sequence, index.sequence);
+	}
 
-  public void setSequence(Long sequence) {
-    this.sequence = sequence;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, sequence);
+	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Index {\n");
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Index index = (Index) o;
-    return Objects.equals(this.id, index.id) &&
-        Objects.equals(this.sequence, index.sequence);
-  }
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, sequence);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Index {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
