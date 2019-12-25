@@ -2,6 +2,8 @@ package com.servec.governor.models;
 
 import java.util.Objects;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +16,11 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
+
+@Document
 public class Variable {
+	
+	@Id
 	@JsonProperty("id")
 	private String id = null;
 

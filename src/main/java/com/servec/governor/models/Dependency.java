@@ -1,7 +1,6 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
@@ -21,7 +20,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Dependency {
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -62,7 +61,7 @@ public class Dependency {
 	@JsonProperty("status")
 	private StatusEnum status = null;
 
-	public Dependency id(UUID id) {
+	public Dependency id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -75,11 +74,11 @@ public class Dependency {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

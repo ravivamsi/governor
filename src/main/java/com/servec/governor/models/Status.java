@@ -3,7 +3,6 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -24,7 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Status {
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	/**
 	 * Gets or Sets overallstatus
@@ -66,7 +65,7 @@ public class Status {
 	@Valid
 	private List<Dependency> dependencies = null;
 
-	public Status id(UUID id) {
+	public Status id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -79,11 +78,11 @@ public class Status {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

@@ -1,8 +1,9 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
-import java.util.UUID;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -15,10 +16,12 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
+@Document
 public class DImage {
 
+	@Id
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("shortname")
 	private String shortname = null;
@@ -35,7 +38,7 @@ public class DImage {
 	@JsonProperty("imagetag")
 	private String imagetag = null;
 
-	public DImage id(UUID id) {
+	public DImage id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -47,11 +50,11 @@ public class DImage {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

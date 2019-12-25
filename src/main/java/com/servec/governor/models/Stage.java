@@ -3,7 +3,6 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -26,7 +25,7 @@ public class Stage {
 
 	@Id
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -48,7 +47,7 @@ public class Stage {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Stage id(UUID id) {
+	public Stage id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -60,11 +59,11 @@ public class Stage {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

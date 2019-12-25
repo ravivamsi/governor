@@ -3,11 +3,11 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.annotation.Id;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,8 +21,10 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
 public class Pipeline {
+	
+	@Id
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -34,7 +36,7 @@ public class Pipeline {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Pipeline id(UUID id) {
+	public Pipeline id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -47,11 +49,11 @@ public class Pipeline {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

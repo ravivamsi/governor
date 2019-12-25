@@ -3,7 +3,6 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -28,7 +27,7 @@ public class Plan {
 
 	@Id
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -87,7 +86,7 @@ public class Plan {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Plan id(UUID id) {
+	public Plan id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -99,11 +98,11 @@ public class Plan {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

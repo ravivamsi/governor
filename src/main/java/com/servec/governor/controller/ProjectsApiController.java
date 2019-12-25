@@ -1,6 +1,7 @@
 package com.servec.governor.controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,12 +20,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.servec.governor.api.ProjectsApi;
+import com.servec.governor.commons.Sequence;
+import com.servec.governor.models.Index;
 import com.servec.governor.models.Job;
+import com.servec.governor.models.JobRepository;
 import com.servec.governor.models.Plan;
+import com.servec.governor.models.PlanRepository;
 import com.servec.governor.models.Project;
 import com.servec.governor.models.ProjectRepository;
 import com.servec.governor.models.Stage;
+import com.servec.governor.models.StageRepository;
 import com.servec.governor.models.Task;
+import com.servec.governor.models.TaskRepository;
 
 import io.swagger.annotations.ApiParam;
 
@@ -40,47 +47,65 @@ public class ProjectsApiController implements ProjectsApi {
 	private final HttpServletRequest request;
 
 	private final ProjectRepository projectRepository;
+	
+	private final PlanRepository planRepository;
+	
+	private final StageRepository stageRepository;
+	
+	private final JobRepository jobRepository;
+	
+	private final TaskRepository taskRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public ProjectsApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			ProjectRepository projectRepository) {
+			ProjectRepository projectRepository, PlanRepository planRepository, StageRepository stageRepository, JobRepository jobRepository, TaskRepository taskRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.projectRepository = projectRepository;
+		this.planRepository = planRepository;
+		this.stageRepository = stageRepository;
+		this.jobRepository = jobRepository;
+		this.taskRepository = taskRepository;
 	}
 
-	public ResponseEntity<Job> addJob(@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
+	public ResponseEntity<Job> addJob(@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Job>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Job.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Job>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			
+			
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Plan> addPlan(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Plan>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"type\" : \"build\",  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Plan.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Plan>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			TODO
+//			Test - Yet to Complete
+			Project project = new Project();	
+			List<Index> planIndexList = new ArrayList<Index>();
+			Optional<Project> optionalProject = projectRepository.findById(projectId);
+			if (optionalProject.isPresent()) {
+				project = optionalProject.get();
 			}
+			planIndexList = project.getPlans();
+			Index planIndex = new Index();
+			
+			Plan plan = planRepository.save(body);
+			
+			planIndex.setId(plan.getId());
+			planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
+			
+			projectRepository.save(project);
+			
+			return new ResponseEntity<Plan>(plan, HttpStatus.CREATED);
+			
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -97,68 +122,100 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Stage> addStage(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Stage>(objectMapper.readValue(
-						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Stage.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Stage>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			TODO
+//			Test - Yet to Complete
+			Plan plan = new Plan();	
+			List<Index> stageIndexList = new ArrayList<Index>();
+			Optional<Plan> optionalPlan = planRepository.findById(planId);
+			if (optionalPlan.isPresent()) {
+				plan = optionalPlan.get();
 			}
+			stageIndexList = plan.getStages();
+			Index stageIndex = new Index();
+			
+			Stage stage = stageRepository.save(body);
+			
+			stageIndex.setId(plan.getId());
+			stageIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(stageIndexList)));
+			stageIndexList.add(stageIndex);
+			plan.setStages(stageIndexList);
+			planRepository.save(plan);
+			
+			return new ResponseEntity<Stage>(stage, HttpStatus.CREATED);
+			
 		}
 
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Task> addTask(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Task>(objectMapper.readValue(
-						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Task.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Task>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			TODO
+//			Test - Yet to Complete
+			Job job = new Job();	
+			List<Index> taskIndexList = new ArrayList<Index>();
+			Optional<Job> optionalJob = jobRepository.findById(jobId);
+			if (optionalJob.isPresent()) {
+				job = optionalJob.get();
 			}
+			taskIndexList = job.getTasks();
+			Index taskIndex = new Index();
+			
+			Task task = taskRepository.save(body);
+			
+			taskIndex.setId(job.getId());
+			taskIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(taskIndexList)));
+			taskIndexList.add(taskIndex);
+			job.setTasks(taskIndexList);
+			jobRepository.save(job);
+			
+			return new ResponseEntity<Task>(task, HttpStatus.CREATED);
+			
 		}
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Job> deleteJobById(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Job>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Job.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Job>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			TODO
+			Job job = new Job();
+			
+			
+			Optional<Job> optionalJob = jobRepository.findById(jobId);
+			
+			if (optionalJob.isPresent()) {
+				job = optionalJob.get();
 			}
+			
+			jobRepository.deleteById(jobId);
+			
+			return new ResponseEntity<Job>(job, HttpStatus.ACCEPTED);
+			
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Plan> deletePlanById(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -175,10 +232,10 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Job> getJobById(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -195,9 +252,9 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<List<Job>> getJobs(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -214,8 +271,8 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Plan> getPlanById(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -232,7 +289,7 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<List<Plan>> getPlans(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -257,8 +314,8 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<List<Stage>> getStages(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -275,10 +332,10 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<List<Task>> getTasks(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String proStringId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -333,9 +390,9 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -352,9 +409,9 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -371,11 +428,11 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId,
-			@ApiParam(value = "", required = true) @PathVariable("taskId") Long taskId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -392,11 +449,11 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId,
-			@ApiParam(value = "", required = true) @PathVariable("taskId") Long taskId) {
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -413,11 +470,11 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId,
-			@ApiParam(value = "", required = true) @PathVariable("taskId") Long taskId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
@@ -435,9 +492,9 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
@@ -483,10 +540,10 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Job> updateJobById(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
-			@ApiParam(value = "", required = true) @PathVariable("stageId") Long stageId,
-			@ApiParam(value = "", required = true) @PathVariable("jobId") Long jobId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
@@ -504,8 +561,8 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Plan> updatePlanById(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
-			@ApiParam(value = "", required = true) @PathVariable("planId") Long planId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {

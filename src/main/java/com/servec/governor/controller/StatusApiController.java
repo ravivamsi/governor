@@ -46,7 +46,7 @@ public class StatusApiController implements StatusApi {
 
 			// MongoDB Component
 			Dependency mongoDependency = new Dependency();
-			mongoDependency.setId(UUID.randomUUID());
+			mongoDependency.setId(UUID.randomUUID().toString());
 			mongoDependency.setName("Mongo Connection");
 			if (MongoConnector.testConnection()) {
 				mongoDependency.setStatus(StatusEnum.valueOf("UP"));
@@ -60,7 +60,7 @@ public class StatusApiController implements StatusApi {
 
 			Status status = new Status();
 
-			status.setId(UUID.randomUUID());
+			status.setId(UUID.randomUUID().toString());
 			status.setOverallstatus(Evaluator.overallStatus(dependencies));
 			if (!dependencies.isEmpty()) {
 				status.setDependencies(dependencies);

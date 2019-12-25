@@ -3,10 +3,11 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -18,11 +19,12 @@ import io.swagger.annotations.ApiModelProperty;
  */
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
-
+@Document
 public class Task {
-
+	
+	@Id
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -40,7 +42,7 @@ public class Task {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Task id(UUID id) {
+	public Task id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -52,11 +54,11 @@ public class Task {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
