@@ -35,7 +35,7 @@ public interface DimagesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/dimages/{dimageId}", method = RequestMethod.DELETE)
 	ResponseEntity<DImage> dimagesDimageIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("dimageId") Long dimageId);
+			@ApiParam(value = "", required = true) @PathVariable("dimageId") String dimageId);
 
 	@ApiOperation(value = "Retrieve Existing DImage", nickname = "dimagesDimageIdGet", notes = "", response = DImage.class, tags = {
 			"dimage", })
@@ -43,7 +43,7 @@ public interface DimagesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/dimages/{dimageId}", method = RequestMethod.GET)
 	ResponseEntity<DImage> dimagesDimageIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("dimageId") Long dimageId);
+			@ApiParam(value = "", required = true) @PathVariable("dimageId") String dimageId);
 
 	@ApiOperation(value = "Update existing DImage", nickname = "dimagesDimageIdPut", notes = "", response = DImage.class, tags = {
 			"dimage", })
@@ -52,7 +52,7 @@ public interface DimagesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/dimages/{dimageId}", method = RequestMethod.PUT)
 	ResponseEntity<DImage> dimagesDimageIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("dimageId") Long dimageId,
+			@ApiParam(value = "", required = true) @PathVariable("dimageId") String dimageId,
 			@ApiParam(value = "DImage object", required = true) @Valid @RequestBody DImage body);
 
 	@ApiOperation(value = "Add a DImage", nickname = "dimagesPost", notes = "", response = DImage.class, tags = {
