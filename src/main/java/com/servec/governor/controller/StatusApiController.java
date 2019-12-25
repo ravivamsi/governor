@@ -2,10 +2,10 @@ package com.servec.governor.controller;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.bson.types.ObjectId;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -46,7 +46,7 @@ public class StatusApiController implements StatusApi {
 
 			// MongoDB Component
 			Dependency mongoDependency = new Dependency();
-			mongoDependency.setId(new ObjectId());
+			mongoDependency.setId(UUID.randomUUID());
 			mongoDependency.setName("Mongo Connection");
 			if (MongoConnector.testConnection()) {
 				mongoDependency.setStatus(StatusEnum.valueOf("UP"));
@@ -60,7 +60,7 @@ public class StatusApiController implements StatusApi {
 
 			Status status = new Status();
 
-			status.setId(new ObjectId());
+			status.setId(UUID.randomUUID());
 			status.setOverallstatus(Evaluator.overallStatus(dependencies));
 			if (!dependencies.isEmpty()) {
 				status.setDependencies(dependencies);

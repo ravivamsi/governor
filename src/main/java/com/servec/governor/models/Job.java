@@ -3,10 +3,10 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Job {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -40,7 +40,7 @@ public class Job {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Job id(ObjectId id) {
+	public Job id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -52,11 +52,11 @@ public class Job {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

@@ -1,8 +1,8 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
+import java.util.UUID;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Notification {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -31,7 +31,7 @@ public class Notification {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Notification id(ObjectId id) {
+	public Notification id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -43,11 +43,11 @@ public class Notification {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

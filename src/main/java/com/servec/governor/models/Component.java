@@ -1,10 +1,10 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Component {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	/**
 	 * Gets or Sets type
@@ -62,7 +62,7 @@ public class Component {
 	@JsonProperty("sequence")
 	private Long sequence = null;
 
-	public Component id(ObjectId id) {
+	public Component id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -75,11 +75,11 @@ public class Component {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

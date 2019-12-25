@@ -3,10 +3,10 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -21,7 +21,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class BadRequest {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	@JsonProperty("code")
 	private Integer code = null;
@@ -33,7 +33,7 @@ public class BadRequest {
 	@Valid
 	private List<String> fields = null;
 
-	public BadRequest id(ObjectId id) {
+	public BadRequest id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -45,11 +45,11 @@ public class BadRequest {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

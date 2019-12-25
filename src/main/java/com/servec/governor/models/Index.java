@@ -4,8 +4,8 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
+import java.util.UUID;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,12 +20,12 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Index {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	@JsonProperty("sequence")
 	private Long sequence = null;
 
-	public Index id(ObjectId id) {
+	public Index id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -37,11 +37,11 @@ public class Index {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

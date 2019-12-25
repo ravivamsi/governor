@@ -3,11 +3,11 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 
-import org.bson.types.ObjectId;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Status {
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	/**
 	 * Gets or Sets overallstatus
@@ -66,7 +66,7 @@ public class Status {
 	@Valid
 	private List<Dependency> dependencies = null;
 
-	public Status id(ObjectId id) {
+	public Status id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -79,11 +79,11 @@ public class Status {
 	@ApiModelProperty(required = true, value = "")
 	@NotNull
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

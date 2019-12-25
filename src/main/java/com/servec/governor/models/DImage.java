@@ -1,6 +1,7 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
+import java.util.UUID;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -17,7 +18,7 @@ import io.swagger.annotations.ApiModelProperty;
 public class DImage {
 
 	@JsonProperty("id")
-	private Object id = null;
+	private UUID id = null;
 
 	@JsonProperty("shortname")
 	private String shortname = null;
@@ -34,7 +35,7 @@ public class DImage {
 	@JsonProperty("imagetag")
 	private String imagetag = null;
 
-	public DImage id(Object id) {
+	public DImage id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -46,11 +47,11 @@ public class DImage {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public Object getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(Object id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 

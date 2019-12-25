@@ -3,10 +3,10 @@ package com.servec.governor.models;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.UUID;
 
 import javax.validation.Valid;
 
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
@@ -26,7 +26,7 @@ public class Project {
 
 	@Id
 	@JsonProperty("id")
-	private ObjectId id = null;
+	private UUID id = null;
 
 	@JsonProperty("name")
 	private String name = null;
@@ -45,7 +45,7 @@ public class Project {
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
 
-	public Project id(ObjectId id) {
+	public Project id(UUID id) {
 		this.id = id;
 		return this;
 	}
@@ -57,11 +57,11 @@ public class Project {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public ObjectId getId() {
+	public UUID getId() {
 		return id;
 	}
 
-	public void setId(ObjectId id) {
+	public void setId(UUID id) {
 		this.id = id;
 	}
 
