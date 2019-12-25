@@ -47,18 +47,19 @@ public class ProjectsApiController implements ProjectsApi {
 	private final HttpServletRequest request;
 
 	private final ProjectRepository projectRepository;
-	
+
 	private final PlanRepository planRepository;
-	
+
 	private final StageRepository stageRepository;
-	
+
 	private final JobRepository jobRepository;
-	
+
 	private final TaskRepository taskRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public ProjectsApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			ProjectRepository projectRepository, PlanRepository planRepository, StageRepository stageRepository, JobRepository jobRepository, TaskRepository taskRepository) {
+			ProjectRepository projectRepository, PlanRepository planRepository, StageRepository stageRepository,
+			JobRepository jobRepository, TaskRepository taskRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.projectRepository = projectRepository;
@@ -68,14 +69,14 @@ public class ProjectsApiController implements ProjectsApi {
 		this.taskRepository = taskRepository;
 	}
 
-	public ResponseEntity<Job> addJob(@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+	public ResponseEntity<Job> addJob(
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			
-			
+
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
@@ -88,7 +89,7 @@ public class ProjectsApiController implements ProjectsApi {
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
 //			Test - Yet to Complete
-			Project project = new Project();	
+			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
@@ -96,16 +97,16 @@ public class ProjectsApiController implements ProjectsApi {
 			}
 			planIndexList = project.getPlans();
 			Index planIndex = new Index();
-			
+
 			Plan plan = planRepository.save(body);
-			
+
 			planIndex.setId(plan.getId());
 			planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
-			
+
 			projectRepository.save(project);
-			
+
 			return new ResponseEntity<Plan>(plan, HttpStatus.CREATED);
-			
+
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -129,7 +130,7 @@ public class ProjectsApiController implements ProjectsApi {
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
 //			Test - Yet to Complete
-			Plan plan = new Plan();	
+			Plan plan = new Plan();
 			List<Index> stageIndexList = new ArrayList<Index>();
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
 			if (optionalPlan.isPresent()) {
@@ -137,17 +138,17 @@ public class ProjectsApiController implements ProjectsApi {
 			}
 			stageIndexList = plan.getStages();
 			Index stageIndex = new Index();
-			
+
 			Stage stage = stageRepository.save(body);
-			
+
 			stageIndex.setId(plan.getId());
 			stageIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(stageIndexList)));
 			stageIndexList.add(stageIndex);
 			plan.setStages(stageIndexList);
 			planRepository.save(plan);
-			
+
 			return new ResponseEntity<Stage>(stage, HttpStatus.CREATED);
-			
+
 		}
 
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
@@ -163,7 +164,7 @@ public class ProjectsApiController implements ProjectsApi {
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
 //			Test - Yet to Complete
-			Job job = new Job();	
+			Job job = new Job();
 			List<Index> taskIndexList = new ArrayList<Index>();
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 			if (optionalJob.isPresent()) {
@@ -171,17 +172,17 @@ public class ProjectsApiController implements ProjectsApi {
 			}
 			taskIndexList = job.getTasks();
 			Index taskIndex = new Index();
-			
+
 			Task task = taskRepository.save(body);
-			
+
 			taskIndex.setId(job.getId());
 			taskIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(taskIndexList)));
 			taskIndexList.add(taskIndex);
 			job.setTasks(taskIndexList);
 			jobRepository.save(job);
-			
+
 			return new ResponseEntity<Task>(task, HttpStatus.CREATED);
-			
+
 		}
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
@@ -196,18 +197,17 @@ public class ProjectsApiController implements ProjectsApi {
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
 			Job job = new Job();
-			
-			
+
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
-			
+
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
 			}
-			
+
 			jobRepository.deleteById(jobId);
-			
+
 			return new ResponseEntity<Job>(job, HttpStatus.ACCEPTED);
-			
+
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);

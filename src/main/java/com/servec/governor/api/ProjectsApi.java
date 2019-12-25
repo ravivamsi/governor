@@ -95,7 +95,8 @@ public interface ProjectsApi {
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Job.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}", method = RequestMethod.DELETE)
-	ResponseEntity<Job> deleteJobById(@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+	ResponseEntity<Job> deleteJobById(
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId);
@@ -124,7 +125,8 @@ public interface ProjectsApi {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK", response = Job.class, responseContainer = "List") })
 	@RequestMapping(value = "/projects/{projectId}/plans/{planId}/stages/{stageId}/jobs", method = RequestMethod.GET)
-	ResponseEntity<List<Job>> getJobs(@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+	ResponseEntity<List<Job>> getJobs(
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId);
 
@@ -273,7 +275,8 @@ public interface ProjectsApi {
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}", method = RequestMethod.PUT)
-	ResponseEntity<Job> updateJobById(@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
+	ResponseEntity<Job> updateJobById(
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,

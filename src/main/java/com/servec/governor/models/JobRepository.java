@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface JobRepository extends MongoRepository<Job, String>{
+public interface JobRepository extends MongoRepository<Job, String> {
 
 }

@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface PlanRepository extends MongoRepository<Plan, String>{
+public interface PlanRepository extends MongoRepository<Plan, String> {
 
 }

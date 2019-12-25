@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface StageRepository extends MongoRepository<Stage, String>{
+public interface StageRepository extends MongoRepository<Stage, String> {
 
 }
