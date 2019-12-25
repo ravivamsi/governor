@@ -16,17 +16,18 @@ $ java -jar target/governor-X.X.X-SNAPSHOT.jar -Dspring.profiles.active=prod
 
 ## To-Do
 
-- [] Upload File
-- [] Download File
-- [] Execution Logs asList
-- [] Workspace Operations
-- [] Folder Structure in Worker
-- [] Generic SFTP Implementation
-- [] Scheduler
-- [] Mongo Database
-- [] Application Properties
-- [] Swagger Updates
-- [] API Implementation
+[] Swagger Updates - In Progress
+[] Mongo Database - In Progress
+[] Application Properties - In Progress
+[] API Implementation - In Progress
+[] Upload File
+[] Download File
+[] Execution Logs asList 
+[] Workspace Operations
+[] Folder Structure in Worker
+[] Generic SFTP Implementation
+[] Scheduler
+
 
 ## Swagger
 
