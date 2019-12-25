@@ -1,13 +1,11 @@
 package com.servec.governor.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
-import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,14 +17,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mongodb.client.MongoCollection;
-import com.mongodb.client.MongoDatabase;
 import com.servec.governor.api.ProjectsApi;
-import com.servec.governor.commons.MongoConnector;
-import com.servec.governor.commons.MongoHelper;
 import com.servec.governor.models.Job;
 import com.servec.governor.models.Plan;
 import com.servec.governor.models.Project;
+import com.servec.governor.models.ProjectRepository;
 import com.servec.governor.models.Stage;
 import com.servec.governor.models.Task;
 
@@ -43,10 +38,14 @@ public class ProjectsApiController implements ProjectsApi {
 
 	private final HttpServletRequest request;
 
+	private final ProjectRepository projectRepository;
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public ProjectsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public ProjectsApiController(ObjectMapper objectMapper, HttpServletRequest request,
+			ProjectRepository projectRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.projectRepository = projectRepository;
 	}
 
 	public ResponseEntity<Job> addJob(@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
@@ -90,14 +89,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Project>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Project.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			return new ResponseEntity<Project>(projectRepository.save(body), HttpStatus.CREATED);
 		}
 
 		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
@@ -258,19 +250,23 @@ public class ProjectsApiController implements ProjectsApi {
 	public ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO
 //			Need to Test
-			
-			List<Project> projects = new ArrayList<Project>();
 
-			MongoDatabase governorDatabase = MongoConnector.getDatabaseByName("Governor");
+//			List<Project> projects = new ArrayList<Project>();
+//
+//			MongoDatabase governorDatabase = MongoConnector.getDatabaseByName("test");
+//			System.out.println(governorDatabase.getName());
+//			for (String name : governorDatabase.listCollectionNames()) {
+//			    System.out.println(name);
+//			}
+//			
+//			MongoCollection<Document> projectsCollection = governorDatabase.getCollection("Projects");
+//			System.out.println(projectsCollection.count());
+//			projects = MongoHelper.getAllProjectDocuments(projectsCollection);
 
-			MongoCollection<Document> projectsCollection = governorDatabase.getCollection("Projects");
-
-			projects = MongoHelper.getAllProjectDocuments(projectsCollection);
-
-			return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
+			return new ResponseEntity<List<Project>>(projectRepository.findAll(), HttpStatus.OK);
 		}
 
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);

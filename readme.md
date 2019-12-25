@@ -22,7 +22,7 @@ $ java -jar target/governor-X.X.X-SNAPSHOT.jar -Dspring.profiles.active=prod
 [] API Implementation - In Progress
 [] Upload File
 [] Download File
-[] Execution Logs asList 
+[] Execution Logs asList
 [] Workspace Operations
 [] Folder Structure in Worker
 [] Generic SFTP Implementation
@@ -34,3 +34,4 @@ $ java -jar target/governor-X.X.X-SNAPSHOT.jar -Dspring.profiles.active=prod
 Refer to swagger.yaml in following location.
 
 [Swagger](https://github.com/ravivamsi/governor/blob/master/swagger.yaml)
+[MongoBD Springboot](https://www.journaldev.com/18156/spring-boot-mongodb)

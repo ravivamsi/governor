@@ -44,12 +44,11 @@ public class MongoConnector {
 				+ "@servecdb-murck.azure.mongodb.net/test?retryWrites=true&w=majority");
 
 		mongoClient = new MongoClient(uri);
-		MongoDatabase database = mongoClient.getDatabase("databasename");
+
+		MongoDatabase database = mongoClient.getDatabase(databasename);
 
 		return database;
 	}
-	
-	
 
 	public static Boolean testConnection() {
 		MongoClientURI uri = new MongoClientURI("mongodb+srv://" + System.getProperty("spring.data.mongodb.username")
@@ -57,8 +56,8 @@ public class MongoConnector {
 				+ "@servecdb-murck.azure.mongodb.net/test?retryWrites=true&w=majority");
 
 		mongoClient = new MongoClient(uri);
-		MongoDatabase database = mongoClient.getDatabase("Worker");
 
+		MongoDatabase database = mongoClient.getDatabase("Worker");
 		if (database.getName().isEmpty()) {
 			return Boolean.FALSE;
 		} else {
