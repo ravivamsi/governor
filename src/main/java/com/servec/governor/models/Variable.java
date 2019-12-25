@@ -1,7 +1,6 @@
 package com.servec.governor.models;
 
 import java.util.Objects;
-import java.util.UUID;
 
 import org.springframework.validation.annotation.Validated;
 
@@ -17,7 +16,7 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class Variable {
 	@JsonProperty("id")
-	private UUID id = null;
+	private String id = null;
 
 	@JsonProperty("key")
 	private String key = null;
@@ -25,7 +24,7 @@ public class Variable {
 	@JsonProperty("value")
 	private String value = null;
 
-	public Variable id(UUID id) {
+	public Variable id(String id) {
 		this.id = id;
 		return this;
 	}
@@ -37,11 +36,11 @@ public class Variable {
 	 **/
 	@ApiModelProperty(value = "")
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(UUID id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

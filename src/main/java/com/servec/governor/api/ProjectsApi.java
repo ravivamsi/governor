@@ -6,7 +6,6 @@
 package com.servec.governor.api;
 
 import java.util.List;
-import java.util.UUID;
 
 import javax.validation.Valid;
 
@@ -178,7 +177,7 @@ public interface ProjectsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/projects/{projectId}", method = RequestMethod.DELETE)
 	ResponseEntity<Project> projectsProjectIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") UUID projectId);
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId);
 
 	@ApiOperation(value = "Retrieve Existing Project", nickname = "projectsProjectIdGet", notes = "", response = Project.class, tags = {
 			"project", })
@@ -186,7 +185,7 @@ public interface ProjectsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/projects/{projectId}", method = RequestMethod.GET)
 	ResponseEntity<Project> projectsProjectIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") UUID projectId);
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId);
 
 	@ApiOperation(value = "Delete existing Stage", nickname = "projectsProjectIdPlansPlanIdStagesStageIdDelete", notes = "", response = Stage.class, tags = {
 			"stage", })
@@ -265,7 +264,7 @@ public interface ProjectsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/projects/{projectId}", method = RequestMethod.PUT)
 	ResponseEntity<Project> projectsProjectIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body);
 
 	@ApiOperation(value = "Update existing job", nickname = "updateJobById", notes = "", response = Job.class, tags = {

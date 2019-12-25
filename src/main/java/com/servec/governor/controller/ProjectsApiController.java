@@ -3,7 +3,6 @@ package com.servec.governor.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -91,8 +90,6 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-
-			body.setId(UUID.randomUUID());
 			return new ResponseEntity<Project>(projectRepository.save(body), HttpStatus.CREATED);
 		}
 
@@ -298,21 +295,18 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Project> projectsProjectIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") UUID projectId) {
-
-//		TODO
-//		Test this before closing - Issue with retrieving
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
 
 		Project project = new Project();
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 
-			Optional<Project> optionalProject = projectRepository.findById(projectId.toString());
+			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
 			}
 
-			projectRepository.deleteById(projectId.toString());
+			projectRepository.deleteById(projectId);
 			return new ResponseEntity<Project>(project, HttpStatus.ACCEPTED);
 
 		}
@@ -321,13 +315,12 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Project> projectsProjectIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") UUID projectId) {
-//		TODO
-//		Test this before closing - Issue with retrieving
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
+
 		Project project = new Project();
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			Optional<Project> optionalProject = projectRepository.findById(projectId.toString());
+			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
 				return new ResponseEntity<Project>(project, HttpStatus.OK);
@@ -462,18 +455,28 @@ public class ProjectsApiController implements ProjectsApi {
 	}
 
 	public ResponseEntity<Project> projectsProjectIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("projectId") Long projectId,
+			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Project>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Project.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Project>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Project project = new Project();
+
+			Optional<Project> optionalProject = projectRepository.findById(projectId);
+			if (optionalProject.isPresent()) {
+				project = optionalProject.get();
 			}
+
+			project.setEnabled(body.isEnabled());
+			project.setName(body.getName());
+			project.setShortname(body.getShortname());
+			project.setPlans(body.getPlans());
+			project.setVariables(body.getVariables());
+
+			projectRepository.save(project);
+
+			return new ResponseEntity<Project>(project, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);

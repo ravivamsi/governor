@@ -32,7 +32,7 @@ public class HeartbeatApiController implements HeartbeatApi {
 
 		try {
 			return new ResponseEntity<Heartbeat>(objectMapper.readValue("{  \"pulse\" : \"ok\"}", Heartbeat.class),
-					HttpStatus.NOT_IMPLEMENTED);
+					HttpStatus.OK);
 		} catch (IOException e) {
 			log.error("Couldn't serialize response for content type application/json", e);
 			return new ResponseEntity<Heartbeat>(HttpStatus.INTERNAL_SERVER_ERROR);
