@@ -1697,6 +1697,8 @@ definitions:
         type: "string"
       imageversion:
         type: "string"
+      imageid:
+        type: "string"
       imagetag:
         type: "string"
   Trigger:
