@@ -38,6 +38,17 @@ public class MongoConnector {
 
 	}
 
+	public static MongoDatabase getDatabaseByName(String databasename) {
+		MongoClientURI uri = new MongoClientURI("mongodb+srv://" + System.getProperty("spring.data.mongodb.username")
+				+ ":" + System.getProperty("spring.data.mongodb.password")
+				+ "@servecdb-murck.azure.mongodb.net/test?retryWrites=true&w=majority");
+
+		mongoClient = new MongoClient(uri);
+		MongoDatabase database = mongoClient.getDatabase("databasename");
+
+		return database;
+	}
+
 	public static Boolean testConnection() {
 		MongoClientURI uri = new MongoClientURI("mongodb+srv://" + System.getProperty("spring.data.mongodb.username")
 				+ ":" + System.getProperty("spring.data.mongodb.password")

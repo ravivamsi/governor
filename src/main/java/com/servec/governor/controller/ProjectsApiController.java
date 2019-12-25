@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.servec.governor.api.ProjectsApi;
+import com.servec.governor.commons.MongoConnector;
+import com.servec.governor.commons.MongoHelper;
 import com.servec.governor.models.Job;
 import com.servec.governor.models.Plan;
 import com.servec.governor.models.Project;
@@ -248,14 +255,18 @@ public class ProjectsApiController implements ProjectsApi {
 		return new ResponseEntity<List<Plan>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<List<Project>> getProjects() {
+	public ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			List<Project> projects = new ArrayList<Project>();
 
-//			TODO
+			MongoDatabase governorDatabase = MongoConnector.getDatabaseByName("Governor");
 
-			return new ResponseEntity<List<Project>>(projects, HttpStatus.NOT_IMPLEMENTED);
+			MongoCollection<Document> projectsCollection = governorDatabase.getCollection("Projects");
+
+			projects = MongoHelper.getAllProjectDocuments(projectsCollection);
+
+			return new ResponseEntity<List<Project>>(projects, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);

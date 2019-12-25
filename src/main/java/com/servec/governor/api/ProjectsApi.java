@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.servec.governor.models.BadRequest;
 import com.servec.governor.models.Job;
 import com.servec.governor.models.Plan;
@@ -147,7 +149,7 @@ public interface ProjectsApi {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK", response = Project.class, responseContainer = "List") })
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
-	ResponseEntity<List<Project>> getProjects();
+	ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException;
 
 	@ApiOperation(value = "Retrieve All Stages", nickname = "getStages", notes = "", response = Stage.class, responseContainer = "List", tags = {
 			"stage", })
