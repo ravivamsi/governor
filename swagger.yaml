@@ -3,13 +3,13 @@ info:
   description: "Server Definition for the Governor. "
   version: "1.0.0"
   title: "Governor"
-  termsOfService: "http://servec.com/terms/"
+  termsOfService: "http://cdomain.com/terms/"
   contact:
     email: "ivamsiravi@gmail.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
-host: "servec.com"
+host: "cdomain.com"
 basePath: "/v2"
 tags:
 - name: "vitals"

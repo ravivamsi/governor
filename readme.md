@@ -42,6 +42,6 @@ Refer to this Webpage for Springboot Implementation with Mongo DB
 
 ## Domain
 
-Own this Domain
+Hosting Domain 
 
 [CGovern](www.cgovern.com)
