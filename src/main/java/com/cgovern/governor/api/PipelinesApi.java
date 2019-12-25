@@ -52,7 +52,7 @@ public interface PipelinesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/pipelines/{pipelineId}", method = RequestMethod.DELETE)
 	ResponseEntity<Pipeline> pipelinesPipelineIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId);
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId);
 
 	@ApiOperation(value = "Retrieve Existing Pipeline", nickname = "pipelinesPipelineIdGet", notes = "", response = Pipeline.class, tags = {
 			"pipeline", })
@@ -60,7 +60,7 @@ public interface PipelinesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/pipelines/{pipelineId}", method = RequestMethod.GET)
 	ResponseEntity<Pipeline> pipelinesPipelineIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId);
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId);
 
 	@ApiOperation(value = "Update existing Pipeline", nickname = "pipelinesPipelineIdPut", notes = "", response = Pipeline.class, tags = {
 			"pipeline", })
@@ -69,7 +69,7 @@ public interface PipelinesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/pipelines/{pipelineId}", method = RequestMethod.PUT)
 	ResponseEntity<Pipeline> pipelinesPipelineIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId,
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId,
 			@ApiParam(value = "Pipeline object", required = true) @Valid @RequestBody Pipeline body);
 
 }

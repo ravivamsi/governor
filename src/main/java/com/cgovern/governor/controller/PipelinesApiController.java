@@ -1,7 +1,7 @@
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.PipelinesApi;
 import com.cgovern.governor.models.Pipeline;
+import com.cgovern.governor.models.PipelineRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
@@ -31,24 +32,23 @@ public class PipelinesApiController implements PipelinesApi {
 
 	private final HttpServletRequest request;
 
+	private final PipelineRepository pipelineRepository;
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public PipelinesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public PipelinesApiController(ObjectMapper objectMapper, HttpServletRequest request,
+			PipelineRepository pipelineRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.pipelineRepository = pipelineRepository;
 	}
 
 	public ResponseEntity<Pipeline> addPipeline(
 			@ApiParam(value = "Pipeline object", required = true) @Valid @RequestBody Pipeline body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Pipeline>(objectMapper.readValue(
-						"{  \"components\" : [ {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  }, {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}",
-						Pipeline.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Pipeline>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+
+			return new ResponseEntity<Pipeline>(pipelineRepository.save(body), HttpStatus.CREATED);
+
 		}
 
 		return new ResponseEntity<Pipeline>(HttpStatus.NOT_IMPLEMENTED);
@@ -57,66 +57,68 @@ public class PipelinesApiController implements PipelinesApi {
 	public ResponseEntity<List<Pipeline>> getPipelines() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<List<Pipeline>>(objectMapper.readValue(
-						"[ {  \"components\" : [ {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  }, {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}, {  \"components\" : [ {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  }, {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Pipeline>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+
+			return new ResponseEntity<List<Pipeline>>(pipelineRepository.findAll(), HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<List<Pipeline>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Pipeline> pipelinesPipelineIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId) {
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId) {
 		String accept = request.getHeader("Accept");
+		Pipeline pipeline = new Pipeline();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Pipeline>(objectMapper.readValue(
-						"{  \"components\" : [ {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  }, {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}",
-						Pipeline.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Pipeline>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
+			if (optionalPipeline.isPresent()) {
+				pipeline = optionalPipeline.get();
 			}
+			pipelineRepository.deleteById(pipelineId);
+			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Pipeline>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Pipeline> pipelinesPipelineIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId) {
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId) {
 		String accept = request.getHeader("Accept");
+		Pipeline pipeline = new Pipeline();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Pipeline>(objectMapper.readValue(
-						"{  \"components\" : [ {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  }, {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}",
-						Pipeline.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Pipeline>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
+			if (optionalPipeline.isPresent()) {
+				pipeline = optionalPipeline.get();
 			}
+
+			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<Pipeline>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Pipeline> pipelinesPipelineIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId,
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId,
 			@ApiParam(value = "Pipeline object", required = true) @Valid @RequestBody Pipeline body) {
 		String accept = request.getHeader("Accept");
+		Pipeline pipeline = new Pipeline();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Pipeline>(objectMapper.readValue(
-						"{  \"components\" : [ {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  }, {    \"sequence\" : 1,    \"id\" : 6,    \"type\" : \"plan\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}",
-						Pipeline.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Pipeline>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
+			if (optionalPipeline.isPresent()) {
+				pipeline = optionalPipeline.get();
 			}
+
+			pipeline.setName(body.getName());
+			pipeline.setEnabled(body.isEnabled());
+			pipeline.setComponents(body.getComponents());
+
+			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<Pipeline>(HttpStatus.NOT_IMPLEMENTED);

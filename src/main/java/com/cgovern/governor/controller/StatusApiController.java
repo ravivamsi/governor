@@ -16,8 +16,8 @@ import com.cgovern.governor.api.StatusApi;
 import com.cgovern.governor.commons.Evaluator;
 import com.cgovern.governor.commons.MongoConnector;
 import com.cgovern.governor.models.Dependency;
-import com.cgovern.governor.models.Status;
 import com.cgovern.governor.models.Dependency.StatusEnum;
+import com.cgovern.governor.models.Status;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-20T05:19:56.685Z")
