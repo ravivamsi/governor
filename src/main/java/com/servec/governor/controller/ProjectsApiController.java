@@ -258,6 +258,10 @@ public class ProjectsApiController implements ProjectsApi {
 	public ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+			
+//			TODO
+//			Need to Test
+			
 			List<Project> projects = new ArrayList<Project>();
 
 			MongoDatabase governorDatabase = MongoConnector.getDatabaseByName("Governor");

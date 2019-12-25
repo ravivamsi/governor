@@ -48,6 +48,8 @@ public class MongoConnector {
 
 		return database;
 	}
+	
+	
 
 	public static Boolean testConnection() {
 		MongoClientURI uri = new MongoClientURI("mongodb+srv://" + System.getProperty("spring.data.mongodb.username")

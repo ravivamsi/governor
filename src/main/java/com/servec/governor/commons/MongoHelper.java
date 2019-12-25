@@ -29,8 +29,6 @@ public class MongoHelper {
 		MongoCursor<Document> cursor = fi.iterator();
 		try {
 			while (cursor.hasNext()) {
-//                cursor.next().toJson()
-//            	TODO
 				ObjectMapper mapper = new ObjectMapper();
 				Project project = mapper.readValue(cursor.next().toJson(), Project.class);
 				projectsList.add(project);

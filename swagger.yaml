@@ -1270,7 +1270,6 @@ paths:
       description: "This can only be done by the logged in user."
       operationId: "createUser"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - in: "body"
@@ -1338,7 +1337,6 @@ paths:
       description: ""
       operationId: "getUserByName"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
@@ -1362,7 +1360,6 @@ paths:
       description: "This can only be done by the logged in user."
       operationId: "updateUser"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
@@ -1388,7 +1385,6 @@ paths:
       description: "This can only be done by the logged in user."
       operationId: "deleteUser"
       produces:
-      - "application/xml"
       - "application/json"
       parameters:
       - name: "username"
