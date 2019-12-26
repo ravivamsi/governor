@@ -17,14 +17,19 @@ public class Sequence {
 	public static Long getLastUsed(List<Index> indexList) {
 
 		Long lastUsedSequence = Long.MIN_VALUE;
+		
+		if(indexList == null) {
+			lastUsedSequence = 0l;
+		}else {
+			for (Index currentIndex : indexList) {
 
-		for (Index currentIndex : indexList) {
+				if (	lastUsedSequence < currentIndex.getSequence() ) {
+					lastUsedSequence = currentIndex.getSequence();
+				}
 
-			if (lastUsedSequence < currentIndex.getSequence()) {
-				lastUsedSequence = currentIndex.getSequence();
 			}
-
 		}
+		
 
 		return lastUsedSequence;
 	}

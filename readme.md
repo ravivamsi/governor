@@ -46,7 +46,7 @@ Hosting Domain
 
 [CGovern](www.cgovern.com)
 
-## Rules
+## Notes
 
 ### Variables
 1. Variables can be at root, project, plan, stage, job and task levels.
@@ -54,7 +54,7 @@ Hosting Domain
 3. Variables can be refer in the values as below.
 
 ```
- ${this.level.variablekey}
+ ${this.<level>.<variablekey>}
 ```
 
 

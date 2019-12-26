@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cgovern.governor.models.BadRequest;
 import com.cgovern.governor.models.Pipeline;
+import com.cgovern.governor.models.Plan;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,12 +28,23 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "{action}", description = "the {action} API")
 public interface ActionApi {
 
-	@ApiOperation(value = "Action on a pipeline", nickname = "actionPipelineIdPost", notes = "", tags = { "action", })
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Created"),
-			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class) })
-	@RequestMapping(value = "/{action}/{pipelineId}", produces = { "application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Void> actionPipelineIdPost(@ApiParam(value = "", required = true) @Valid @RequestBody Pipeline body,
-			@ApiParam(value = "", required = true) @PathVariable("pipelineId") Long pipelineId,
-			@ApiParam(value = "", required = true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action);
+    @ApiOperation(value = "Action on a pipeline", nickname = "actionPipelinePipelineIdPost", notes = "", tags={ "action", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class) })
+    @RequestMapping(value = "/{action}/pipeline/{pipelineId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Void> actionPipelinePipelineIdPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pipeline body,@ApiParam(value = "",required=true) @PathVariable("pipelineId") String pipelineId,@ApiParam(value = "",required=true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action);
+
+
+    @ApiOperation(value = "Action on a pipeline", nickname = "actionPlanPlanIdPost", notes = "", tags={ "action", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class) })
+    @RequestMapping(value = "/{action}/plan/{planId}",
+        produces = { "application/json" }, 
+        method = RequestMethod.POST)
+    ResponseEntity<Void> actionPlanPlanIdPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Plan body,@ApiParam(value = "",required=true) @PathVariable("planId") String planId,@ApiParam(value = "",required=true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action);
 
 }

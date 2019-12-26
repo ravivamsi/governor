@@ -1269,7 +1269,7 @@ paths:
           schema:
             type: "array"
             items:
-              $ref: "#/definitions/Worker"
+              $ref: "#/definitions/DImage"
   /workers/{workerId}:
     put:
       tags:
@@ -1636,7 +1636,7 @@ paths:
             $ref: "#/definitions/Pipeline"
         404: 
           description: "Not Found"
-  /{action}/{pipelineId}:
+  /{action}/pipeline/{pipelineId}:
     post:
       tags:
       - "action"
@@ -1650,6 +1650,38 @@ paths:
         schema: 
           $ref: "#/definitions/Pipeline"
       - name: "pipelineId"
+        in: "path"
+        required: true
+        type: "integer"
+        format: "int64"
+      - name: "action"
+        in: "path"
+        required: true
+        type: "string"
+        enum:
+        - "run"
+        - "stop"
+      responses:
+        201: 
+          description: "Created"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+  /{action}/plan/{planId}:
+    post:
+      tags:
+      - "action"
+      summary: "Action on a pipeline"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "body"
+        in: "body"
+        required: true
+        schema: 
+          $ref: "#/definitions/Plan"
+      - name: "planId"
         in: "path"
         required: true
         type: "integer"

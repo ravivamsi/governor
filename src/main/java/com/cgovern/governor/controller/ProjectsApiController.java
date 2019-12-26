@@ -87,10 +87,10 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
-//			Test - Yet to Complete
+
 			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
+			
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -102,7 +102,10 @@ public class ProjectsApiController implements ProjectsApi {
 
 			planIndex.setId(plan.getId());
 			planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
-
+//			TODO
+//			Not Complete - Issue during Testing
+			planIndexList.add(planIndex);
+			project.setPlans(planIndexList);
 			projectRepository.save(project);
 
 			return new ResponseEntity<Plan>(plan, HttpStatus.CREATED);
