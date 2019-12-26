@@ -102,9 +102,14 @@ public class ProjectsApiController implements ProjectsApi {
 
 			planIndex.setId(plan.getId());
 			planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
-//			TODO
 //			Not Complete - Issue during Testing
-			planIndexList.add(planIndex);
+			if(planIndexList == null) {
+				planIndexList = new ArrayList<Index>();
+				planIndexList.add(planIndex);
+			}else {
+				planIndexList.add(planIndex);
+			}
+			
 			project.setPlans(planIndexList);
 			projectRepository.save(project);
 
@@ -221,14 +226,41 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Plan>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"type\" : \"build\",  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Plan.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Plan>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
+			Project project = new Project();
+			List<Index> planIndexList = new ArrayList<Index>();
+			
+			Optional<Project> optionalProject = projectRepository.findById(projectId);
+			if (optionalProject.isPresent()) {
+				project = optionalProject.get();
 			}
+			planIndexList = project.getPlans();
+			
+			for(Index currentIndex : planIndexList) {
+				if(currentIndex.getId().equalsIgnoreCase(planId)) {
+					planIndexList.remove(currentIndex);
+				}
+			}
+			Plan plan = new Plan();
+			
+			Optional<Plan> optionalPlan = planRepository.findById(planId);
+			if (optionalPlan.isPresent()) {
+				plan = optionalPlan.get();
+			}
+			
+			if(planIndexList == null) {
+				planIndexList = new ArrayList<Index>();
+				project.setPlans(planIndexList);
+				projectRepository.save(project);
+			}else {
+				project.setPlans(planIndexList);
+				projectRepository.save(project);
+			}
+			
+			planRepository.deleteById(planId);
+			
+			return new ResponseEntity<Plan>(plan, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -277,15 +309,42 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
+		Plan plan = new Plan();
+		Project project = new Project();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Plan>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"type\" : \"build\",  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Plan.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Plan>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Optional<Project> optionalProject = projectRepository.findById(projectId);
+			
+			if(optionalProject.isPresent()) {
+				project = optionalProject.get();
 			}
+
+			Boolean isPlanIdexPresent = false;
+			if(project.getPlans()!=null) {
+				
+				for(Index currentIndex: project.getPlans()) {
+					if( currentIndex.getId().equalsIgnoreCase(planId) ) {
+						isPlanIdexPresent = true;
+					}
+					
+				}
+				
+				if(isPlanIdexPresent) {
+					Optional<Plan> optionalPlan = planRepository.findById(planId);
+					if (optionalPlan.isPresent()) {
+						plan = optionalPlan.get();
+					}
+					
+					return new ResponseEntity<Plan>(plan, HttpStatus.OK);
+				}else {
+					return new ResponseEntity<Plan>(HttpStatus.NOT_FOUND);	
+				}
+			
+			}else {
+				return new ResponseEntity<Plan>(HttpStatus.NOT_FOUND);
+			}
+			
+			
+			
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -295,14 +354,9 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<List<Plan>>(objectMapper.readValue(
-						"[ {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"type\" : \"build\",  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"type\" : \"build\",  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Plan>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			
+				return new ResponseEntity<List<Plan>>(planRepository.findAll(), HttpStatus.NOT_IMPLEMENTED);
+			
 		}
 
 		return new ResponseEntity<List<Plan>>(HttpStatus.NOT_IMPLEMENTED);
