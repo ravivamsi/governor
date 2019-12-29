@@ -17,9 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import com.jcraft.jsch.Channel;
 import com.jcraft.jsch.ChannelExec;
+import com.jcraft.jsch.ChannelSftp;
 import com.jcraft.jsch.JSch;
 import com.jcraft.jsch.JSchException;
 import com.jcraft.jsch.Session;
+import com.jcraft.jsch.SftpException;
 
 public class Executer {
 
@@ -123,12 +125,45 @@ public class Executer {
 
 	}
 
-	public static void uploadFromGovernor(String hostname, String username, String password, String filepath) {
+	public static void uploadFromGovernor(String hostname, String username, String password, String localfilepath,
+			String remoteDirectory, String filenameOnRemote) throws JSchException, SftpException {
 //		TODO
+		java.util.Properties config = new java.util.Properties();
+		config.put("StrictHostKeyChecking", "no");
+		JSch jsch = new JSch();
+//	    jsch.setKnownHosts("/Users/john/.ssh/known_hosts");
+		Session jschSession = jsch.getSession(username, hostname);
+		jschSession.setPassword(password);
+		jschSession.setConfig(config);
+		jschSession.connect();
+
+		ChannelSftp channelSftp = (ChannelSftp) jschSession.openChannel("sftp");
+		channelSftp.connect();
+
+		channelSftp.put(localfilepath, remoteDirectory + filenameOnRemote);
+
+		channelSftp.exit();
 	}
 
-	public static void downloadToGovernor(String hostname, String username, String password, String filepath) {
+	public static void downloadToGovernor(String hostname, String username, String password, String remotefilepath,
+			String localDirectory, String filenameOnLocal) throws JSchException, SftpException {
 //		TODO
+
+		java.util.Properties config = new java.util.Properties();
+		config.put("StrictHostKeyChecking", "no");
+		JSch jsch = new JSch();
+//	    jsch.setKnownHosts("/Users/john/.ssh/known_hosts");
+		Session jschSession = jsch.getSession(username, hostname);
+		jschSession.setPassword(password);
+		jschSession.setConfig(config);
+		jschSession.connect();
+
+		ChannelSftp channelSftp = (ChannelSftp) jschSession.openChannel("sftp");
+		channelSftp.connect();
+
+		channelSftp.get(remotefilepath, localDirectory + filenameOnLocal);
+
+		channelSftp.exit();
 	}
 
 }

@@ -1,7 +1,5 @@
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -37,14 +35,14 @@ public class HealthApiController implements HealthApi {
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
 //			Need a way to get the Build Number, BuildTime and Version set during the build time
-			
+
 			health.setAppname("CGovern");
 			health.setBuildnumber("3");
 			health.setBuildtime(String.valueOf(System.currentTimeMillis()));
 			health.setReleasetime(String.valueOf(System.currentTimeMillis()));
 			health.setVersion("0.0.3");
-			
-			return new ResponseEntity<Health>(health,HttpStatus.OK);
+
+			return new ResponseEntity<Health>(health, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<Health>(HttpStatus.NOT_IMPLEMENTED);
