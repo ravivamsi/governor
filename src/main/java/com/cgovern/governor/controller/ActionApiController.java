@@ -25,42 +25,47 @@ import io.swagger.annotations.ApiParam;
 @Controller
 public class ActionApiController implements ActionApi {
 
-    private static final Logger log = LoggerFactory.getLogger(ActionApiController.class);
+	private static final Logger log = LoggerFactory.getLogger(ActionApiController.class);
 
-    private final ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 
-    private final HttpServletRequest request;
-    
-    private final PipelineRepository pipelineRepository;
-    
-    private final PlanRepository planRepository;
+	private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    public ActionApiController(ObjectMapper objectMapper, HttpServletRequest request, PipelineRepository pipelineRepository, PlanRepository planRepository) {
-        this.objectMapper = objectMapper;
-        this.request = request;
-        this.pipelineRepository = pipelineRepository;
-        this.planRepository = planRepository;
-    }
+	private final PipelineRepository pipelineRepository;
 
-    public ResponseEntity<Void> actionPipelinePipelineIdPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Pipeline body,@ApiParam(value = "",required=true) @PathVariable("pipelineId") String pipelineId,@ApiParam(value = "",required=true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action) {
-        String accept = request.getHeader("Accept");
-        
+	private final PlanRepository planRepository;
+
+	@org.springframework.beans.factory.annotation.Autowired
+	public ActionApiController(ObjectMapper objectMapper, HttpServletRequest request,
+			PipelineRepository pipelineRepository, PlanRepository planRepository) {
+		this.objectMapper = objectMapper;
+		this.request = request;
+		this.pipelineRepository = pipelineRepository;
+		this.planRepository = planRepository;
+	}
+
+	public ResponseEntity<Void> actionPipelinePipelineIdPost(
+			@ApiParam(value = "", required = true) @Valid @RequestBody Pipeline body,
+			@ApiParam(value = "", required = true) @PathVariable("pipelineId") String pipelineId,
+			@ApiParam(value = "", required = true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action) {
+		String accept = request.getHeader("Accept");
+
 //        TODO
-        
-        
-        
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
 
-    public ResponseEntity<Void> actionPlanPlanIdPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Plan body,@ApiParam(value = "",required=true) @PathVariable("planId") String planId,@ApiParam(value = "",required=true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action) {
-        String accept = request.getHeader("Accept");
-        
-        Plan plan = new Plan();
-        
+		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+	}
+
+	public ResponseEntity<Void> actionPlanPlanIdPost(
+			@ApiParam(value = "", required = true) @Valid @RequestBody Plan body,
+			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+			@ApiParam(value = "", required = true, allowableValues = "\"run\", \"stop\"") @PathVariable("action") String action) {
+		String accept = request.getHeader("Accept");
+
+		Plan plan = new Plan();
+
 //      TODO
-        
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
+
+		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
 }

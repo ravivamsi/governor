@@ -22,211 +22,209 @@ import io.swagger.annotations.ApiModelProperty;
 
 @Document
 public class Project {
-		@Id
-	  @JsonProperty("id")
-	  private String id = null;
+	@Id
+	@JsonProperty("id")
+	private String id = null;
 
-	  @JsonProperty("name")
-	  private String name = null;
+	@JsonProperty("name")
+	private String name = null;
 
-	  @JsonProperty("shortname")
-	  private String shortname = null;
+	@JsonProperty("shortname")
+	private String shortname = null;
 
-	  @JsonProperty("plans")
-	  @Valid
-	  private List<Index> plans = null;
+	@JsonProperty("plans")
+	@Valid
+	private List<Index> plans = null;
 
-	  @JsonProperty("variables")
-	  @Valid
-	  private List<Variable> variables = null;
+	@JsonProperty("variables")
+	@Valid
+	private List<Variable> variables = null;
 
-	  @JsonProperty("enabled")
-	  private Boolean enabled = null;
+	@JsonProperty("enabled")
+	private Boolean enabled = null;
 
-	  public Project id(String id) {
-	    this.id = id;
-	    return this;
-	  }
+	public Project id(String id) {
+		this.id = id;
+		return this;
+	}
 
-	  /**
-	   * Get id
-	   * @return id
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(value = "")
 
+	public String getId() {
+		return id;
+	}
 
-	  public String getId() {
-	    return id;
-	  }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-	  public void setId(String id) {
-	    this.id = id;
-	  }
+	public Project name(String name) {
+		this.name = name;
+		return this;
+	}
 
-	  public Project name(String name) {
-	    this.name = name;
-	    return this;
-	  }
+	/**
+	 * Get name
+	 * 
+	 * @return name
+	 **/
+	@ApiModelProperty(value = "")
 
-	  /**
-	   * Get name
-	   * @return name
-	  **/
-	  @ApiModelProperty(value = "")
+	public String getName() {
+		return name;
+	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
 
-	  public String getName() {
-	    return name;
-	  }
+	public Project shortname(String shortname) {
+		this.shortname = shortname;
+		return this;
+	}
 
-	  public void setName(String name) {
-	    this.name = name;
-	  }
+	/**
+	 * Get shortname
+	 * 
+	 * @return shortname
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Project shortname(String shortname) {
-	    this.shortname = shortname;
-	    return this;
-	  }
+	public String getShortname() {
+		return shortname;
+	}
 
-	  /**
-	   * Get shortname
-	   * @return shortname
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setShortname(String shortname) {
+		this.shortname = shortname;
+	}
 
+	public Project plans(List<Index> plans) {
+		this.plans = plans;
+		return this;
+	}
 
-	  public String getShortname() {
-	    return shortname;
-	  }
+	public Project addPlansItem(Index plansItem) {
+		if (this.plans == null) {
+			this.plans = new ArrayList<Index>();
+		}
+		this.plans.add(plansItem);
+		return this;
+	}
 
-	  public void setShortname(String shortname) {
-	    this.shortname = shortname;
-	  }
+	/**
+	 * Get plans
+	 * 
+	 * @return plans
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Project plans(List<Index> plans) {
-	    this.plans = plans;
-	    return this;
-	  }
+	@Valid
 
-	  public Project addPlansItem(Index plansItem) {
-	    if (this.plans == null) {
-	      this.plans = new ArrayList<Index>();
-	    }
-	    this.plans.add(plansItem);
-	    return this;
-	  }
+	public List<Index> getPlans() {
+		return plans;
+	}
 
-	  /**
-	   * Get plans
-	   * @return plans
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setPlans(List<Index> plans) {
+		this.plans = plans;
+	}
 
-	  @Valid
+	public Project variables(List<Variable> variables) {
+		this.variables = variables;
+		return this;
+	}
 
-	  public List<Index> getPlans() {
-	    return plans;
-	  }
+	public Project addVariablesItem(Variable variablesItem) {
+		if (this.variables == null) {
+			this.variables = new ArrayList<Variable>();
+		}
+		this.variables.add(variablesItem);
+		return this;
+	}
 
-	  public void setPlans(List<Index> plans) {
-	    this.plans = plans;
-	  }
+	/**
+	 * Get variables
+	 * 
+	 * @return variables
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Project variables(List<Variable> variables) {
-	    this.variables = variables;
-	    return this;
-	  }
+	@Valid
 
-	  public Project addVariablesItem(Variable variablesItem) {
-	    if (this.variables == null) {
-	      this.variables = new ArrayList<Variable>();
-	    }
-	    this.variables.add(variablesItem);
-	    return this;
-	  }
+	public List<Variable> getVariables() {
+		return variables;
+	}
 
-	  /**
-	   * Get variables
-	   * @return variables
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setVariables(List<Variable> variables) {
+		this.variables = variables;
+	}
 
-	  @Valid
+	public Project enabled(Boolean enabled) {
+		this.enabled = enabled;
+		return this;
+	}
 
-	  public List<Variable> getVariables() {
-	    return variables;
-	  }
+	/**
+	 * Get enabled
+	 * 
+	 * @return enabled
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setVariables(List<Variable> variables) {
-	    this.variables = variables;
-	  }
+	public Boolean isEnabled() {
+		return enabled;
+	}
 
-	  public Project enabled(Boolean enabled) {
-	    this.enabled = enabled;
-	    return this;
-	  }
+	public void setEnabled(Boolean enabled) {
+		this.enabled = enabled;
+	}
 
-	  /**
-	   * Get enabled
-	   * @return enabled
-	  **/
-	  @ApiModelProperty(value = "")
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Project project = (Project) o;
+		return Objects.equals(this.id, project.id) && Objects.equals(this.name, project.name)
+				&& Objects.equals(this.shortname, project.shortname) && Objects.equals(this.plans, project.plans)
+				&& Objects.equals(this.variables, project.variables) && Objects.equals(this.enabled, project.enabled);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, name, shortname, plans, variables, enabled);
+	}
 
-	  public Boolean isEnabled() {
-	    return enabled;
-	  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Project {\n");
 
-	  public void setEnabled(Boolean enabled) {
-	    this.enabled = enabled;
-	  }
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    name: ").append(toIndentedString(name)).append("\n");
+		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+		sb.append("    plans: ").append(toIndentedString(plans)).append("\n");
+		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
+		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-
-	  @Override
-	  public boolean equals(java.lang.Object o) {
-	    if (this == o) {
-	      return true;
-	    }
-	    if (o == null || getClass() != o.getClass()) {
-	      return false;
-	    }
-	    Project project = (Project) o;
-	    return Objects.equals(this.id, project.id) &&
-	        Objects.equals(this.name, project.name) &&
-	        Objects.equals(this.shortname, project.shortname) &&
-	        Objects.equals(this.plans, project.plans) &&
-	        Objects.equals(this.variables, project.variables) &&
-	        Objects.equals(this.enabled, project.enabled);
-	  }
-
-	  @Override
-	  public int hashCode() {
-	    return Objects.hash(id, name, shortname, plans, variables, enabled);
-	  }
-
-	  @Override
-	  public String toString() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("class Project {\n");
-	    
-	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-	    sb.append("    plans: ").append(toIndentedString(plans)).append("\n");
-	    sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
-	    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-	    sb.append("}");
-	    return sb.toString();
-	  }
-
-	  /**
-	   * Convert the given object to string with each line indented by 4 spaces
-	   * (except the first line).
-	   */
-	  private String toIndentedString(java.lang.Object o) {
-	    if (o == null) {
-	      return "null";
-	    }
-	    return o.toString().replace("\n", "\n    ");
-	  }
-	  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
+}

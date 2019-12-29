@@ -23,54 +23,51 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
+
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-25T23:34:55.664Z")
 
 @Api(value = "workers", description = "the workers API")
 public interface WorkersApi {
 
-    @ApiOperation(value = "Retrieve All Workers", nickname = "getWorkers", notes = "", response = Worker.class, responseContainer = "List", tags={ "worker", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Worker.class, responseContainer = "List") })
-    @RequestMapping(value = "/workers",
-        method = RequestMethod.GET)
-    ResponseEntity<List<Worker>> getWorkers();
+	@ApiOperation(value = "Retrieve All Workers", nickname = "getWorkers", notes = "", response = Worker.class, responseContainer = "List", tags = {
+			"worker", })
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "OK", response = Worker.class, responseContainer = "List") })
+	@RequestMapping(value = "/workers", method = RequestMethod.GET)
+	ResponseEntity<List<Worker>> getWorkers();
 
+	@ApiOperation(value = "Add a Worker", nickname = "workersPost", notes = "", response = Worker.class, tags = {
+			"worker", })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Worker.class),
+			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
+			@ApiResponse(code = 409, message = "Conflict") })
+	@RequestMapping(value = "/workers", method = RequestMethod.POST)
+	ResponseEntity<Worker> workersPost(@ApiParam(value = "", required = true) @Valid @RequestBody Worker body);
 
-    @ApiOperation(value = "Add a Worker", nickname = "workersPost", notes = "", response = Worker.class, tags={ "worker", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Worker.class),
-        @ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
-        @ApiResponse(code = 409, message = "Conflict") })
-    @RequestMapping(value = "/workers",
-        method = RequestMethod.POST)
-    ResponseEntity<Worker> workersPost(@ApiParam(value = "" ,required=true )  @Valid @RequestBody Worker body);
+	@ApiOperation(value = "Delete existing Worker", nickname = "workersWorkerIdDelete", notes = "", response = Worker.class, tags = {
+			"worker", })
+	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Worker.class),
+			@ApiResponse(code = 404, message = "Not Found") })
+	@RequestMapping(value = "/workers/{workerId}", method = RequestMethod.DELETE)
+	ResponseEntity<Worker> workersWorkerIdDelete(
+			@ApiParam(value = "", required = true) @PathVariable("workerId") String workerId);
 
+	@ApiOperation(value = "Retrieve Existing Worker", nickname = "workersWorkerIdGet", notes = "", response = Worker.class, tags = {
+			"worker", })
+	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Worker.class),
+			@ApiResponse(code = 404, message = "Not Found") })
+	@RequestMapping(value = "/workers/{workerId}", method = RequestMethod.GET)
+	ResponseEntity<Worker> workersWorkerIdGet(
+			@ApiParam(value = "", required = true) @PathVariable("workerId") String workerId);
 
-    @ApiOperation(value = "Delete existing Worker", nickname = "workersWorkerIdDelete", notes = "", response = Worker.class, tags={ "worker", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "No Content", response = Worker.class),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/workers/{workerId}",
-        method = RequestMethod.DELETE)
-    ResponseEntity<Worker> workersWorkerIdDelete(@ApiParam(value = "",required=true) @PathVariable("workerId") String workerId);
-
-
-    @ApiOperation(value = "Retrieve Existing Worker", nickname = "workersWorkerIdGet", notes = "", response = Worker.class, tags={ "worker", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = Worker.class),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/workers/{workerId}",
-        method = RequestMethod.GET)
-    ResponseEntity<Worker> workersWorkerIdGet(@ApiParam(value = "",required=true) @PathVariable("workerId") String workerId);
-
-
-    @ApiOperation(value = "Update existing Worker", nickname = "workersWorkerIdPut", notes = "", response = Worker.class, tags={ "worker", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 204, message = "No Content", response = Worker.class),
-        @ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/workers/{workerId}",
-        method = RequestMethod.PUT)
-    ResponseEntity<Worker> workersWorkerIdPut(@ApiParam(value = "",required=true) @PathVariable("workerId") String workerId,@ApiParam(value = "Worker object" ,required=true )  @Valid @RequestBody Worker body);
+	@ApiOperation(value = "Update existing Worker", nickname = "workersWorkerIdPut", notes = "", response = Worker.class, tags = {
+			"worker", })
+	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Worker.class),
+			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
+			@ApiResponse(code = 404, message = "Not Found") })
+	@RequestMapping(value = "/workers/{workerId}", method = RequestMethod.PUT)
+	ResponseEntity<Worker> workersWorkerIdPut(
+			@ApiParam(value = "", required = true) @PathVariable("workerId") String workerId,
+			@ApiParam(value = "Worker object", required = true) @Valid @RequestBody Worker body);
 
 }

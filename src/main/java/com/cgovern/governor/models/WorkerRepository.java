@@ -9,6 +9,6 @@ import org.springframework.data.mongodb.repository.MongoRepository;
  * @author vamsiravi
  *
  */
-public interface WorkerRepository  extends MongoRepository<Worker, String>{
+public interface WorkerRepository extends MongoRepository<Worker, String> {
 
 }

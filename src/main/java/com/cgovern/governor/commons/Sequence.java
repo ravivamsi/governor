@@ -17,23 +17,22 @@ public class Sequence {
 	public static Long getLastUsed(List<Index> indexList) {
 
 		Long lastUsedSequence = Long.MIN_VALUE;
-		
-		if(indexList == null) {
+
+		if (indexList == null) {
 			lastUsedSequence = 0l;
-		}else {
+		} else {
 			for (Index currentIndex : indexList) {
 
-				if (	lastUsedSequence < currentIndex.getSequence() ) {
+				if (lastUsedSequence < currentIndex.getSequence()) {
 					lastUsedSequence = currentIndex.getSequence();
 				}
 
 			}
 		}
-		
 
 		return lastUsedSequence;
 	}
-	
+
 	public static Long getLastUsedWorkerSequence(List<Worker> workerList) {
 
 		Long lastUsedSequence = Long.MIN_VALUE;

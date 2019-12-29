@@ -90,7 +90,7 @@ public class ProjectsApiController implements ProjectsApi {
 //			Test
 			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
-			
+
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -103,13 +103,13 @@ public class ProjectsApiController implements ProjectsApi {
 			planIndex.setId(plan.getId());
 			planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
 
-			if(planIndexList == null) {
+			if (planIndexList == null) {
 				planIndexList = new ArrayList<Index>();
 				planIndexList.add(planIndex);
-			}else {
+			} else {
 				planIndexList.add(planIndex);
 			}
-			
+
 			project.setPlans(planIndexList);
 			projectRepository.save(project);
 
@@ -228,36 +228,36 @@ public class ProjectsApiController implements ProjectsApi {
 //			Test
 			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
-			
+
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
 			}
 			planIndexList = project.getPlans();
-			
-			for(Index currentIndex : planIndexList) {
-				if(currentIndex.getId().equalsIgnoreCase(planId)) {
+
+			for (Index currentIndex : planIndexList) {
+				if (currentIndex.getId().equalsIgnoreCase(planId)) {
 					planIndexList.remove(currentIndex);
 				}
 			}
 			Plan plan = new Plan();
-			
+
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
 			if (optionalPlan.isPresent()) {
 				plan = optionalPlan.get();
 			}
-			
-			if(planIndexList == null) {
+
+			if (planIndexList == null) {
 				planIndexList = new ArrayList<Index>();
 				project.setPlans(planIndexList);
 				projectRepository.save(project);
-			}else {
+			} else {
 				project.setPlans(planIndexList);
 				projectRepository.save(project);
 			}
-			
+
 			planRepository.deleteById(planId);
-			
+
 			return new ResponseEntity<Plan>(plan, HttpStatus.ACCEPTED);
 
 		}
@@ -315,38 +315,36 @@ public class ProjectsApiController implements ProjectsApi {
 		if (accept != null && accept.contains("application/json")) {
 //			Test
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
-			
-			if(optionalProject.isPresent()) {
+
+			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
 			}
 
 			Boolean isPlanIdexPresent = false;
-			if(project.getPlans()!=null) {
-				
-				for(Index currentIndex: project.getPlans()) {
-					if( currentIndex.getId().equalsIgnoreCase(planId) ) {
+			if (project.getPlans() != null) {
+
+				for (Index currentIndex : project.getPlans()) {
+					if (currentIndex.getId().equalsIgnoreCase(planId)) {
 						isPlanIdexPresent = true;
 					}
-					
+
 				}
-				
-				if(isPlanIdexPresent) {
+
+				if (isPlanIdexPresent) {
 					Optional<Plan> optionalPlan = planRepository.findById(planId);
 					if (optionalPlan.isPresent()) {
 						plan = optionalPlan.get();
 					}
-					
+
 					return new ResponseEntity<Plan>(plan, HttpStatus.OK);
-				}else {
-					return new ResponseEntity<Plan>(HttpStatus.NOT_FOUND);	
+				} else {
+					return new ResponseEntity<Plan>(HttpStatus.NOT_FOUND);
 				}
-			
-			}else {
+
+			} else {
 				return new ResponseEntity<Plan>(HttpStatus.NOT_FOUND);
 			}
-			
-			
-			
+
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -357,9 +355,9 @@ public class ProjectsApiController implements ProjectsApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
-			
-				return new ResponseEntity<List<Plan>>(planRepository.findAll(), HttpStatus.NOT_IMPLEMENTED);
-			
+
+			return new ResponseEntity<List<Plan>>(planRepository.findAll(), HttpStatus.NOT_IMPLEMENTED);
+
 		}
 
 		return new ResponseEntity<List<Plan>>(HttpStatus.NOT_IMPLEMENTED);
