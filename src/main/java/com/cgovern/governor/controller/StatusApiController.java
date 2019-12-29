@@ -43,6 +43,9 @@ public class StatusApiController implements StatusApi {
 
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+			
+//			TODO
+//			Worker HeartBeat
 
 			// MongoDB Component
 			Dependency mongoDependency = new Dependency();

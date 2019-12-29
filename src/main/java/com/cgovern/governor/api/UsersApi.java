@@ -30,7 +30,7 @@ public interface UsersApi {
 			"user", })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successful operation") })
 	@RequestMapping(value = "/users", produces = { "application/xml", "application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Void> createUser(
+	ResponseEntity<User> createUser(
 			@ApiParam(value = "Created user object", required = true) @Valid @RequestBody User body);
 
 	@ApiOperation(value = "Delete user", nickname = "deleteUser", notes = "This can only be done by the logged in user.", tags = {
@@ -39,7 +39,7 @@ public interface UsersApi {
 			@ApiResponse(code = 404, message = "User not found") })
 	@RequestMapping(value = "/users/{username}", produces = { "application/xml",
 			"application/json" }, method = RequestMethod.DELETE)
-	ResponseEntity<Void> deleteUser(
+	ResponseEntity<User> deleteUser(
 			@ApiParam(value = "The name that needs to be deleted", required = true) @PathVariable("username") String username);
 
 	@ApiOperation(value = "Get user by user name", nickname = "getUserByName", notes = "", response = User.class, tags = {
@@ -58,7 +58,7 @@ public interface UsersApi {
 			@ApiResponse(code = 404, message = "User not found") })
 	@RequestMapping(value = "/users/{username}", produces = { "application/xml",
 			"application/json" }, method = RequestMethod.PUT)
-	ResponseEntity<Void> updateUser(
+	ResponseEntity<User> updateUser(
 			@ApiParam(value = "name that need to be updated", required = true) @PathVariable("username") String username,
 			@ApiParam(value = "Updated user object", required = true) @Valid @RequestBody User body);
 

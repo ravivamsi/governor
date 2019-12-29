@@ -1,7 +1,7 @@
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.RolesApi;
 import com.cgovern.governor.models.Role;
+import com.cgovern.governor.models.RoleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
@@ -31,58 +32,55 @@ public class RolesApiController implements RolesApi {
 
 	private final HttpServletRequest request;
 
+	private final RoleRepository roleRepository;
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public RolesApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public RolesApiController(ObjectMapper objectMapper, HttpServletRequest request, RoleRepository roleRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.roleRepository = roleRepository;
 	}
 
 	public ResponseEntity<Role> addRole(
 			@ApiParam(value = "Role object", required = true) @Valid @RequestBody Role body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Role>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"status\" : \"active\"}", Role.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Role>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			return new ResponseEntity<Role>(roleRepository.save(body), HttpStatus.CREATED);
 		}
 
 		return new ResponseEntity<Role>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Role> deleteRoleById(
-			@ApiParam(value = "", required = true) @PathVariable("roleId") Long roleId) {
+			@ApiParam(value = "", required = true) @PathVariable("roleId") String roleId) {
 		String accept = request.getHeader("Accept");
+		Role role = new Role();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Role>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"status\" : \"active\"}", Role.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Role>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<Role> optionalRole = roleRepository.findById(roleId);
+			if (optionalRole.isPresent()) {
+				role = optionalRole.get();
 			}
+			roleRepository.deleteById(roleId);
+			return new ResponseEntity<Role>(role, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Role>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Role> getRoleById(
-			@ApiParam(value = "", required = true) @PathVariable("roleId") Long roleId) {
+			@ApiParam(value = "", required = true) @PathVariable("roleId") String roleId) {
 		String accept = request.getHeader("Accept");
+		Role role = new Role();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Role>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"status\" : \"active\"}", Role.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Role>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Optional<Role> optionalRole = roleRepository.findById(roleId);
+			if (optionalRole.isPresent()) {
+				role = optionalRole.get();
 			}
+
+			return new ResponseEntity<Role>(role, HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<Role>(HttpStatus.NOT_IMPLEMENTED);
@@ -91,31 +89,29 @@ public class RolesApiController implements RolesApi {
 	public ResponseEntity<List<Role>> getRoles() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<List<Role>>(objectMapper.readValue(
-						"[ {  \"name\" : \"name\",  \"id\" : 0,  \"status\" : \"active\"}, {  \"name\" : \"name\",  \"id\" : 0,  \"status\" : \"active\"} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Role>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+			return new ResponseEntity<List<Role>>(roleRepository.findAll(), HttpStatus.OK);
 		}
 
 		return new ResponseEntity<List<Role>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Role> updateRoleById(
-			@ApiParam(value = "", required = true) @PathVariable("roleId") Long roleId) {
+			@ApiParam(value = "", required = true) @PathVariable("roleId") String roleId,
+			@ApiParam(value = "Role object", required = true) @Valid @RequestBody Role body) {
 		String accept = request.getHeader("Accept");
+		Role role = new Role();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Role>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"status\" : \"active\"}", Role.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Role>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Optional<Role> optionalRole = roleRepository.findById(roleId);
+			if (optionalRole.isPresent()) {
+				role = optionalRole.get();
 			}
+
+			role.setName(body.getName());
+			role.setStatus(body.getStatus());
+
+			roleRepository.save(role);
+			return new ResponseEntity<Role>(role, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Role>(HttpStatus.NOT_IMPLEMENTED);

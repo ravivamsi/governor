@@ -33,15 +33,18 @@ public class HealthApiController implements HealthApi {
 
 	public ResponseEntity<Health> healthGet() {
 		String accept = request.getHeader("Accept");
+		Health health = new Health();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Health>(objectMapper.readValue(
-						"{  \"releasetime\" : \"releasetime\",  \"appname\" : \"appname\",  \"buildtime\" : \"buildtime\",  \"version\" : \"version\"}",
-						Health.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Health>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+//			TODO
+//			Need a way to get the Build Number, BuildTime and Version set during the build time
+			
+			health.setAppname("CGovern");
+			health.setBuildnumber("3");
+			health.setBuildtime(String.valueOf(System.currentTimeMillis()));
+			health.setReleasetime(String.valueOf(System.currentTimeMillis()));
+			health.setVersion("0.0.3");
+			
+			return new ResponseEntity<Health>(health,HttpStatus.OK);
 		}
 
 		return new ResponseEntity<Health>(HttpStatus.NOT_IMPLEMENTED);

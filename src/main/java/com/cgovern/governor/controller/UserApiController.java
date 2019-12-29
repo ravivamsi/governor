@@ -1,7 +1,5 @@
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
@@ -40,14 +38,7 @@ public class UserApiController implements UserApi {
 	public ResponseEntity<User> loginUser(@ApiParam(value = "", required = true) @Valid @RequestBody Login body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<User>(objectMapper.readValue(
-						"{  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"password\" : \"password\",  \"tier\" : \"enterprise\",  \"phone\" : \"phone\",  \"id\" : 0,  \"email\" : \"email\",  \"username\" : \"username\",  \"status\" : \"active\"}",
-						User.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+//			TODO
 		}
 
 		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
@@ -57,14 +48,7 @@ public class UserApiController implements UserApi {
 			@ApiParam(value = "The user name for login", required = true) @PathVariable("username") String username) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<User>(objectMapper.readValue(
-						"{  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"password\" : \"password\",  \"tier\" : \"enterprise\",  \"phone\" : \"phone\",  \"id\" : 0,  \"email\" : \"email\",  \"username\" : \"username\",  \"status\" : \"active\"}",
-						User.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+//			TODO
 		}
 
 		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);

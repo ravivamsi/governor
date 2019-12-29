@@ -1,6 +1,6 @@
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.UsersApi;
 import com.cgovern.governor.models.User;
+import com.cgovern.governor.models.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
@@ -29,58 +30,106 @@ public class UsersApiController implements UsersApi {
 	private final ObjectMapper objectMapper;
 
 	private final HttpServletRequest request;
+	
+	private final UserRepository userRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public UsersApiController(ObjectMapper objectMapper, HttpServletRequest request, UserRepository userRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.userRepository =  userRepository;
 	}
 
-	public ResponseEntity<Void> createUser(
+	public ResponseEntity<User> createUser(
 			@ApiParam(value = "Created user object", required = true) @Valid @RequestBody User body) {
 		String accept = request.getHeader("Accept");
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+		
+		if (accept != null && accept.contains("application/json")) {
+			List<User> userList = userRepository.findAll();
+			
+			for(User currentUser: userList) {
+				if(currentUser.getUsername().equalsIgnoreCase(body.getUsername())) {
+					return new ResponseEntity<User>(HttpStatus.CONFLICT);
+				}
+			}
+			return new ResponseEntity<User>(userRepository.save(body), HttpStatus.CREATED);
+		}
+		
+		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Void> deleteUser(
+	public ResponseEntity<User> deleteUser(
 			@ApiParam(value = "The name that needs to be deleted", required = true) @PathVariable("username") String username) {
 		String accept = request.getHeader("Accept");
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+		
+		User user = new User();
+		if (accept != null && accept.contains("application/json")) {
+			List<User> userList = userRepository.findAll();
+			
+			for(User currentUser: userList) {
+				if(currentUser.getUsername().equalsIgnoreCase(username)) {
+					user = currentUser;
+				}
+			}
+			
+			userRepository.deleteById(user.getId());;
+			return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
+
+		}
+		
+		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<User> getUserByName(
 			@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ", required = true) @PathVariable("username") String username) {
 		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/xml")) {
-			try {
-				return new ResponseEntity<User>(objectMapper.readValue(
-						"<null>  <id>123456789</id>  <username>aeiou</username>  <firstName>aeiou</firstName>  <lastName>aeiou</lastName>  <email>aeiou</email>  <password>aeiou</password>  <phone>aeiou</phone>  <tier>aeiou</tier>  <status>aeiou</status></null>",
-						User.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/xml", e);
-				return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-		}
-
+		User user = new User();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<User>(objectMapper.readValue(
-						"{  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"password\" : \"password\",  \"tier\" : \"enterprise\",  \"phone\" : \"phone\",  \"id\" : 0,  \"email\" : \"email\",  \"username\" : \"username\",  \"status\" : \"active\"}",
-						User.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<User>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			List<User> userList = userRepository.findAll();
+			
+			for(User currentUser: userList) {
+				if(currentUser.getUsername().equalsIgnoreCase(username)) {
+					user = currentUser;
+				}
 			}
+			
+			
+			return new ResponseEntity<User>(user, HttpStatus.OK);
 		}
 
 		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Void> updateUser(
+	public ResponseEntity<User> updateUser(
 			@ApiParam(value = "name that need to be updated", required = true) @PathVariable("username") String username,
 			@ApiParam(value = "Updated user object", required = true) @Valid @RequestBody User body) {
 		String accept = request.getHeader("Accept");
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+		User user = new User();
+		if (accept != null && accept.contains("application/json")) {
+			
+			List<User> userList = userRepository.findAll();
+			
+			for(User currentUser: userList) {
+				if(currentUser.getUsername().equalsIgnoreCase(username)) {
+					user = currentUser;
+				}
+			}
+
+			user.setEmail(body.getEmail());
+			user.setFirstName(body.getFirstName());
+			user.setLastName(body.getLastName());
+			user.setPassword(body.getPassword());
+			user.setPhone(body.getPhone());
+			user.setRoles(body.getRoles());
+			user.setStatus(body.getStatus());
+			user.setTier(body.getTier());
+			
+			userRepository.save(user);
+			return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
+
+		}
+		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 }

@@ -14,19 +14,24 @@ $ mvn clean install
 $ java -jar target/governor-X.X.X-SNAPSHOT.jar -Dspring.profiles.active=prod
 ```
 
+## Priority
+
+- [] Projects API
+- [] User API
+
 ## To-Do
 
-[] Swagger Updates - In Progress
-[] Mongo Database - In Progress
-[] Application Properties - In Progress
-[] API Implementation - In Progress
-[] Upload File
-[] Download File
-[] Execution Logs asList
-[] Workspace Operations
-[] Folder Structure in Worker
-[] Generic SFTP Implementation
-[] Scheduler
+- [] Swagger Updates - In Progress
+- [] Mongo Database - In Progress
+- [] Application Properties - In Progress
+- [] API Implementation - In Progress
+- [] Upload File
+- [] Download File
+- [] Execution Logs asList
+- [] Workspace Operations
+- [] Folder Structure in Worker
+- [] Generic SFTP Implementation
+- [] Scheduler
 
 
 ## Swagger

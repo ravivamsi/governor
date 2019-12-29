@@ -43,14 +43,14 @@ public interface RolesApi {
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Role.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/roles/{roleId}", method = RequestMethod.DELETE)
-	ResponseEntity<Role> deleteRoleById(@ApiParam(value = "", required = true) @PathVariable("roleId") Long roleId);
+	ResponseEntity<Role> deleteRoleById(@ApiParam(value = "", required = true) @PathVariable("roleId") String roleId);
 
 	@ApiOperation(value = "Retrieve Existing Role", nickname = "getRoleById", notes = "", response = Role.class, tags = {
 			"role", })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Role.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/roles/{roleId}", method = RequestMethod.GET)
-	ResponseEntity<Role> getRoleById(@ApiParam(value = "", required = true) @PathVariable("roleId") Long roleId);
+	ResponseEntity<Role> getRoleById(@ApiParam(value = "", required = true) @PathVariable("roleId") String roleId);
 
 	@ApiOperation(value = "Retrieve All Roles", nickname = "getRoles", notes = "", response = Role.class, responseContainer = "List", tags = {
 			"role", })
@@ -65,6 +65,7 @@ public interface RolesApi {
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/roles/{roleId}", method = RequestMethod.PUT)
-	ResponseEntity<Role> updateRoleById(@ApiParam(value = "", required = true) @PathVariable("roleId") Long roleId);
+	ResponseEntity<Role> updateRoleById(@ApiParam(value = "", required = true) @PathVariable("roleId") String roleId,
+			@ApiParam(value = "Role object", required = true) @Valid @RequestBody Role body);
 
 }
