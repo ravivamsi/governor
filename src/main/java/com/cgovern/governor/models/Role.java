@@ -2,7 +2,8 @@ package com.cgovern.governor.models;
 
 import java.util.Objects;
 
-import org.bson.types.ObjectId;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -17,147 +18,192 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 
+@Document
 public class Role {
-	@JsonProperty("id")
-	private ObjectId id = null;
+	
+	  @Id
+	  @JsonProperty("id")
+	  private String id = null;
 
-	@JsonProperty("name")
-	private String name = null;
+	  /**
+	   * Gets or Sets name
+	   */
+	  public enum NameEnum {
+	    ADMIN("admin"),
+	    
+	    EDIT("edit"),
+	    
+	    VIEW("view"),
+	    
+	    RUN("run"),
+	    
+	    PRODEDIT("prodedit"),
+	    
+	    PRODRUN("prodrun");
 
-	/**
-	 * Role Status
-	 */
-	public enum StatusEnum {
-		ACTIVE("active"),
+	    private String value;
 
-		PENDING("pending"),
+	    NameEnum(String value) {
+	      this.value = value;
+	    }
 
-		SUSPENDED("suspended");
+	    @Override
+	    @JsonValue
+	    public String toString() {
+	      return String.valueOf(value);
+	    }
 
-		private String value;
+	    @JsonCreator
+	    public static NameEnum fromValue(String text) {
+	      for (NameEnum b : NameEnum.values()) {
+	        if (String.valueOf(b.value).equals(text)) {
+	          return b;
+	        }
+	      }
+	      return null;
+	    }
+	  }
 
-		StatusEnum(String value) {
-			this.value = value;
-		}
+	  @JsonProperty("name")
+	  private NameEnum name = null;
 
-		@Override
-		@JsonValue
-		public String toString() {
-			return String.valueOf(value);
-		}
+	  /**
+	   * Role Status
+	   */
+	  public enum StatusEnum {
+	    ACTIVE("active"),
+	    
+	    PENDING("pending"),
+	    
+	    SUSPENDED("suspended"),
+	    
+	    INACTIVE("inactive");
 
-		@JsonCreator
-		public static StatusEnum fromValue(String text) {
-			for (StatusEnum b : StatusEnum.values()) {
-				if (String.valueOf(b.value).equals(text)) {
-					return b;
-				}
-			}
-			return null;
-		}
-	}
+	    private String value;
 
-	@JsonProperty("status")
-	private StatusEnum status = null;
+	    StatusEnum(String value) {
+	      this.value = value;
+	    }
 
-	public Role id(ObjectId id) {
-		this.id = id;
-		return this;
-	}
+	    @Override
+	    @JsonValue
+	    public String toString() {
+	      return String.valueOf(value);
+	    }
 
-	/**
-	 * Get id
-	 * 
-	 * @return id
-	 **/
-	@ApiModelProperty(value = "")
+	    @JsonCreator
+	    public static StatusEnum fromValue(String text) {
+	      for (StatusEnum b : StatusEnum.values()) {
+	        if (String.valueOf(b.value).equals(text)) {
+	          return b;
+	        }
+	      }
+	      return null;
+	    }
+	  }
 
-	public ObjectId getId() {
-		return id;
-	}
+	  @JsonProperty("status")
+	  private StatusEnum status = null;
 
-	public void setId(ObjectId id) {
-		this.id = id;
-	}
+	  public Role id(String id) {
+	    this.id = id;
+	    return this;
+	  }
 
-	public Role name(String name) {
-		this.name = name;
-		return this;
-	}
+	  /**
+	   * Get id
+	   * @return id
+	  **/
+	  @ApiModelProperty(value = "")
 
-	/**
-	 * Get name
-	 * 
-	 * @return name
-	 **/
-	@ApiModelProperty(value = "")
 
-	public String getName() {
-		return name;
-	}
+	  public String getId() {
+	    return id;
+	  }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	  public void setId(String id) {
+	    this.id = id;
+	  }
 
-	public Role status(StatusEnum status) {
-		this.status = status;
-		return this;
-	}
+	  public Role name(NameEnum name) {
+	    this.name = name;
+	    return this;
+	  }
 
-	/**
-	 * Role Status
-	 * 
-	 * @return status
-	 **/
-	@ApiModelProperty(value = "Role Status")
+	  /**
+	   * Get name
+	   * @return name
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public StatusEnum getStatus() {
-		return status;
-	}
 
-	public void setStatus(StatusEnum status) {
-		this.status = status;
-	}
+	  public NameEnum getName() {
+	    return name;
+	  }
 
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Role role = (Role) o;
-		return Objects.equals(this.id, role.id) && Objects.equals(this.name, role.name)
-				&& Objects.equals(this.status, role.status);
-	}
+	  public void setName(NameEnum name) {
+	    this.name = name;
+	  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, name, status);
-	}
+	  public Role status(StatusEnum status) {
+	    this.status = status;
+	    return this;
+	  }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Role {\n");
+	  /**
+	   * Role Status
+	   * @return status
+	  **/
+	  @ApiModelProperty(value = "Role Status")
 
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    name: ").append(toIndentedString(name)).append("\n");
-		sb.append("    status: ").append(toIndentedString(status)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
 
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
-}
+	  public StatusEnum getStatus() {
+	    return status;
+	  }
+
+	  public void setStatus(StatusEnum status) {
+	    this.status = status;
+	  }
+
+
+	  @Override
+	  public boolean equals(java.lang.Object o) {
+	    if (this == o) {
+	      return true;
+	    }
+	    if (o == null || getClass() != o.getClass()) {
+	      return false;
+	    }
+	    Role role = (Role) o;
+	    return Objects.equals(this.id, role.id) &&
+	        Objects.equals(this.name, role.name) &&
+	        Objects.equals(this.status, role.status);
+	  }
+
+	  @Override
+	  public int hashCode() {
+	    return Objects.hash(id, name, status);
+	  }
+
+	  @Override
+	  public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("class Role {\n");
+	    
+	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+	    sb.append("    status: ").append(toIndentedString(status)).append("\n");
+	    sb.append("}");
+	    return sb.toString();
+	  }
+
+	  /**
+	   * Convert the given object to string with each line indented by 4 spaces
+	   * (except the first line).
+	   */
+	  private String toIndentedString(java.lang.Object o) {
+	    if (o == null) {
+	      return "null";
+	    }
+	    return o.toString().replace("\n", "\n    ");
+	  }}

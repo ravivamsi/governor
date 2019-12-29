@@ -76,7 +76,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-
+//			TODO
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
@@ -87,7 +87,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-
+//			Test
 			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
 			
@@ -102,7 +102,7 @@ public class ProjectsApiController implements ProjectsApi {
 
 			planIndex.setId(plan.getId());
 			planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
-//			Not Complete - Issue during Testing
+
 			if(planIndexList == null) {
 				planIndexList = new ArrayList<Index>();
 				planIndexList.add(planIndex);
@@ -124,6 +124,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			Test
 			return new ResponseEntity<Project>(projectRepository.save(body), HttpStatus.CREATED);
 		}
 
@@ -137,7 +138,6 @@ public class ProjectsApiController implements ProjectsApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
-//			Test - Yet to Complete
 			Plan plan = new Plan();
 			List<Index> stageIndexList = new ArrayList<Index>();
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
@@ -171,7 +171,6 @@ public class ProjectsApiController implements ProjectsApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
-//			Test - Yet to Complete
 			Job job = new Job();
 			List<Index> taskIndexList = new ArrayList<Index>();
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
@@ -226,7 +225,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			
+//			Test
 			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
 			
@@ -273,6 +272,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Job>(objectMapper.readValue(
 						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -292,6 +292,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<List<Job>>(objectMapper.readValue(
 						"[ {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
@@ -312,6 +313,7 @@ public class ProjectsApiController implements ProjectsApi {
 		Plan plan = new Plan();
 		Project project = new Project();
 		if (accept != null && accept.contains("application/json")) {
+//			Test
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			
 			if(optionalProject.isPresent()) {
@@ -354,6 +356,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			
 				return new ResponseEntity<List<Plan>>(planRepository.findAll(), HttpStatus.NOT_IMPLEMENTED);
 			
@@ -365,6 +368,7 @@ public class ProjectsApiController implements ProjectsApi {
 	public ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			Test
 			return new ResponseEntity<List<Project>>(projectRepository.findAll(), HttpStatus.OK);
 		}
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
@@ -375,6 +379,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<List<Stage>>(objectMapper.readValue(
 						"[ {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
@@ -395,6 +400,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<List<Task>>(objectMapper.readValue(
 						"[ {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
@@ -414,7 +420,7 @@ public class ProjectsApiController implements ProjectsApi {
 		Project project = new Project();
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-
+//			Test
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -434,6 +440,7 @@ public class ProjectsApiController implements ProjectsApi {
 		Project project = new Project();
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			Test
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -452,6 +459,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Stage>(objectMapper.readValue(
 						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -471,6 +479,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Stage>(objectMapper.readValue(
 						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -490,6 +499,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
+//		TODO
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			try {
@@ -513,6 +523,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Task>(objectMapper.readValue(
 						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -535,6 +546,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Task>(objectMapper.readValue(
 						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -555,6 +567,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Stage>(objectMapper.readValue(
 						"{  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -573,6 +586,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			Test
 
 			Project project = new Project();
 
@@ -604,6 +618,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Job>(objectMapper.readValue(
 						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
@@ -623,6 +638,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
+//			TODO
 			try {
 				return new ResponseEntity<Plan>(objectMapper.readValue(
 						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"type\" : \"build\",  \"shortname\" : \"shortname\",  \"enabled\" : true}",

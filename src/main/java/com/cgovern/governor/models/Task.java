@@ -24,197 +24,300 @@ public class Task {
 
 	@Id
 	@JsonProperty("id")
-	private String id = null;
+	  private String id = null;
 
-	@JsonProperty("name")
-	private String name = null;
+	  @JsonProperty("projectid")
+	  private String projectid = null;
 
-	@JsonProperty("shortname")
-	private String shortname = null;
+	  @JsonProperty("planid")
+	  private String planid = null;
 
-	@JsonProperty("sequence")
-	private Long sequence = null;
+	  @JsonProperty("stageid")
+	  private String stageid = null;
 
-	@JsonProperty("variables")
-	@Valid
-	private List<Variable> variables = null;
+	  @JsonProperty("jobid")
+	  private String jobid = null;
 
-	@JsonProperty("enabled")
-	private Boolean enabled = null;
+	  @JsonProperty("name")
+	  private String name = null;
 
-	public Task id(String id) {
-		this.id = id;
-		return this;
-	}
+	  @JsonProperty("shortname")
+	  private String shortname = null;
 
-	/**
-	 * Get id
-	 * 
-	 * @return id
-	 **/
-	@ApiModelProperty(value = "")
+	  @JsonProperty("sequence")
+	  private Long sequence = null;
 
-	public String getId() {
-		return id;
-	}
+	  @JsonProperty("variables")
+	  @Valid
+	  private List<Variable> variables = null;
 
-	public void setId(String id) {
-		this.id = id;
-	}
+	  @JsonProperty("enabled")
+	  private Boolean enabled = null;
 
-	public Task name(String name) {
-		this.name = name;
-		return this;
-	}
+	  public Task id(String id) {
+	    this.id = id;
+	    return this;
+	  }
 
-	/**
-	 * Get name
-	 * 
-	 * @return name
-	 **/
-	@ApiModelProperty(value = "")
+	  /**
+	   * Get id
+	   * @return id
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public String getName() {
-		return name;
-	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
+	  public String getId() {
+	    return id;
+	  }
 
-	public Task shortname(String shortname) {
-		this.shortname = shortname;
-		return this;
-	}
+	  public void setId(String id) {
+	    this.id = id;
+	  }
 
-	/**
-	 * Get shortname
-	 * 
-	 * @return shortname
-	 **/
-	@ApiModelProperty(value = "")
+	  public Task projectid(String projectid) {
+	    this.projectid = projectid;
+	    return this;
+	  }
 
-	public String getShortname() {
-		return shortname;
-	}
+	  /**
+	   * Get projectid
+	   * @return projectid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public void setShortname(String shortname) {
-		this.shortname = shortname;
-	}
 
-	public Task sequence(Long sequence) {
-		this.sequence = sequence;
-		return this;
-	}
+	  public String getProjectid() {
+	    return projectid;
+	  }
 
-	/**
-	 * Get sequence
-	 * 
-	 * @return sequence
-	 **/
-	@ApiModelProperty(value = "")
+	  public void setProjectid(String projectid) {
+	    this.projectid = projectid;
+	  }
 
-	public Long getSequence() {
-		return sequence;
-	}
+	  public Task planid(String planid) {
+	    this.planid = planid;
+	    return this;
+	  }
 
-	public void setSequence(Long sequence) {
-		this.sequence = sequence;
-	}
+	  /**
+	   * Get planid
+	   * @return planid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public Task variables(List<Variable> variables) {
-		this.variables = variables;
-		return this;
-	}
 
-	public Task addVariablesItem(Variable variablesItem) {
-		if (this.variables == null) {
-			this.variables = new ArrayList<Variable>();
-		}
-		this.variables.add(variablesItem);
-		return this;
-	}
+	  public String getPlanid() {
+	    return planid;
+	  }
 
-	/**
-	 * Get variables
-	 * 
-	 * @return variables
-	 **/
-	@ApiModelProperty(value = "")
+	  public void setPlanid(String planid) {
+	    this.planid = planid;
+	  }
 
-	@Valid
+	  public Task stageid(String stageid) {
+	    this.stageid = stageid;
+	    return this;
+	  }
 
-	public List<Variable> getVariables() {
-		return variables;
-	}
+	  /**
+	   * Get stageid
+	   * @return stageid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
 
-	public Task enabled(Boolean enabled) {
-		this.enabled = enabled;
-		return this;
-	}
+	  public String getStageid() {
+	    return stageid;
+	  }
 
-	/**
-	 * Get enabled
-	 * 
-	 * @return enabled
-	 **/
-	@ApiModelProperty(value = "")
+	  public void setStageid(String stageid) {
+	    this.stageid = stageid;
+	  }
 
-	public Boolean isEnabled() {
-		return enabled;
-	}
+	  public Task jobid(String jobid) {
+	    this.jobid = jobid;
+	    return this;
+	  }
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
+	  /**
+	   * Get jobid
+	   * @return jobid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Task task = (Task) o;
-		return Objects.equals(this.id, task.id) && Objects.equals(this.name, task.name)
-				&& Objects.equals(this.shortname, task.shortname) && Objects.equals(this.sequence, task.sequence)
-				&& Objects.equals(this.variables, task.variables) && Objects.equals(this.enabled, task.enabled);
-	}
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, name, shortname, sequence, variables, enabled);
-	}
+	  public String getJobid() {
+	    return jobid;
+	  }
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Task {\n");
+	  public void setJobid(String jobid) {
+	    this.jobid = jobid;
+	  }
 
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    name: ").append(toIndentedString(name)).append("\n");
-		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
-		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
-		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
+	  public Task name(String name) {
+	    this.name = name;
+	    return this;
+	  }
 
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
+	  /**
+	   * Get name
+	   * @return name
+	  **/
+	  @ApiModelProperty(value = "")
+
+
+	  public String getName() {
+	    return name;
+	  }
+
+	  public void setName(String name) {
+	    this.name = name;
+	  }
+
+	  public Task shortname(String shortname) {
+	    this.shortname = shortname;
+	    return this;
+	  }
+
+	  /**
+	   * Get shortname
+	   * @return shortname
+	  **/
+	  @ApiModelProperty(value = "")
+
+
+	  public String getShortname() {
+	    return shortname;
+	  }
+
+	  public void setShortname(String shortname) {
+	    this.shortname = shortname;
+	  }
+
+	  public Task sequence(Long sequence) {
+	    this.sequence = sequence;
+	    return this;
+	  }
+
+	  /**
+	   * Get sequence
+	   * @return sequence
+	  **/
+	  @ApiModelProperty(value = "")
+
+
+	  public Long getSequence() {
+	    return sequence;
+	  }
+
+	  public void setSequence(Long sequence) {
+	    this.sequence = sequence;
+	  }
+
+	  public Task variables(List<Variable> variables) {
+	    this.variables = variables;
+	    return this;
+	  }
+
+	  public Task addVariablesItem(Variable variablesItem) {
+	    if (this.variables == null) {
+	      this.variables = new ArrayList<Variable>();
+	    }
+	    this.variables.add(variablesItem);
+	    return this;
+	  }
+
+	  /**
+	   * Get variables
+	   * @return variables
+	  **/
+	  @ApiModelProperty(value = "")
+
+	  @Valid
+
+	  public List<Variable> getVariables() {
+	    return variables;
+	  }
+
+	  public void setVariables(List<Variable> variables) {
+	    this.variables = variables;
+	  }
+
+	  public Task enabled(Boolean enabled) {
+	    this.enabled = enabled;
+	    return this;
+	  }
+
+	  /**
+	   * Get enabled
+	   * @return enabled
+	  **/
+	  @ApiModelProperty(value = "")
+
+
+	  public Boolean isEnabled() {
+	    return enabled;
+	  }
+
+	  public void setEnabled(Boolean enabled) {
+	    this.enabled = enabled;
+	  }
+
+
+	  @Override
+	  public boolean equals(java.lang.Object o) {
+	    if (this == o) {
+	      return true;
+	    }
+	    if (o == null || getClass() != o.getClass()) {
+	      return false;
+	    }
+	    Task task = (Task) o;
+	    return Objects.equals(this.id, task.id) &&
+	        Objects.equals(this.projectid, task.projectid) &&
+	        Objects.equals(this.planid, task.planid) &&
+	        Objects.equals(this.stageid, task.stageid) &&
+	        Objects.equals(this.jobid, task.jobid) &&
+	        Objects.equals(this.name, task.name) &&
+	        Objects.equals(this.shortname, task.shortname) &&
+	        Objects.equals(this.sequence, task.sequence) &&
+	        Objects.equals(this.variables, task.variables) &&
+	        Objects.equals(this.enabled, task.enabled);
+	  }
+
+	  @Override
+	  public int hashCode() {
+	    return Objects.hash(id, projectid, planid, stageid, jobid, name, shortname, sequence, variables, enabled);
+	  }
+
+	  @Override
+	  public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("class Task {\n");
+	    
+	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+	    sb.append("    projectid: ").append(toIndentedString(projectid)).append("\n");
+	    sb.append("    planid: ").append(toIndentedString(planid)).append("\n");
+	    sb.append("    stageid: ").append(toIndentedString(stageid)).append("\n");
+	    sb.append("    jobid: ").append(toIndentedString(jobid)).append("\n");
+	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+	    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+	    sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
+	    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+	    sb.append("}");
+	    return sb.toString();
+	  }
+
+	  /**
+	   * Convert the given object to string with each line indented by 4 spaces
+	   * (except the first line).
+	   */
+	  private String toIndentedString(java.lang.Object o) {
+	    if (o == null) {
+	      return "null";
+	    }
+	    return o.toString().replace("\n", "\n    ");
+	  }
 
 }
