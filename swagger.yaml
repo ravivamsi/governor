@@ -1838,6 +1838,12 @@ definitions:
         type: "string"
       enabled:
         type: "boolean"
+      class:
+        type: "string"
+        enum:
+        - "schedule"
+        - "changelistener"
+        - "resultlistener"
   Notification:
     type: "object"
     properties:

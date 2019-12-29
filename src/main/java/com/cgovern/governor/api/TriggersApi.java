@@ -45,7 +45,7 @@ public interface TriggersApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/triggers/{triggerId}", method = RequestMethod.DELETE)
 	ResponseEntity<Trigger> deleteTriggerById(
-			@ApiParam(value = "", required = true) @PathVariable("triggerId") Long triggerId);
+			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId);
 
 	@ApiOperation(value = "Retrieve Existing Trigger", nickname = "getTriggerById", notes = "", response = Trigger.class, tags = {
 			"trigger", })
@@ -53,7 +53,7 @@ public interface TriggersApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/triggers/{triggerId}", method = RequestMethod.GET)
 	ResponseEntity<Trigger> getTriggerById(
-			@ApiParam(value = "", required = true) @PathVariable("triggerId") Long triggerId);
+			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId);
 
 	@ApiOperation(value = "Retrieve All Triggers", nickname = "getTriggers", notes = "", response = Trigger.class, responseContainer = "List", tags = {
 			"trigger", })
@@ -69,6 +69,7 @@ public interface TriggersApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/triggers/{triggerId}", method = RequestMethod.PUT)
 	ResponseEntity<Trigger> updateTriggerById(
-			@ApiParam(value = "", required = true) @PathVariable("triggerId") Long triggerId);
+			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId,
+			@ApiParam(value = "Trigger Body", required =true) @RequestBody @Valid Trigger body);
 
 }

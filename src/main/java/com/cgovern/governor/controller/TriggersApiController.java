@@ -1,7 +1,7 @@
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.TriggersApi;
 import com.cgovern.governor.models.Trigger;
+import com.cgovern.governor.models.TriggerRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.ApiParam;
@@ -30,59 +31,56 @@ public class TriggersApiController implements TriggersApi {
 	private final ObjectMapper objectMapper;
 
 	private final HttpServletRequest request;
+	
+	private final TriggerRepository triggerRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public TriggersApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public TriggersApiController(ObjectMapper objectMapper, HttpServletRequest request, TriggerRepository triggerRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.triggerRepository = triggerRepository;
 	}
 
 	public ResponseEntity<Trigger> addTrigger(
 			@ApiParam(value = "Trigger object", required = true) @Valid @RequestBody Trigger body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Trigger>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}", Trigger.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Trigger>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<Trigger>(triggerRepository.save(body), HttpStatus.CREATED);
 			}
-		}
 
 		return new ResponseEntity<Trigger>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Trigger> deleteTriggerById(
-			@ApiParam(value = "", required = true) @PathVariable("triggerId") Long triggerId) {
+			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId) {
 		String accept = request.getHeader("Accept");
+		Trigger trigger = new Trigger();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Trigger>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}", Trigger.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Trigger>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<Trigger> optionalDImage = triggerRepository.findById(triggerId);
+			if (optionalDImage.isPresent()) {
+				trigger = optionalDImage.get();
 			}
+			triggerRepository.deleteById(triggerId);
+			return new ResponseEntity<Trigger>(trigger, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Trigger>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Trigger> getTriggerById(
-			@ApiParam(value = "", required = true) @PathVariable("triggerId") Long triggerId) {
+			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId) {
 		String accept = request.getHeader("Accept");
+		Trigger trigger = new Trigger();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Trigger>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}", Trigger.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Trigger>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Optional<Trigger> optionalTrigger = triggerRepository.findById(triggerId);
+			if (optionalTrigger.isPresent()) {
+				trigger = optionalTrigger.get();
 			}
+
+			return new ResponseEntity<Trigger>(trigger, HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<Trigger>(HttpStatus.NOT_IMPLEMENTED);
@@ -91,31 +89,29 @@ public class TriggersApiController implements TriggersApi {
 	public ResponseEntity<List<Trigger>> getTriggers() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<List<Trigger>>(objectMapper.readValue(
-						"[ {  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}, {  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Trigger>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<List<Trigger>>(triggerRepository.findAll(), HttpStatus.OK);
 			}
-		}
 
 		return new ResponseEntity<List<Trigger>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<Trigger> updateTriggerById(
-			@ApiParam(value = "", required = true) @PathVariable("triggerId") Long triggerId) {
+			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId,
+			@ApiParam(value = "Trigger object", required = true) @Valid @RequestBody Trigger body) {
 		String accept = request.getHeader("Accept");
+		Trigger trigger = new Trigger();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<Trigger>(objectMapper
-						.readValue("{  \"name\" : \"name\",  \"id\" : 0,  \"enabled\" : true}", Trigger.class),
-						HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Trigger>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Optional<Trigger> optionalTrigger = triggerRepository.findById(triggerId);
+			if (optionalTrigger.isPresent()) {
+				trigger = optionalTrigger.get();
 			}
+
+			trigger.setEnabled(body.isEnabled());
+			trigger.setName(body.getName());
+
+			triggerRepository.save(trigger);
+			return new ResponseEntity<Trigger>(trigger, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<Trigger>(HttpStatus.NOT_IMPLEMENTED);
