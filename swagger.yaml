@@ -1943,7 +1943,7 @@ definitions:
       sequence:
         type: "integer"
         format: "int64"
-      stages:
+      jobs:
         type: "array"
         items:
           $ref: "#/definitions/Index"

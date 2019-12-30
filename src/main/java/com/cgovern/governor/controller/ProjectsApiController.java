@@ -76,7 +76,34 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
+//			Test
+			Stage stage = new Stage();
+			List<Index> jobIndexList = new ArrayList<Index>();
+
+			Optional<Stage> optionalStage = stageRepository.findById(stageId);
+			if (optionalStage.isPresent()) {
+				stage = optionalStage.get();
+			}
+			jobIndexList = stage.getJobs();
+			Index jobIndex = new Index();
+
+			Job job = jobRepository.save(body);
+
+			jobIndex.setId(job.getId());
+			jobIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(jobIndexList)));
+
+			if (jobIndexList == null) {
+				jobIndexList = new ArrayList<Index>();
+				jobIndexList.add(jobIndex);
+			} else {
+				jobIndexList.add(jobIndex);
+			}
+
+			stage.setJobs(jobIndexList);
+			stageRepository.save(stage);
+
+			return new ResponseEntity<Job>(job, HttpStatus.CREATED);
+
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
@@ -137,7 +164,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
+//			Test
 			Plan plan = new Plan();
 			List<Index> stageIndexList = new ArrayList<Index>();
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
@@ -170,7 +197,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
+//			Test
 			Job job = new Job();
 			List<Index> taskIndexList = new ArrayList<Index>();
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
@@ -202,13 +229,38 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
+//			Test
+			Stage stage = new Stage();
+			List<Index> jobIndexList = new ArrayList<Index>();
+			
+			Optional<Stage> optionalStage = stageRepository.findById(stageId);
+			if (optionalStage.isPresent()) {
+				stage = optionalStage.get();
+			}
+			jobIndexList = stage.getJobs();
+			
+			for (Index currentIndex : jobIndexList) {
+				if (currentIndex.getId().equalsIgnoreCase(stageId)) {
+					jobIndexList.remove(currentIndex);
+				}
+			}
+			
 			Job job = new Job();
 
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
+			}
+			
+			
+			if (jobIndexList == null) {
+				jobIndexList = new ArrayList<Index>();
+				stage.setJobs(jobIndexList);
+				stageRepository.save(stage);
+			} else {
+				stage.setJobs(jobIndexList);
+				stageRepository.save(stage);
 			}
 
 			jobRepository.deleteById(jobId);
@@ -271,16 +323,41 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
+		Stage stage = new Stage();
+		Job job = new Job();
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
-			try {
-				return new ResponseEntity<Job>(objectMapper.readValue(
-						"{  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}",
-						Job.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<Job>(HttpStatus.INTERNAL_SERVER_ERROR);
+//			Test
+			Optional<Stage> optionalStage = stageRepository.findById(stageId);
+
+			if (optionalStage.isPresent()) {
+				stage = optionalStage.get();
 			}
+
+			Boolean isJobIdexPresent = false;
+			if (stage.getJobs() != null) {
+
+				for (Index currentIndex : stage.getJobs()) {
+					if (currentIndex.getId().equalsIgnoreCase(jobId)) {
+						isJobIdexPresent = true;
+					}
+
+				}
+
+				if (isJobIdexPresent) {
+					Optional<Job> optionalJob = jobRepository.findById(jobId);
+					if (optionalJob.isPresent()) {
+						job = optionalJob.get();
+					}
+
+					return new ResponseEntity<Job>(job, HttpStatus.OK);
+				} else {
+					return new ResponseEntity<Job>(HttpStatus.NOT_FOUND);
+				}
+
+			} else {
+				return new ResponseEntity<Job>(HttpStatus.NOT_FOUND);
+			}
+
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
@@ -290,17 +367,40 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
+		
+//		Test
 		String accept = request.getHeader("Accept");
+		List<Job> jobList = new ArrayList<Job>();
+		Stage stage = new Stage();
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
-			try {
-				return new ResponseEntity<List<Job>>(objectMapper.readValue(
-						"[ {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Job>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			Optional<Stage> optionalStage =  stageRepository.findById(stageId);
+			
+			if(optionalStage.isPresent()) {
+				stage = optionalStage.get();
 			}
+			
+			if(!stage.getJobs().isEmpty()) {
+				List<Index> jobListIndex = stage.getJobs();
+				
+				
+				for(Index currentJobIndex: jobListIndex) {
+					Job job = new Job();
+					Optional<Job> optionalJob = jobRepository.findById(currentJobIndex.getId());
+					
+					if(optionalJob.isPresent()) {
+						job = optionalJob.get();
+						
+						jobList.add(job);
+					}
+	
+				}
+				
+				return new ResponseEntity<List<Job>>(jobList, HttpStatus.OK);
+				
+			}else {
+				return new ResponseEntity<List<Job>>(HttpStatus.NOT_FOUND);
+			}
+
 		}
 
 		return new ResponseEntity<List<Job>>(HttpStatus.NOT_IMPLEMENTED);
@@ -352,11 +452,39 @@ public class ProjectsApiController implements ProjectsApi {
 
 	public ResponseEntity<List<Plan>> getPlans(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
+		
+//		Test
 		String accept = request.getHeader("Accept");
+		List<Plan> planList = new ArrayList<Plan>();
+		Project project = new Project();
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
-
-			return new ResponseEntity<List<Plan>>(planRepository.findAll(), HttpStatus.NOT_IMPLEMENTED);
+			Optional<Project> optionalProject =  projectRepository.findById(projectId);
+			
+			if(optionalProject.isPresent()) {
+				project = optionalProject.get();
+			}
+			
+			if(!project.getPlans().isEmpty()) {
+				List<Index> planListIndex = project.getPlans();
+				
+				
+				for(Index currentPlanIndex: planListIndex) {
+					Plan plan = new Plan();
+					Optional<Plan> optionalPlan = planRepository.findById(currentPlanIndex.getId());
+					
+					if(optionalPlan.isPresent()) {
+						plan = optionalPlan.get();
+						
+						planList.add(plan);
+					}
+					
+				}
+				
+				return new ResponseEntity<List<Plan>>(planList, HttpStatus.OK);
+				
+			}else {
+				return new ResponseEntity<List<Plan>>(HttpStatus.NOT_FOUND);
+			}
 
 		}
 
@@ -376,16 +504,51 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
+		
+		List<Stage> stageList = new ArrayList<Stage>();
+		Plan plan = new Plan();
+		
+		
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
-			try {
-				return new ResponseEntity<List<Stage>>(objectMapper.readValue(
-						"[ {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Stage>>(HttpStatus.INTERNAL_SERVER_ERROR);
+			
+//			Test
+			
+			
+			Optional<Plan> optionalPlan =  planRepository.findById(planId);
+			
+			if(optionalPlan.isPresent()) {
+				plan = optionalPlan.get();
 			}
+			
+			if(!plan.getStages().isEmpty()) {
+				List<Index> stageListIndex = plan.getStages();
+				
+				
+				for(Index currentStageIndex: stageListIndex) {
+					Stage stage = new Stage();
+					Optional<Stage> optionalStage = stageRepository.findById(currentStageIndex.getId());
+					
+					if(optionalStage.isPresent()) {
+						stage = optionalStage.get();
+						
+						stageList.add(stage);
+					}
+					
+					
+					
+				}
+				
+				return new ResponseEntity<List<Stage>>(stageList, HttpStatus.OK);
+				
+			}else {
+				return new ResponseEntity<List<Stage>>(HttpStatus.NOT_FOUND);
+			}
+
+			
+			
+			
+			
+			
 		}
 
 		return new ResponseEntity<List<Stage>>(HttpStatus.NOT_IMPLEMENTED);
@@ -397,16 +560,41 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
+		List<Task> taskList = new ArrayList<Task>();
+		Job job = new Job();
+		
 		if (accept != null && accept.contains("application/json")) {
-//			TODO
-			try {
-				return new ResponseEntity<List<Task>>(objectMapper.readValue(
-						"[ {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true}, {  \"sequence\" : 6,  \"variables\" : [ {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  }, {    \"id\" : 6,    \"value\" : \"value\",    \"key\" : \"key\"  } ],  \"name\" : \"name\",  \"id\" : 0,  \"shortname\" : \"shortname\",  \"enabled\" : true} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<Task>>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+//			Test
+						
+			Optional<Job> optionalJob =  jobRepository.findById(jobId);
+			
+			if(optionalJob.isPresent()) {
+				job = optionalJob.get();
 			}
+			
+			if(!job.getTasks().isEmpty()) {
+				List<Index> taskListIndex = job.getTasks();
+				
+				
+				for(Index currentTaskIndex: taskListIndex) {
+					Task task = new Task();
+					Optional<Task> optionalTask = taskRepository.findById(currentTaskIndex.getId());
+					
+					if(optionalTask.isPresent()) {
+						task = optionalTask.get();
+						
+						taskList.add(task);
+					}	
+					
+				}
+				
+				return new ResponseEntity<List<Task>>(taskList, HttpStatus.OK);
+				
+			}else {
+				return new ResponseEntity<List<Task>>(HttpStatus.NOT_FOUND);
+			}
+			
 		}
 
 		return new ResponseEntity<List<Task>>(HttpStatus.NOT_IMPLEMENTED);

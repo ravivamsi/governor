@@ -42,9 +42,9 @@ public class Stage {
 	@JsonProperty("sequence")
 	private Long sequence = null;
 
-	@JsonProperty("stages")
+	@JsonProperty("jobs")
 	@Valid
-	private List<Index> stages = null;
+	private List<Index> jobs = null;
 
 	@JsonProperty("variables")
 	@Valid
@@ -173,16 +173,16 @@ public class Stage {
 		this.sequence = sequence;
 	}
 
-	public Stage stages(List<Index> stages) {
-		this.stages = stages;
+	public Stage stages(List<Index> jobs) {
+		this.jobs = jobs;
 		return this;
 	}
 
-	public Stage addStagesItem(Index stagesItem) {
-		if (this.stages == null) {
-			this.stages = new ArrayList<Index>();
+	public Stage addStagesItem(Index jobsItem) {
+		if (this.jobs == null) {
+			this.jobs = new ArrayList<Index>();
 		}
-		this.stages.add(stagesItem);
+		this.jobs.add(jobsItem);
 		return this;
 	}
 
@@ -195,12 +195,12 @@ public class Stage {
 
 	@Valid
 
-	public List<Index> getStages() {
-		return stages;
+	public List<Index> getJobs() {
+		return jobs;
 	}
 
-	public void setStages(List<Index> stages) {
-		this.stages = stages;
+	public void setJobs(List<Index> jobs) {
+		this.jobs = jobs;
 	}
 
 	public Stage variables(List<Variable> variables) {
@@ -265,13 +265,13 @@ public class Stage {
 		return Objects.equals(this.id, stage.id) && Objects.equals(this.projectid, stage.projectid)
 				&& Objects.equals(this.planid, stage.planid) && Objects.equals(this.name, stage.name)
 				&& Objects.equals(this.shortname, stage.shortname) && Objects.equals(this.sequence, stage.sequence)
-				&& Objects.equals(this.stages, stage.stages) && Objects.equals(this.variables, stage.variables)
+				&& Objects.equals(this.jobs, stage.jobs) && Objects.equals(this.variables, stage.variables)
 				&& Objects.equals(this.enabled, stage.enabled);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, projectid, planid, name, shortname, sequence, stages, variables, enabled);
+		return Objects.hash(id, projectid, planid, name, shortname, sequence, jobs, variables, enabled);
 	}
 
 	@Override
@@ -285,7 +285,7 @@ public class Stage {
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
 		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
-		sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
+		sb.append("    jobs: ").append(toIndentedString(jobs)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
 		sb.append("}");
