@@ -1,1 +1,1 @@
-web: java -Dserver.port=8080 -jar target/governor*.jar
+web: java -jar target/governor*.jar
