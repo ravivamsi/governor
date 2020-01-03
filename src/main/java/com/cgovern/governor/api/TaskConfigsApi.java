@@ -54,7 +54,7 @@ public interface TaskConfigsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/taskconfigs/{taskconfigId}", method = RequestMethod.DELETE)
 	ResponseEntity<TaskConfig> taskconfigsTaskconfigIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") Long taskconfigId);
+			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") String taskconfigId);
 
 	@ApiOperation(value = "Retrieve Task Config", nickname = "taskconfigsTaskconfigIdGet", notes = "", response = TaskConfig.class, tags = {
 			"taskconfig", })
@@ -62,7 +62,7 @@ public interface TaskConfigsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/taskconfigs/{taskconfigId}", method = RequestMethod.GET)
 	ResponseEntity<TaskConfig> taskconfigsTaskconfigIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") Long taskconfigId);
+			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") String taskconfigId);
 
 	@ApiOperation(value = "Update existing Task Config", nickname = "taskconfigsTaskconfigIdPut", notes = "", response = TaskConfig.class, tags = {
 			"taskconfig", })
@@ -71,7 +71,7 @@ public interface TaskConfigsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/taskconfigs/{taskconfigId}", method = RequestMethod.PUT)
 	ResponseEntity<TaskConfig> taskconfigsTaskconfigIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") Long taskconfigId,
+			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") String taskconfigId,
 			@ApiParam(value = "taskconfig object", required = true) @Valid @RequestBody TaskConfig body);
 
 }

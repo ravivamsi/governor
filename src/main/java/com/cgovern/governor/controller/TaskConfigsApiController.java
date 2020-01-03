@@ -3,8 +3,8 @@
  */
 package com.cgovern.governor.controller;
 
-import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.TaskConfigsApi;
 import com.cgovern.governor.models.TaskConfig;
+import com.cgovern.governor.models.TaskConfigRepository;
 
 /**
  * @author vamsiravi
@@ -40,23 +41,22 @@ public class TaskConfigsApiController implements TaskConfigsApi {
 
 	private final HttpServletRequest request;
 
+	private final TaskConfigRepository taskConfigRepository;
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public TaskConfigsApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public TaskConfigsApiController(ObjectMapper objectMapper, HttpServletRequest request,
+			TaskConfigRepository taskConfigRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.taskConfigRepository = taskConfigRepository;
 	}
 
 	public ResponseEntity<List<TaskConfig>> getTaskConfigs() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<List<TaskConfig>>(objectMapper.readValue(
-						"[ {  \"schema\" : [ {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  }, {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  } ],  \"name\" : \"name\",  \"dimageid\" : \"dimageid\",  \"id\" : \"id\"}, {  \"schema\" : [ {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  }, {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  } ],  \"name\" : \"name\",  \"dimageid\" : \"dimageid\",  \"id\" : \"id\"} ]",
-						List.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<List<TaskConfig>>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+
+			return new ResponseEntity<List<TaskConfig>>(taskConfigRepository.findAll(), HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<List<TaskConfig>>(HttpStatus.NOT_IMPLEMENTED);
@@ -66,66 +66,70 @@ public class TaskConfigsApiController implements TaskConfigsApi {
 			@ApiParam(value = "", required = true) @Valid @RequestBody TaskConfig body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<TaskConfig>(objectMapper.readValue(
-						"{  \"schema\" : [ {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  }, {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  } ],  \"name\" : \"name\",  \"dimageid\" : \"dimageid\",  \"id\" : \"id\"}",
-						TaskConfig.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<TaskConfig>(HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+
+			return new ResponseEntity<TaskConfig>(taskConfigRepository.save(body), HttpStatus.CREATED);
+
 		}
 
 		return new ResponseEntity<TaskConfig>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<TaskConfig> taskconfigsTaskconfigIdDelete(
-			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") Long taskconfigId) {
+			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") String taskconfigId) {
 		String accept = request.getHeader("Accept");
+		TaskConfig taskConfig = new TaskConfig();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<TaskConfig>(objectMapper.readValue(
-						"{  \"schema\" : [ {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  }, {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  } ],  \"name\" : \"name\",  \"dimageid\" : \"dimageid\",  \"id\" : \"id\"}",
-						TaskConfig.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<TaskConfig>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<TaskConfig> optionalTaskConfig = taskConfigRepository.findById(taskconfigId);
+			if (optionalTaskConfig.isPresent()) {
+				taskConfig = optionalTaskConfig.get();
 			}
+			taskConfigRepository.deleteById(taskconfigId);
+			return new ResponseEntity<TaskConfig>(taskConfig, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<TaskConfig>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<TaskConfig> taskconfigsTaskconfigIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") Long taskconfigId) {
+			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") String taskconfigId) {
 		String accept = request.getHeader("Accept");
+		TaskConfig taskConfig = new TaskConfig();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<TaskConfig>(objectMapper.readValue(
-						"{  \"schema\" : [ {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  }, {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  } ],  \"name\" : \"name\",  \"dimageid\" : \"dimageid\",  \"id\" : \"id\"}",
-						TaskConfig.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<TaskConfig>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<TaskConfig> optionalWorker = taskConfigRepository.findById(taskconfigId);
+			if (optionalWorker.isPresent()) {
+				taskConfig = optionalWorker.get();
 			}
+
+			return new ResponseEntity<TaskConfig>(taskConfig, HttpStatus.ACCEPTED);
+
 		}
 
 		return new ResponseEntity<TaskConfig>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<TaskConfig> taskconfigsTaskconfigIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") Long taskconfigId,
+			@ApiParam(value = "", required = true) @PathVariable("taskconfigId") String taskconfigId,
 			@ApiParam(value = "taskconfig object", required = true) @Valid @RequestBody TaskConfig body) {
 		String accept = request.getHeader("Accept");
+		TaskConfig taskConfig = new TaskConfig();
 		if (accept != null && accept.contains("application/json")) {
-			try {
-				return new ResponseEntity<TaskConfig>(objectMapper.readValue(
-						"{  \"schema\" : [ {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  }, {    \"fieldkey\" : \"fieldkey\",    \"fielddefaultvalue\" : \"fielddefaultvalue\",    \"description\" : \"description\",    \"fieldvaluetype\" : \"string\",    \"fieldvalueformat\" : \"fieldvalueformat\",    \"id\" : \"id\",    \"required\" : true  } ],  \"name\" : \"name\",  \"dimageid\" : \"dimageid\",  \"id\" : \"id\"}",
-						TaskConfig.class), HttpStatus.NOT_IMPLEMENTED);
-			} catch (IOException e) {
-				log.error("Couldn't serialize response for content type application/json", e);
-				return new ResponseEntity<TaskConfig>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+			Optional<TaskConfig> optionalTaskConfig = taskConfigRepository.findById(taskconfigId);
+			if (optionalTaskConfig.isPresent()) {
+				taskConfig = optionalTaskConfig.get();
 			}
+
+			taskConfig.setDimageid(body.getDimageid());
+			taskConfig.setName(body.getName());
+			taskConfig.setSchema(body.getSchema());
+
+			taskConfigRepository.save(taskConfig);
+
+			return new ResponseEntity<TaskConfig>(taskConfig, HttpStatus.OK);
+
 		}
 
 		return new ResponseEntity<TaskConfig>(HttpStatus.NOT_IMPLEMENTED);

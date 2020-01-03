@@ -131,13 +131,12 @@ public class UsersApiController implements UsersApi {
 		}
 		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
-	
-	
-	public ResponseEntity<Void> getUserNameAvailability(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true)
-	@PathVariable("username") String username) {
+
+	public ResponseEntity<Void> getUserNameAvailability(
+			@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ", required = true) @PathVariable("username") String username) {
 //		TODO
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
+		String accept = request.getHeader("Accept");
+		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
 }

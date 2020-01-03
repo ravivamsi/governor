@@ -117,6 +117,7 @@ public class PipelinesApiController implements PipelinesApi {
 			pipeline.setEnabled(body.isEnabled());
 			pipeline.setComponents(body.getComponents());
 
+			pipelineRepository.save(pipeline);
 			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.OK);
 
 		}

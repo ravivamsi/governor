@@ -24,260 +24,257 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-03T05:10:13.637Z")
 
-public class TaskSchema   {
-  @JsonProperty("id")
-  private String id = null;
+public class TaskSchema {
+	@JsonProperty("id")
+	private String id = null;
 
-  @JsonProperty("fieldkey")
-  private String fieldkey = null;
+	@JsonProperty("fieldkey")
+	private String fieldkey = null;
 
-  @JsonProperty("fielddefaultvalue")
-  private String fielddefaultvalue = null;
+	@JsonProperty("fielddefaultvalue")
+	private String fielddefaultvalue = null;
 
-  @JsonProperty("required")
-  private Boolean required = null;
+	@JsonProperty("required")
+	private Boolean required = null;
 
-  @JsonProperty("description")
-  private String description = null;
+	@JsonProperty("description")
+	private String description = null;
 
-  /**
-   * Gets or Sets fieldvaluetype
-   */
-  public enum FieldvaluetypeEnum {
-    STRING("string"),
-    
-    BOOLEAN("boolean"),
-    
-    INTEGER("integer"),
-    
-    FLOAT("float"),
-    
-    DOUBLE("double"),
-    
-    PASSWORD("password"),
-    
-    EMAIL("email"),
-    
-    URL("url");
+	/**
+	 * Gets or Sets fieldvaluetype
+	 */
+	public enum FieldvaluetypeEnum {
+		STRING("string"),
 
-    private String value;
+		BOOLEAN("boolean"),
 
-    FieldvaluetypeEnum(String value) {
-      this.value = value;
-    }
+		INTEGER("integer"),
 
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
+		FLOAT("float"),
 
-    @JsonCreator
-    public static FieldvaluetypeEnum fromValue(String text) {
-      for (FieldvaluetypeEnum b : FieldvaluetypeEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
+		DOUBLE("double"),
 
-  @JsonProperty("fieldvaluetype")
-  private FieldvaluetypeEnum fieldvaluetype = null;
+		PASSWORD("password"),
 
-  @JsonProperty("fieldvalueformat")
-  private String fieldvalueformat = null;
+		EMAIL("email"),
 
-  public TaskSchema id(String id) {
-    this.id = id;
-    return this;
-  }
+		URL("url");
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+		private String value;
 
+		FieldvaluetypeEnum(String value) {
+			this.value = value;
+		}
 
-  public String getId() {
-    return id;
-  }
+		@Override
+		@JsonValue
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-  public void setId(String id) {
-    this.id = id;
-  }
+		@JsonCreator
+		public static FieldvaluetypeEnum fromValue(String text) {
+			for (FieldvaluetypeEnum b : FieldvaluetypeEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
+	}
 
-  public TaskSchema fieldkey(String fieldkey) {
-    this.fieldkey = fieldkey;
-    return this;
-  }
+	@JsonProperty("fieldvaluetype")
+	private FieldvaluetypeEnum fieldvaluetype = null;
 
-  /**
-   * Get fieldkey
-   * @return fieldkey
-  **/
-  @ApiModelProperty(value = "")
+	@JsonProperty("fieldvalueformat")
+	private String fieldvalueformat = null;
 
+	public TaskSchema id(String id) {
+		this.id = id;
+		return this;
+	}
 
-  public String getFieldkey() {
-    return fieldkey;
-  }
+	/**
+	 * Get id
+	 * 
+	 * @return id
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setFieldkey(String fieldkey) {
-    this.fieldkey = fieldkey;
-  }
+	public String getId() {
+		return id;
+	}
 
-  public TaskSchema fielddefaultvalue(String fielddefaultvalue) {
-    this.fielddefaultvalue = fielddefaultvalue;
-    return this;
-  }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-  /**
-   * Get fielddefaultvalue
-   * @return fielddefaultvalue
-  **/
-  @ApiModelProperty(value = "")
+	public TaskSchema fieldkey(String fieldkey) {
+		this.fieldkey = fieldkey;
+		return this;
+	}
 
+	/**
+	 * Get fieldkey
+	 * 
+	 * @return fieldkey
+	 **/
+	@ApiModelProperty(value = "")
 
-  public String getFielddefaultvalue() {
-    return fielddefaultvalue;
-  }
+	public String getFieldkey() {
+		return fieldkey;
+	}
 
-  public void setFielddefaultvalue(String fielddefaultvalue) {
-    this.fielddefaultvalue = fielddefaultvalue;
-  }
+	public void setFieldkey(String fieldkey) {
+		this.fieldkey = fieldkey;
+	}
 
-  public TaskSchema required(Boolean required) {
-    this.required = required;
-    return this;
-  }
+	public TaskSchema fielddefaultvalue(String fielddefaultvalue) {
+		this.fielddefaultvalue = fielddefaultvalue;
+		return this;
+	}
 
-  /**
-   * Get required
-   * @return required
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get fielddefaultvalue
+	 * 
+	 * @return fielddefaultvalue
+	 **/
+	@ApiModelProperty(value = "")
 
+	public String getFielddefaultvalue() {
+		return fielddefaultvalue;
+	}
 
-  public Boolean isRequired() {
-    return required;
-  }
+	public void setFielddefaultvalue(String fielddefaultvalue) {
+		this.fielddefaultvalue = fielddefaultvalue;
+	}
 
-  public void setRequired(Boolean required) {
-    this.required = required;
-  }
+	public TaskSchema required(Boolean required) {
+		this.required = required;
+		return this;
+	}
 
-  public TaskSchema description(String description) {
-    this.description = description;
-    return this;
-  }
+	/**
+	 * Get required
+	 * 
+	 * @return required
+	 **/
+	@ApiModelProperty(value = "")
 
-  /**
-   * Get description
-   * @return description
-  **/
-  @ApiModelProperty(value = "")
+	public Boolean isRequired() {
+		return required;
+	}
 
+	public void setRequired(Boolean required) {
+		this.required = required;
+	}
 
-  public String getDescription() {
-    return description;
-  }
+	public TaskSchema description(String description) {
+		this.description = description;
+		return this;
+	}
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+	/**
+	 * Get description
+	 * 
+	 * @return description
+	 **/
+	@ApiModelProperty(value = "")
 
-  public TaskSchema fieldvaluetype(FieldvaluetypeEnum fieldvaluetype) {
-    this.fieldvaluetype = fieldvaluetype;
-    return this;
-  }
+	public String getDescription() {
+		return description;
+	}
 
-  /**
-   * Get fieldvaluetype
-   * @return fieldvaluetype
-  **/
-  @ApiModelProperty(value = "")
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
+	public TaskSchema fieldvaluetype(FieldvaluetypeEnum fieldvaluetype) {
+		this.fieldvaluetype = fieldvaluetype;
+		return this;
+	}
 
-  public FieldvaluetypeEnum getFieldvaluetype() {
-    return fieldvaluetype;
-  }
+	/**
+	 * Get fieldvaluetype
+	 * 
+	 * @return fieldvaluetype
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setFieldvaluetype(FieldvaluetypeEnum fieldvaluetype) {
-    this.fieldvaluetype = fieldvaluetype;
-  }
+	public FieldvaluetypeEnum getFieldvaluetype() {
+		return fieldvaluetype;
+	}
 
-  public TaskSchema fieldvalueformat(String fieldvalueformat) {
-    this.fieldvalueformat = fieldvalueformat;
-    return this;
-  }
+	public void setFieldvaluetype(FieldvaluetypeEnum fieldvaluetype) {
+		this.fieldvaluetype = fieldvaluetype;
+	}
 
-  /**
-   * Regex for the format
-   * @return fieldvalueformat
-  **/
-  @ApiModelProperty(value = "Regex for the format")
+	public TaskSchema fieldvalueformat(String fieldvalueformat) {
+		this.fieldvalueformat = fieldvalueformat;
+		return this;
+	}
 
+	/**
+	 * Regex for the format
+	 * 
+	 * @return fieldvalueformat
+	 **/
+	@ApiModelProperty(value = "Regex for the format")
 
-  public String getFieldvalueformat() {
-    return fieldvalueformat;
-  }
+	public String getFieldvalueformat() {
+		return fieldvalueformat;
+	}
 
-  public void setFieldvalueformat(String fieldvalueformat) {
-    this.fieldvalueformat = fieldvalueformat;
-  }
+	public void setFieldvalueformat(String fieldvalueformat) {
+		this.fieldvalueformat = fieldvalueformat;
+	}
 
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		TaskSchema taskSchema = (TaskSchema) o;
+		return Objects.equals(this.id, taskSchema.id) && Objects.equals(this.fieldkey, taskSchema.fieldkey)
+				&& Objects.equals(this.fielddefaultvalue, taskSchema.fielddefaultvalue)
+				&& Objects.equals(this.required, taskSchema.required)
+				&& Objects.equals(this.description, taskSchema.description)
+				&& Objects.equals(this.fieldvaluetype, taskSchema.fieldvaluetype)
+				&& Objects.equals(this.fieldvalueformat, taskSchema.fieldvalueformat);
+	}
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    TaskSchema taskSchema = (TaskSchema) o;
-    return Objects.equals(this.id, taskSchema.id) &&
-        Objects.equals(this.fieldkey, taskSchema.fieldkey) &&
-        Objects.equals(this.fielddefaultvalue, taskSchema.fielddefaultvalue) &&
-        Objects.equals(this.required, taskSchema.required) &&
-        Objects.equals(this.description, taskSchema.description) &&
-        Objects.equals(this.fieldvaluetype, taskSchema.fieldvaluetype) &&
-        Objects.equals(this.fieldvalueformat, taskSchema.fieldvalueformat);
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, fieldkey, fielddefaultvalue, required, description, fieldvaluetype, fieldvalueformat);
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, fieldkey, fielddefaultvalue, required, description, fieldvaluetype, fieldvalueformat);
-  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class TaskSchema {\n");
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class TaskSchema {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    fieldkey: ").append(toIndentedString(fieldkey)).append("\n");
-    sb.append("    fielddefaultvalue: ").append(toIndentedString(fielddefaultvalue)).append("\n");
-    sb.append("    required: ").append(toIndentedString(required)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
-    sb.append("    fieldvaluetype: ").append(toIndentedString(fieldvaluetype)).append("\n");
-    sb.append("    fieldvalueformat: ").append(toIndentedString(fieldvalueformat)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
+		sb.append("    id: ").append(toIndentedString(id)).append("\n");
+		sb.append("    fieldkey: ").append(toIndentedString(fieldkey)).append("\n");
+		sb.append("    fielddefaultvalue: ").append(toIndentedString(fielddefaultvalue)).append("\n");
+		sb.append("    required: ").append(toIndentedString(required)).append("\n");
+		sb.append("    description: ").append(toIndentedString(description)).append("\n");
+		sb.append("    fieldvaluetype: ").append(toIndentedString(fieldvaluetype)).append("\n");
+		sb.append("    fieldvalueformat: ").append(toIndentedString(fieldvalueformat)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
-

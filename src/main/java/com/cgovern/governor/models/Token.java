@@ -24,175 +24,171 @@ import io.swagger.annotations.ApiModelProperty;
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-03T04:54:06.978Z")
 
-public class Token   {
-  @JsonProperty("token")
-  private String token = null;
+public class Token {
+	@JsonProperty("token")
+	private String token = null;
 
-  @JsonProperty("expiresin")
-  private Integer expiresin = null;
+	@JsonProperty("expiresin")
+	private Integer expiresin = null;
 
-  @JsonProperty("username")
-  private String username = null;
+	@JsonProperty("username")
+	private String username = null;
 
-  /**
-   * Gets or Sets status
-   */
-  public enum StatusEnum {
-    ACTIVE("active"),
-    
-    PENDING("pending"),
-    
-    SUSPENDED("suspended");
+	/**
+	 * Gets or Sets status
+	 */
+	public enum StatusEnum {
+		ACTIVE("active"),
 
-    private String value;
+		PENDING("pending"),
 
-    StatusEnum(String value) {
-      this.value = value;
-    }
+		SUSPENDED("suspended");
 
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
+		private String value;
 
-    @JsonCreator
-    public static StatusEnum fromValue(String text) {
-      for (StatusEnum b : StatusEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
+		StatusEnum(String value) {
+			this.value = value;
+		}
 
-  @JsonProperty("status")
-  private StatusEnum status = null;
+		@Override
+		@JsonValue
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-  public Token token(String token) {
-    this.token = token;
-    return this;
-  }
+		@JsonCreator
+		public static StatusEnum fromValue(String text) {
+			for (StatusEnum b : StatusEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
+	}
 
-  /**
-   * Get token
-   * @return token
-  **/
-  @ApiModelProperty(value = "")
+	@JsonProperty("status")
+	private StatusEnum status = null;
 
+	public Token token(String token) {
+		this.token = token;
+		return this;
+	}
 
-  public String getToken() {
-    return token;
-  }
+	/**
+	 * Get token
+	 * 
+	 * @return token
+	 **/
+	@ApiModelProperty(value = "")
 
-  public void setToken(String token) {
-    this.token = token;
-  }
+	public String getToken() {
+		return token;
+	}
 
-  public Token expiresin(Integer expiresin) {
-    this.expiresin = expiresin;
-    return this;
-  }
+	public void setToken(String token) {
+		this.token = token;
+	}
 
-  /**
-   * Get expiresin
-   * @return expiresin
-  **/
-  @ApiModelProperty(value = "")
+	public Token expiresin(Integer expiresin) {
+		this.expiresin = expiresin;
+		return this;
+	}
 
+	/**
+	 * Get expiresin
+	 * 
+	 * @return expiresin
+	 **/
+	@ApiModelProperty(value = "")
 
-  public Integer getExpiresin() {
-    return expiresin;
-  }
+	public Integer getExpiresin() {
+		return expiresin;
+	}
 
-  public void setExpiresin(Integer expiresin) {
-    this.expiresin = expiresin;
-  }
+	public void setExpiresin(Integer expiresin) {
+		this.expiresin = expiresin;
+	}
 
-  public Token username(String username) {
-    this.username = username;
-    return this;
-  }
+	public Token username(String username) {
+		this.username = username;
+		return this;
+	}
 
-  /**
-   * Get username
-   * @return username
-  **/
-  @ApiModelProperty(value = "")
+	/**
+	 * Get username
+	 * 
+	 * @return username
+	 **/
+	@ApiModelProperty(value = "")
 
+	public String getUsername() {
+		return username;
+	}
 
-  public String getUsername() {
-    return username;
-  }
+	public void setUsername(String username) {
+		this.username = username;
+	}
 
-  public void setUsername(String username) {
-    this.username = username;
-  }
+	public Token status(StatusEnum status) {
+		this.status = status;
+		return this;
+	}
 
-  public Token status(StatusEnum status) {
-    this.status = status;
-    return this;
-  }
+	/**
+	 * Get status
+	 * 
+	 * @return status
+	 **/
+	@ApiModelProperty(value = "")
 
-  /**
-   * Get status
-   * @return status
-  **/
-  @ApiModelProperty(value = "")
+	public StatusEnum getStatus() {
+		return status;
+	}
 
+	public void setStatus(StatusEnum status) {
+		this.status = status;
+	}
 
-  public StatusEnum getStatus() {
-    return status;
-  }
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Token token = (Token) o;
+		return Objects.equals(this.token, token.token) && Objects.equals(this.expiresin, token.expiresin)
+				&& Objects.equals(this.username, token.username) && Objects.equals(this.status, token.status);
+	}
 
-  public void setStatus(StatusEnum status) {
-    this.status = status;
-  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(token, expiresin, username, status);
+	}
 
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Token {\n");
 
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    Token token = (Token) o;
-    return Objects.equals(this.token, token.token) &&
-        Objects.equals(this.expiresin, token.expiresin) &&
-        Objects.equals(this.username, token.username) &&
-        Objects.equals(this.status, token.status);
-  }
+		sb.append("    token: ").append(toIndentedString(token)).append("\n");
+		sb.append("    expiresin: ").append(toIndentedString(expiresin)).append("\n");
+		sb.append("    username: ").append(toIndentedString(username)).append("\n");
+		sb.append("    status: ").append(toIndentedString(status)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(token, expiresin, username, status);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class Token {\n");
-    
-    sb.append("    token: ").append(toIndentedString(token)).append("\n");
-    sb.append("    expiresin: ").append(toIndentedString(expiresin)).append("\n");
-    sb.append("    username: ").append(toIndentedString(username)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
 }
-

@@ -122,6 +122,7 @@ public class WorkersApiController implements WorkersApi {
 			worker.setSequence(
 					Sequence.generateNextSequence(Sequence.getLastUsedWorkerSequence(workerRepository.findAll())));
 
+			workerRepository.save(worker);
 			return new ResponseEntity<Worker>(worker, HttpStatus.OK);
 
 		}
