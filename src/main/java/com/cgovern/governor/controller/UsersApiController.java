@@ -7,6 +7,8 @@ import javax.validation.Valid;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -134,8 +136,30 @@ public class UsersApiController implements UsersApi {
 
 	public ResponseEntity<Void> getUserNameAvailability(
 			@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ", required = true) @PathVariable("username") String username) {
-//		TODO
+
 		String accept = request.getHeader("Accept");
+
+		User user = new User();
+		if (accept != null && accept.contains("application/json")) {
+
+			List<User> userList = userRepository.findAll();
+
+			for (User currentUser : userList) {
+				if (currentUser.getUsername().equalsIgnoreCase(username)) {
+					user = currentUser;
+				}
+			}
+			
+			
+			if(user.getUsername().isEmpty()) {
+				return new ResponseEntity<Void>( HttpStatus.OK);
+			}else {
+				return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+			}
+			
+
+		}
+		
 		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 

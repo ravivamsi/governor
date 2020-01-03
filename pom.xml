@@ -35,6 +35,16 @@
 			<version>0.1.55</version>
 		</dependency>
 		<dependency>
+    <groupId>com.mysema.querydsl</groupId>
+    <artifactId>querydsl-mongodb</artifactId>
+    <version>3.6.6</version>
+</dependency>
+<dependency>
+    <groupId>com.mysema.querydsl</groupId>
+    <artifactId>querydsl-apt</artifactId>
+    <version>3.6.6</version>
+</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
@@ -42,7 +52,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web-services</artifactId>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-mongodb -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-mongodb</artifactId>
