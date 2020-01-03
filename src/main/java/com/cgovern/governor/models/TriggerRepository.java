@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
  *
  */
 @Repository
-public interface TriggerRepository extends MongoRepository<Trigger, String>{
+public interface TriggerRepository extends MongoRepository<Trigger, String> {
 
 }

@@ -31,11 +31,12 @@ public class TriggersApiController implements TriggersApi {
 	private final ObjectMapper objectMapper;
 
 	private final HttpServletRequest request;
-	
+
 	private final TriggerRepository triggerRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public TriggersApiController(ObjectMapper objectMapper, HttpServletRequest request, TriggerRepository triggerRepository) {
+	public TriggersApiController(ObjectMapper objectMapper, HttpServletRequest request,
+			TriggerRepository triggerRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.triggerRepository = triggerRepository;
@@ -46,7 +47,7 @@ public class TriggersApiController implements TriggersApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			return new ResponseEntity<Trigger>(triggerRepository.save(body), HttpStatus.CREATED);
-			}
+		}
 
 		return new ResponseEntity<Trigger>(HttpStatus.NOT_IMPLEMENTED);
 	}
@@ -90,7 +91,7 @@ public class TriggersApiController implements TriggersApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 			return new ResponseEntity<List<Trigger>>(triggerRepository.findAll(), HttpStatus.OK);
-			}
+		}
 
 		return new ResponseEntity<List<Trigger>>(HttpStatus.NOT_IMPLEMENTED);
 	}

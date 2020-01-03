@@ -70,6 +70,6 @@ public interface TriggersApi {
 	@RequestMapping(value = "/triggers/{triggerId}", method = RequestMethod.PUT)
 	ResponseEntity<Trigger> updateTriggerById(
 			@ApiParam(value = "", required = true) @PathVariable("triggerId") String triggerId,
-			@ApiParam(value = "Trigger Body", required =true) @RequestBody @Valid Trigger body);
+			@ApiParam(value = "Trigger Body", required = true) @RequestBody @Valid Trigger body);
 
 }
