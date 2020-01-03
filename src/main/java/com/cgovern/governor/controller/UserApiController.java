@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.UserApi;
 import com.cgovern.governor.models.Login;
+import com.cgovern.governor.models.Session;
+import com.cgovern.governor.models.SessionRepository;
 import com.cgovern.governor.models.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -29,19 +31,23 @@ public class UserApiController implements UserApi {
 
 	private final HttpServletRequest request;
 
+	private final SessionRepository sessionRepository;
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public UserApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+	public UserApiController(ObjectMapper objectMapper, HttpServletRequest request,
+			SessionRepository sessionRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
+		this.sessionRepository = sessionRepository;
 	}
 
-	public ResponseEntity<User> loginUser(@ApiParam(value = "", required = true) @Valid @RequestBody Login body) {
+	public ResponseEntity<Session> loginUser(@ApiParam(value = "", required = true) @Valid @RequestBody Login body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 //			TODO
 		}
 
-		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
+		return new ResponseEntity<Session>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<User> logoutUser(

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cgovern.governor.models.BadRequest;
 import com.cgovern.governor.models.Login;
+import com.cgovern.governor.models.Session;
 import com.cgovern.governor.models.User;
 
 import io.swagger.annotations.Api;
@@ -33,7 +34,7 @@ public interface UserApi {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "successful operation", response = User.class),
 			@ApiResponse(code = 400, message = "Invalid username/password supplied") })
 	@RequestMapping(value = "/user/login", produces = { "application/json" }, method = RequestMethod.POST)
-	ResponseEntity<User> loginUser(@ApiParam(value = "", required = true) @Valid @RequestBody Login body);
+	ResponseEntity<Session> loginUser(@ApiParam(value = "", required = true) @Valid @RequestBody Login body);
 
 	@ApiOperation(value = "Logs out current logged in user session", nickname = "logoutUser", notes = "", response = User.class, tags = {
 			"user", })
