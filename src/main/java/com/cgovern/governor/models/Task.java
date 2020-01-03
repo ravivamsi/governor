@@ -6,7 +6,6 @@ import java.util.Objects;
 
 import javax.validation.Valid;
 
-import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.validation.annotation.Validated;
 
@@ -21,298 +20,353 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2019-12-22T04:22:26.530Z")
 @Document
 public class Task {
+	  @JsonProperty("id")
+	  private String id = null;
 
-	@Id
-	@JsonProperty("id")
-	private String id = null;
+	  @JsonProperty("projectid")
+	  private String projectid = null;
 
-	@JsonProperty("projectid")
-	private String projectid = null;
+	  @JsonProperty("planid")
+	  private String planid = null;
 
-	@JsonProperty("planid")
-	private String planid = null;
+	  @JsonProperty("stageid")
+	  private String stageid = null;
 
-	@JsonProperty("stageid")
-	private String stageid = null;
+	  @JsonProperty("jobid")
+	  private String jobid = null;
 
-	@JsonProperty("jobid")
-	private String jobid = null;
+	  @JsonProperty("name")
+	  private String name = null;
 
-	@JsonProperty("name")
-	private String name = null;
+	  @JsonProperty("shortname")
+	  private String shortname = null;
 
-	@JsonProperty("shortname")
-	private String shortname = null;
+	  @JsonProperty("sequence")
+	  private Long sequence = null;
 
-	@JsonProperty("sequence")
-	private Long sequence = null;
+	  @JsonProperty("variables")
+	  @Valid
+	  private List<Variable> variables = null;
 
-	@JsonProperty("variables")
-	@Valid
-	private List<Variable> variables = null;
+	  @JsonProperty("enabled")
+	  private Boolean enabled = null;
 
-	@JsonProperty("enabled")
-	private Boolean enabled = null;
+	  @JsonProperty("configuration")
+	  private TaskConfiguration configuration = null;
 
-	public Task id(String id) {
-		this.id = id;
-		return this;
-	}
+	  @JsonProperty("condition")
+	  private TaskCondition condition = null;
 
-	/**
-	 * Get id
-	 * 
-	 * @return id
-	 **/
-	@ApiModelProperty(value = "")
+	  public Task id(String id) {
+	    this.id = id;
+	    return this;
+	  }
 
-	public String getId() {
-		return id;
-	}
+	  /**
+	   * Get id
+	   * @return id
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public void setId(String id) {
-		this.id = id;
-	}
 
-	public Task projectid(String projectid) {
-		this.projectid = projectid;
-		return this;
-	}
+	  public String getId() {
+	    return id;
+	  }
 
-	/**
-	 * Get projectid
-	 * 
-	 * @return projectid
-	 **/
-	@ApiModelProperty(value = "")
+	  public void setId(String id) {
+	    this.id = id;
+	  }
 
-	public String getProjectid() {
-		return projectid;
-	}
+	  public Task projectid(String projectid) {
+	    this.projectid = projectid;
+	    return this;
+	  }
 
-	public void setProjectid(String projectid) {
-		this.projectid = projectid;
-	}
+	  /**
+	   * Get projectid
+	   * @return projectid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public Task planid(String planid) {
-		this.planid = planid;
-		return this;
-	}
 
-	/**
-	 * Get planid
-	 * 
-	 * @return planid
-	 **/
-	@ApiModelProperty(value = "")
+	  public String getProjectid() {
+	    return projectid;
+	  }
 
-	public String getPlanid() {
-		return planid;
-	}
+	  public void setProjectid(String projectid) {
+	    this.projectid = projectid;
+	  }
 
-	public void setPlanid(String planid) {
-		this.planid = planid;
-	}
+	  public Task planid(String planid) {
+	    this.planid = planid;
+	    return this;
+	  }
 
-	public Task stageid(String stageid) {
-		this.stageid = stageid;
-		return this;
-	}
+	  /**
+	   * Get planid
+	   * @return planid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	/**
-	 * Get stageid
-	 * 
-	 * @return stageid
-	 **/
-	@ApiModelProperty(value = "")
 
-	public String getStageid() {
-		return stageid;
-	}
+	  public String getPlanid() {
+	    return planid;
+	  }
 
-	public void setStageid(String stageid) {
-		this.stageid = stageid;
-	}
+	  public void setPlanid(String planid) {
+	    this.planid = planid;
+	  }
 
-	public Task jobid(String jobid) {
-		this.jobid = jobid;
-		return this;
-	}
+	  public Task stageid(String stageid) {
+	    this.stageid = stageid;
+	    return this;
+	  }
 
-	/**
-	 * Get jobid
-	 * 
-	 * @return jobid
-	 **/
-	@ApiModelProperty(value = "")
+	  /**
+	   * Get stageid
+	   * @return stageid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public String getJobid() {
-		return jobid;
-	}
 
-	public void setJobid(String jobid) {
-		this.jobid = jobid;
-	}
+	  public String getStageid() {
+	    return stageid;
+	  }
 
-	public Task name(String name) {
-		this.name = name;
-		return this;
-	}
+	  public void setStageid(String stageid) {
+	    this.stageid = stageid;
+	  }
 
-	/**
-	 * Get name
-	 * 
-	 * @return name
-	 **/
-	@ApiModelProperty(value = "")
+	  public Task jobid(String jobid) {
+	    this.jobid = jobid;
+	    return this;
+	  }
 
-	public String getName() {
-		return name;
-	}
+	  /**
+	   * Get jobid
+	   * @return jobid
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public Task shortname(String shortname) {
-		this.shortname = shortname;
-		return this;
-	}
+	  public String getJobid() {
+	    return jobid;
+	  }
 
-	/**
-	 * Get shortname
-	 * 
-	 * @return shortname
-	 **/
-	@ApiModelProperty(value = "")
+	  public void setJobid(String jobid) {
+	    this.jobid = jobid;
+	  }
 
-	public String getShortname() {
-		return shortname;
-	}
+	  public Task name(String name) {
+	    this.name = name;
+	    return this;
+	  }
 
-	public void setShortname(String shortname) {
-		this.shortname = shortname;
-	}
+	  /**
+	   * Get name
+	   * @return name
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public Task sequence(Long sequence) {
-		this.sequence = sequence;
-		return this;
-	}
 
-	/**
-	 * Get sequence
-	 * 
-	 * @return sequence
-	 **/
-	@ApiModelProperty(value = "")
+	  public String getName() {
+	    return name;
+	  }
 
-	public Long getSequence() {
-		return sequence;
-	}
+	  public void setName(String name) {
+	    this.name = name;
+	  }
 
-	public void setSequence(Long sequence) {
-		this.sequence = sequence;
-	}
+	  public Task shortname(String shortname) {
+	    this.shortname = shortname;
+	    return this;
+	  }
 
-	public Task variables(List<Variable> variables) {
-		this.variables = variables;
-		return this;
-	}
+	  /**
+	   * Get shortname
+	   * @return shortname
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public Task addVariablesItem(Variable variablesItem) {
-		if (this.variables == null) {
-			this.variables = new ArrayList<Variable>();
-		}
-		this.variables.add(variablesItem);
-		return this;
-	}
 
-	/**
-	 * Get variables
-	 * 
-	 * @return variables
-	 **/
-	@ApiModelProperty(value = "")
+	  public String getShortname() {
+	    return shortname;
+	  }
 
-	@Valid
+	  public void setShortname(String shortname) {
+	    this.shortname = shortname;
+	  }
 
-	public List<Variable> getVariables() {
-		return variables;
-	}
+	  public Task sequence(Long sequence) {
+	    this.sequence = sequence;
+	    return this;
+	  }
 
-	public void setVariables(List<Variable> variables) {
-		this.variables = variables;
-	}
+	  /**
+	   * Get sequence
+	   * @return sequence
+	  **/
+	  @ApiModelProperty(value = "")
 
-	public Task enabled(Boolean enabled) {
-		this.enabled = enabled;
-		return this;
-	}
 
-	/**
-	 * Get enabled
-	 * 
-	 * @return enabled
-	 **/
-	@ApiModelProperty(value = "")
+	  public Long getSequence() {
+	    return sequence;
+	  }
 
-	public Boolean isEnabled() {
-		return enabled;
-	}
+	  public void setSequence(Long sequence) {
+	    this.sequence = sequence;
+	  }
 
-	public void setEnabled(Boolean enabled) {
-		this.enabled = enabled;
-	}
+	  public Task variables(List<Variable> variables) {
+	    this.variables = variables;
+	    return this;
+	  }
 
-	@Override
-	public boolean equals(java.lang.Object o) {
-		if (this == o) {
-			return true;
-		}
-		if (o == null || getClass() != o.getClass()) {
-			return false;
-		}
-		Task task = (Task) o;
-		return Objects.equals(this.id, task.id) && Objects.equals(this.projectid, task.projectid)
-				&& Objects.equals(this.planid, task.planid) && Objects.equals(this.stageid, task.stageid)
-				&& Objects.equals(this.jobid, task.jobid) && Objects.equals(this.name, task.name)
-				&& Objects.equals(this.shortname, task.shortname) && Objects.equals(this.sequence, task.sequence)
-				&& Objects.equals(this.variables, task.variables) && Objects.equals(this.enabled, task.enabled);
-	}
+	  public Task addVariablesItem(Variable variablesItem) {
+	    if (this.variables == null) {
+	      this.variables = new ArrayList<Variable>();
+	    }
+	    this.variables.add(variablesItem);
+	    return this;
+	  }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(id, projectid, planid, stageid, jobid, name, shortname, sequence, variables, enabled);
-	}
+	  /**
+	   * Get variables
+	   * @return variables
+	  **/
+	  @ApiModelProperty(value = "")
 
-	@Override
-	public String toString() {
-		StringBuilder sb = new StringBuilder();
-		sb.append("class Task {\n");
+	  @Valid
 
-		sb.append("    id: ").append(toIndentedString(id)).append("\n");
-		sb.append("    projectid: ").append(toIndentedString(projectid)).append("\n");
-		sb.append("    planid: ").append(toIndentedString(planid)).append("\n");
-		sb.append("    stageid: ").append(toIndentedString(stageid)).append("\n");
-		sb.append("    jobid: ").append(toIndentedString(jobid)).append("\n");
-		sb.append("    name: ").append(toIndentedString(name)).append("\n");
-		sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
-		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
-		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
-		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
-		sb.append("}");
-		return sb.toString();
-	}
+	  public List<Variable> getVariables() {
+	    return variables;
+	  }
 
-	/**
-	 * Convert the given object to string with each line indented by 4 spaces
-	 * (except the first line).
-	 */
-	private String toIndentedString(java.lang.Object o) {
-		if (o == null) {
-			return "null";
-		}
-		return o.toString().replace("\n", "\n    ");
-	}
+	  public void setVariables(List<Variable> variables) {
+	    this.variables = variables;
+	  }
 
+	  public Task enabled(Boolean enabled) {
+	    this.enabled = enabled;
+	    return this;
+	  }
+
+	  /**
+	   * Get enabled
+	   * @return enabled
+	  **/
+	  @ApiModelProperty(value = "")
+
+
+	  public Boolean isEnabled() {
+	    return enabled;
+	  }
+
+	  public void setEnabled(Boolean enabled) {
+	    this.enabled = enabled;
+	  }
+
+	  public Task _configuration(TaskConfiguration _configuration) {
+	    this.configuration = configuration;
+	    return this;
+	  }
+
+	  /**
+	   * Get _configuration
+	   * @return _configuration
+	  **/
+	  @ApiModelProperty(value = "")
+
+	  @Valid
+
+	  public TaskConfiguration getConfiguration() {
+	    return configuration;
+	  }
+
+	  public void setConfiguration(TaskConfiguration configuration) {
+	    this.configuration = configuration;
+	  }
+
+	  public Task condition(TaskCondition condition) {
+	    this.condition = condition;
+	    return this;
+	  }
+
+	  /**
+	   * Get condition
+	   * @return condition
+	  **/
+	  @ApiModelProperty(value = "")
+
+	  @Valid
+
+	  public TaskCondition getCondition() {
+	    return condition;
+	  }
+
+	  public void setCondition(TaskCondition condition) {
+	    this.condition = condition;
+	  }
+
+
+	  @Override
+	  public boolean equals(java.lang.Object o) {
+	    if (this == o) {
+	      return true;
+	    }
+	    if (o == null || getClass() != o.getClass()) {
+	      return false;
+	    }
+	    Task task = (Task) o;
+	    return Objects.equals(this.id, task.id) &&
+	        Objects.equals(this.projectid, task.projectid) &&
+	        Objects.equals(this.planid, task.planid) &&
+	        Objects.equals(this.stageid, task.stageid) &&
+	        Objects.equals(this.jobid, task.jobid) &&
+	        Objects.equals(this.name, task.name) &&
+	        Objects.equals(this.shortname, task.shortname) &&
+	        Objects.equals(this.sequence, task.sequence) &&
+	        Objects.equals(this.variables, task.variables) &&
+	        Objects.equals(this.enabled, task.enabled) &&
+	        Objects.equals(this.configuration, task.configuration) &&
+	        Objects.equals(this.condition, task.condition);
+	  }
+
+	  @Override
+	  public int hashCode() {
+	    return Objects.hash(id, projectid, planid, stageid, jobid, name, shortname, sequence, variables, enabled, configuration, condition);
+	  }
+
+	  @Override
+	  public String toString() {
+	    StringBuilder sb = new StringBuilder();
+	    sb.append("class Task {\n");
+	    
+	    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+	    sb.append("    projectid: ").append(toIndentedString(projectid)).append("\n");
+	    sb.append("    planid: ").append(toIndentedString(planid)).append("\n");
+	    sb.append("    stageid: ").append(toIndentedString(stageid)).append("\n");
+	    sb.append("    jobid: ").append(toIndentedString(jobid)).append("\n");
+	    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+	    sb.append("    shortname: ").append(toIndentedString(shortname)).append("\n");
+	    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+	    sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
+	    sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+	    sb.append("    _configuration: ").append(toIndentedString(configuration)).append("\n");
+	    sb.append("    condition: ").append(toIndentedString(condition)).append("\n");
+	    sb.append("}");
+	    return sb.toString();
+	  }
+
+	  /**
+	   * Convert the given object to string with each line indented by 4 spaces
+	   * (except the first line).
+	   */
+	  private String toIndentedString(java.lang.Object o) {
+	    if (o == null) {
+	      return "null";
+	    }
+	    return o.toString().replace("\n", "\n    ");
+	  }
+	  
 }

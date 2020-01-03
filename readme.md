@@ -1,5 +1,6 @@
-# governor
+# Governor
 
+![alt text](assets/auditlogo4.png)
 
 
 ## Build
@@ -49,7 +50,7 @@ Refer to this Webpage for Springboot Implementation with Mongo DB
 
 Hosting Domain
 
-[CGovern](www.cgovern.com)
+[www.cgovern.com](www.cgovern.com)
 
 ## Notes
 

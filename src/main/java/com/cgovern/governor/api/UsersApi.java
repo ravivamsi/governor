@@ -62,4 +62,14 @@ public interface UsersApi {
 			@ApiParam(value = "name that need to be updated", required = true) @PathVariable("username") String username,
 			@ApiParam(value = "Updated user object", required = true) @Valid @RequestBody User body);
 
+	
+	@ApiOperation(value = "Get username availability", nickname = "getUserNameAvailability", notes = "", tags={ "user", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "successful operation"),
+        @ApiResponse(code = 400, message = "Invalid username supplied") })
+    @RequestMapping(value = "/users/{username}/availability",
+        method = RequestMethod.GET)
+    ResponseEntity<Void> getUserNameAvailability(@ApiParam(value = "The name that needs to be fetched. Use user1 for testing. ",required=true) 
+    @PathVariable("username") String username);
+
 }

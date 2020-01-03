@@ -2129,7 +2129,7 @@ definitions:
           $ref: "#/definitions/Variable"
       enabled:
         type: "boolean"
-      config:
+      configuration:
         type: "object"
         properties:
           taskconfigid:
