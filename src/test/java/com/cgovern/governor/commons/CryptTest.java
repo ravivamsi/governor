@@ -3,8 +3,6 @@
  */
 package com.cgovern.governor.commons;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,7 +12,7 @@ import org.junit.jupiter.api.Test;
  *
  */
 class CryptTest {
-	
+
 //	TODO
 
 	/**
@@ -36,18 +34,17 @@ class CryptTest {
 
 //		fail("Not yet implemented");
 	}
-	
+
 	@Test
 	void testDecodeCreds() {
 //		fail("Not yet implemented");
 	}
 
-	
 	@Test
 	void testUrlDecode() {
 //		fail("Not yet implemented");
 	}
-	
+
 	@Test
 	void testUrlEncode() {
 //		fail("Not yet implemented");
