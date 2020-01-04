@@ -1,0 +1,27 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+
+<suite name="Regression Test Suite">
+
+	<test name="DImage">
+		<groups>
+			<run>
+				<include name="regression" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.cgovern.governor.automation.TestDImage" />
+		</classes>
+	</test>
+
+	<test name="Worker">
+		<groups>
+			<run>
+				<include name="regression" />
+			</run>
+		</groups>
+		<classes>
+			<class name="com.cgovern.governor.automation.TestWorker" />
+		</classes>
+	</test>
+
+</suite>
