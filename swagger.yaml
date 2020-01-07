@@ -5,7 +5,7 @@ info:
   title: "Governor"
   termsOfService: "http://cgovern.com/terms/"
   contact:
-    email: "ivamsiravi@gmail.com"
+    email: "cgovern@outlook.com"
   license:
     name: "Apache 2.0"
     url: "http://www.apache.org/licenses/LICENSE-2.0.html"
@@ -583,7 +583,7 @@ paths:
             $ref: "#/definitions/Plan"
         404: 
           description: "Not Found"
-  /projects/{projectId}/plans/{planId}/stages:
+  /plans/{planId}/stages:
     post:
       tags: 
       - "stage"
@@ -594,16 +594,10 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "planId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
         description: "Stage object"
@@ -627,16 +621,10 @@ paths:
       summary: "Retrieve All Stages"
       operationId: "getStages"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "planId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: OK
@@ -644,27 +632,20 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Stage"
-  /projects/{projectId}/plans/{planId}/stages/{stageId}:
+  /plans/{planId}/stages/{stageId}:
     put:
       tags:
       - "stage"
       summary: "Update existing Stage"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "planId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "stageId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
         description: "Stage object"
@@ -687,22 +668,14 @@ paths:
       - "stage"
       summary: "Delete existing Stage"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "planId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         204:
           description: "No Content"
@@ -715,22 +688,14 @@ paths:
       - "stage"
       summary: "Retrieve Existing Stage"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "planId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: "OK"
@@ -738,7 +703,7 @@ paths:
             $ref: "#/definitions/Stage"
         404: 
           description: "Not Found"
-  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs:
+  /stages/{stageId}/jobs:
     post:
       tags: 
       - "job"
@@ -749,22 +714,10 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
         description: "Job object"
@@ -788,22 +741,10 @@ paths:
       summary: "Retrieve All Jobs"
       operationId: "getJobs"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: OK
@@ -811,34 +752,21 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Job"
-  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}:
+  /stages/{stageId}/jobs/{jobId}:
     put:
       tags:
       - "job"
       summary: "Update existing job"
       operationId: "updateJobById"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "jobId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
         description: "Job object"
@@ -862,27 +790,14 @@ paths:
       summary: "Delete existing Job"
       operationId: "deleteJobById"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "jobId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         204:
           description: "No Content"
@@ -896,28 +811,14 @@ paths:
       summary: "Retrieve Existing Job"
       operationId: "getJobById"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "stageId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "jobId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: "OK"
@@ -925,7 +826,7 @@ paths:
             $ref: "#/definitions/Job"
         404: 
           description: "Not Found"
-  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}/tasks:
+  /jobs/{jobId}/tasks:
     post:
       tags: 
       - "task"
@@ -936,28 +837,10 @@ paths:
       produces:
       - "application/json"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "stageId"
-        in: "path"
-        description: ""
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "jobId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
         description: "Task object"
@@ -981,28 +864,10 @@ paths:
       summary: "Retrieve All Tasks"
       operationId: "getTasks"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "stageId"
-        in: "path"
-        description: ""
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "jobId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: OK
@@ -1010,39 +875,20 @@ paths:
             type: "array"
             items:
               $ref: "#/definitions/Task"
-  /projects/{projectId}/plans/{planId}/stages/{stageId}/jobs/{jobId}/tasks/{taskId}:
+  /jobs/{jobId}/tasks/{taskId}:
     put:
       tags:
       - "task"
       summary: "Update existing Task"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "stageId"
-        in: "path"
-        description: ""
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "jobId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "taskId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - in: "body"
         name: "body"
         description: "Task object"
@@ -1065,33 +911,14 @@ paths:
       - "task"
       summary: "Delete existing Task"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "stageId"
-        in: "path"
-        description: ""
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "jobId"
         in: "path"
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "taskId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         204:
           description: "No Content"
@@ -1104,34 +931,14 @@ paths:
       - "task"
       summary: "Retrieve Existing Task"
       parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "planId"
-        in: "path"
-        required: true
-        type: "integer"
-        format: "int64"
-      - name: "stageId"
-        in: "path"
-        description: ""
-        required: true
-        type: "integer"
-        format: "int64"
       - name: "jobId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       - name: "taskId"
         in: "path"
-        description: ""
         required: true
-        type: "integer"
-        format: "int64"
+        type: "string"
       responses:
         200:
           description: "OK"
