@@ -16,13 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cgovern.governor.models.BadRequest;
-import com.cgovern.governor.models.Job;
-import com.cgovern.governor.models.Plan;
-import com.cgovern.governor.models.Project;
-import com.cgovern.governor.models.Stage;
 import com.cgovern.governor.models.Task;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,30 +29,22 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "projects", description = "the projects API")
 public interface TasksApi {
 
-	
-
 	@ApiOperation(value = "Create New Task", nickname = "addTask", notes = "", response = Task.class, tags = {
 			"task", })
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Created", response = Task.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 409, message = "Conflict") })
-	@RequestMapping(value = "/jobs/{jobId}/tasks", produces = {
-			"application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Task> addTask(
-			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+	@RequestMapping(value = "/jobs/{jobId}/tasks", produces = { "application/json" }, consumes = {
+			"application/json" }, method = RequestMethod.POST)
+	ResponseEntity<Task> addTask(@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body);
-
-	
 
 	@ApiOperation(value = "Retrieve All Tasks", nickname = "getTasks", notes = "", response = Task.class, responseContainer = "List", tags = {
 			"task", })
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK", response = Task.class, responseContainer = "List") })
 	@RequestMapping(value = "/jobs/{jobId}/tasks", method = RequestMethod.GET)
-	ResponseEntity<List<Task>> getTasks(
-			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId);
-
-	
+	ResponseEntity<List<Task>> getTasks(@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId);
 
 	@ApiOperation(value = "Delete existing Task", nickname = "projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdDelete", notes = "", response = Task.class, tags = {
 			"task", })
@@ -75,7 +61,7 @@ public interface TasksApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/jobs/{jobId}/tasks/{taskId}", method = RequestMethod.GET)
 	ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdGet(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId);
 
@@ -86,11 +72,9 @@ public interface TasksApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/jobs/{jobId}/tasks/{taskId}", method = RequestMethod.PUT)
 	ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdPut(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body);
-
-	
 
 }

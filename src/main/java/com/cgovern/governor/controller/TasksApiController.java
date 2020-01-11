@@ -36,9 +36,7 @@ import io.swagger.annotations.ApiParam;
 
 @Controller
 public class TasksApiController implements TasksApi {
-	
-	
-	
+
 //	TODO - Fix Implementation
 
 	private static final Logger log = LoggerFactory.getLogger(TasksApiController.class);
@@ -70,9 +68,7 @@ public class TasksApiController implements TasksApi {
 		this.taskRepository = taskRepository;
 	}
 
-	
-	public ResponseEntity<Task> addTask(
-			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+	public ResponseEntity<Task> addTask(@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
@@ -100,8 +96,6 @@ public class TasksApiController implements TasksApi {
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<List<Task>> getTasks(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
@@ -145,8 +139,6 @@ public class TasksApiController implements TasksApi {
 		return new ResponseEntity<List<Task>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdDelete(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
@@ -159,7 +151,8 @@ public class TasksApiController implements TasksApi {
 		Task task = new Task();
 		if (accept != null && accept.contains("application/json")) {
 //			TEST
-			Optional<Project> optionalProject = projectRepository.findById(taskRepository.findById(jobId).get().getProjectid());
+			Optional<Project> optionalProject = projectRepository
+					.findById(taskRepository.findById(jobId).get().getProjectid());
 
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -176,7 +169,8 @@ public class TasksApiController implements TasksApi {
 				}
 
 				if (isPlanIdexPresent) {
-					Optional<Plan> optionalPlan = planRepository.findById(taskRepository.findById(jobId).get().getPlanid());
+					Optional<Plan> optionalPlan = planRepository
+							.findById(taskRepository.findById(jobId).get().getPlanid());
 					if (optionalPlan.isPresent()) {
 						plan = optionalPlan.get();
 					}
@@ -186,14 +180,16 @@ public class TasksApiController implements TasksApi {
 					if (plan.getStages() != null) {
 						for (Index currentStageIndex : plan.getStages()) {
 
-							if (currentStageIndex.getId().equalsIgnoreCase(taskRepository.findById(jobId).get().getStageid())) {
+							if (currentStageIndex.getId()
+									.equalsIgnoreCase(taskRepository.findById(jobId).get().getStageid())) {
 								isStageIndexPresent = true;
 							}
 
 						}
 						if (isStageIndexPresent) {
 
-							Optional<Stage> optionalStage = stageRepository.findById(taskRepository.findById(jobId).get().getStageid());
+							Optional<Stage> optionalStage = stageRepository
+									.findById(taskRepository.findById(jobId).get().getStageid());
 							if (optionalStage.isPresent()) {
 								stage = optionalStage.get();
 
@@ -277,8 +273,6 @@ public class TasksApiController implements TasksApi {
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdGet(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
@@ -291,7 +285,8 @@ public class TasksApiController implements TasksApi {
 		Task task = new Task();
 		if (accept != null && accept.contains("application/json")) {
 //			TEST
-			Optional<Project> optionalProject = projectRepository.findById(taskRepository.findById(jobId).get().getProjectid());
+			Optional<Project> optionalProject = projectRepository
+					.findById(taskRepository.findById(jobId).get().getProjectid());
 
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -308,7 +303,8 @@ public class TasksApiController implements TasksApi {
 				}
 
 				if (isPlanIdexPresent) {
-					Optional<Plan> optionalPlan = planRepository.findById(taskRepository.findById(jobId).get().getProjectid());
+					Optional<Plan> optionalPlan = planRepository
+							.findById(taskRepository.findById(jobId).get().getProjectid());
 					if (optionalPlan.isPresent()) {
 						plan = optionalPlan.get();
 					}
@@ -318,14 +314,16 @@ public class TasksApiController implements TasksApi {
 					if (plan.getStages() != null) {
 						for (Index currentStageIndex : plan.getStages()) {
 
-							if (currentStageIndex.getId().equalsIgnoreCase(taskRepository.findById(jobId).get().getProjectid())) {
+							if (currentStageIndex.getId()
+									.equalsIgnoreCase(taskRepository.findById(jobId).get().getProjectid())) {
 								isStageIndexPresent = true;
 							}
 
 						}
 						if (isStageIndexPresent) {
 
-							Optional<Stage> optionalStage = stageRepository.findById(taskRepository.findById(jobId).get().getProjectid());
+							Optional<Stage> optionalStage = stageRepository
+									.findById(taskRepository.findById(jobId).get().getProjectid());
 							if (optionalStage.isPresent()) {
 								stage = optionalStage.get();
 
@@ -415,7 +413,8 @@ public class TasksApiController implements TasksApi {
 		if (accept != null && accept.contains("application/json")) {
 			Project project = new Project();
 
-			Optional<Project> optionalProject = projectRepository.findById(taskRepository.findById(jobId).get().getProjectid());
+			Optional<Project> optionalProject = projectRepository
+					.findById(taskRepository.findById(jobId).get().getProjectid());
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
 			} else {
@@ -432,7 +431,8 @@ public class TasksApiController implements TasksApi {
 			}
 
 			Stage stage = new Stage();
-			Optional<Stage> optionalStage = stageRepository.findById(taskRepository.findById(jobId).get().getProjectid());
+			Optional<Stage> optionalStage = stageRepository
+					.findById(taskRepository.findById(jobId).get().getProjectid());
 
 			if (optionalStage.isPresent()) {
 				stage = optionalStage.get();
@@ -478,7 +478,5 @@ public class TasksApiController implements TasksApi {
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 }

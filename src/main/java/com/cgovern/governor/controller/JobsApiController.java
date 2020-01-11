@@ -49,14 +49,11 @@ public class JobsApiController implements JobsApi {
 
 	private final JobRepository jobRepository;
 
-
 //	TODO - Fix Implementation
-	
-	
+
 	@org.springframework.beans.factory.annotation.Autowired
-	public JobsApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			ProjectRepository projectRepository, PlanRepository planRepository, StageRepository stageRepository,
-			JobRepository jobRepository) {
+	public JobsApiController(ObjectMapper objectMapper, HttpServletRequest request, ProjectRepository projectRepository,
+			PlanRepository planRepository, StageRepository stageRepository, JobRepository jobRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.projectRepository = projectRepository;
@@ -66,7 +63,7 @@ public class JobsApiController implements JobsApi {
 	}
 
 	public ResponseEntity<Job> addJob(
-	
+
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
@@ -103,8 +100,6 @@ public class JobsApiController implements JobsApi {
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Job> deleteJobById(
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
@@ -152,7 +147,6 @@ public class JobsApiController implements JobsApi {
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
 
 	public ResponseEntity<Job> getJobById(
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
@@ -238,8 +232,6 @@ public class JobsApiController implements JobsApi {
 		return new ResponseEntity<List<Job>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<Job> updateJobById(
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
@@ -248,7 +240,8 @@ public class JobsApiController implements JobsApi {
 		if (accept != null && accept.contains("application/json")) {
 			Project project = new Project();
 
-			Optional<Project> optionalProject = projectRepository.findById(stageRepository.findById(stageId).get().getProjectid());
+			Optional<Project> optionalProject = projectRepository
+					.findById(stageRepository.findById(stageId).get().getProjectid());
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
 			} else {
@@ -300,7 +293,5 @@ public class JobsApiController implements JobsApi {
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 }

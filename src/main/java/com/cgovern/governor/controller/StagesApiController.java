@@ -55,13 +55,11 @@ public class StagesApiController implements StagesApi {
 		this.projectRepository = projectRepository;
 		this.planRepository = planRepository;
 		this.stageRepository = stageRepository;
-		
+
 	}
 
-	
-
 	public ResponseEntity<Stage> addStage(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
@@ -91,10 +89,8 @@ public class StagesApiController implements StagesApi {
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<List<Stage>> getStages(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
 		String accept = request.getHeader("Accept");
 
@@ -137,10 +133,8 @@ public class StagesApiController implements StagesApi {
 		return new ResponseEntity<List<Stage>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdGet(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
@@ -149,7 +143,8 @@ public class StagesApiController implements StagesApi {
 		Stage stage = new Stage();
 		if (accept != null && accept.contains("application/json")) {
 //			Test
-			Optional<Project> optionalProject = projectRepository.findById(planRepository.findById(planId).get().getProjectid());
+			Optional<Project> optionalProject = projectRepository
+					.findById(planRepository.findById(planId).get().getProjectid());
 
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -209,10 +204,8 @@ public class StagesApiController implements StagesApi {
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdDelete(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
@@ -223,7 +216,8 @@ public class StagesApiController implements StagesApi {
 
 		if (accept != null && accept.contains("application/json")) {
 //			Test
-			Optional<Project> optionalProject = projectRepository.findById(planRepository.findById(planId).get().getProjectid());
+			Optional<Project> optionalProject = projectRepository
+					.findById(planRepository.findById(planId).get().getProjectid());
 
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -289,16 +283,13 @@ public class StagesApiController implements StagesApi {
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdPut(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-			
 
 			Plan plan = new Plan();
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
@@ -336,7 +327,5 @@ public class StagesApiController implements StagesApi {
 
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 }

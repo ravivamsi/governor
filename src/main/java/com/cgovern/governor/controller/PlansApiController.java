@@ -42,18 +42,16 @@ public class PlansApiController implements PlansApi {
 	private final PlanRepository planRepository;
 
 //	TODO - Fix Implementation
-	
+
 	@org.springframework.beans.factory.annotation.Autowired
 	public PlansApiController(ObjectMapper objectMapper, HttpServletRequest request,
 			ProjectRepository projectRepository, PlanRepository planRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
-		this.projectRepository=projectRepository;
+		this.projectRepository = projectRepository;
 		this.planRepository = planRepository;
-		
-	}
 
-	
+	}
 
 	public ResponseEntity<Plan> addPlan(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
@@ -92,8 +90,6 @@ public class PlansApiController implements PlansApi {
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Plan> deletePlanById(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
@@ -139,8 +135,6 @@ public class PlansApiController implements PlansApi {
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Plan> getPlanById(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
@@ -225,8 +219,6 @@ public class PlansApiController implements PlansApi {
 
 		return new ResponseEntity<List<Plan>>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Plan> updatePlanById(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,

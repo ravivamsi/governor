@@ -16,13 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.cgovern.governor.models.BadRequest;
-import com.cgovern.governor.models.Job;
-import com.cgovern.governor.models.Plan;
-import com.cgovern.governor.models.Project;
 import com.cgovern.governor.models.Stage;
-import com.cgovern.governor.models.Task;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -35,29 +29,22 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "projects", description = "the projects API")
 public interface StagesApi {
 
-	
 	@ApiOperation(value = "Create New Stage", nickname = "addStage", notes = "", response = Stage.class, tags = {
 			"stage", })
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Created", response = Stage.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 409, message = "Conflict") })
-	@RequestMapping(value = "/plans/{planId}/stages", produces = {
-			"application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Stage> addStage(
-			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
+	@RequestMapping(value = "/plans/{planId}/stages", produces = { "application/json" }, consumes = {
+			"application/json" }, method = RequestMethod.POST)
+	ResponseEntity<Stage> addStage(@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body);
-
-	
 
 	@ApiOperation(value = "Retrieve All Stages", nickname = "getStages", notes = "", response = Stage.class, responseContainer = "List", tags = {
 			"stage", })
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK", response = Stage.class, responseContainer = "List") })
 	@RequestMapping(value = "/plans/{planId}/stages", method = RequestMethod.GET)
-	ResponseEntity<List<Stage>> getStages(
-			@ApiParam(value = "", required = true) @PathVariable("planId") String planId);
-
-	
+	ResponseEntity<List<Stage>> getStages(@ApiParam(value = "", required = true) @PathVariable("planId") String planId);
 
 	@ApiOperation(value = "Delete existing Stage", nickname = "projectsProjectIdPlansPlanIdStagesStageIdDelete", notes = "", response = Stage.class, tags = {
 			"stage", })
@@ -74,11 +61,9 @@ public interface StagesApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/plans/{planId}/stages/{stageId}", method = RequestMethod.GET)
 	ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdGet(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId);
-
-	
 
 	@ApiOperation(value = "Update existing Stage", nickname = "projectsProjectIdPlansPlanIdStagesStageIdPut", notes = "", response = Stage.class, tags = {
 			"stage", })
@@ -90,7 +75,5 @@ public interface StagesApi {
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body);
-
-	
 
 }

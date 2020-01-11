@@ -33,13 +33,10 @@ public interface JobsApi {
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Created", response = Job.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 409, message = "Conflict") })
-	@RequestMapping(value = "/stages/{stageId}/jobs", produces = {
-			"application/json" }, consumes = { "application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Job> addJob(
-			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+	@RequestMapping(value = "/stages/{stageId}/jobs", produces = { "application/json" }, consumes = {
+			"application/json" }, method = RequestMethod.POST)
+	ResponseEntity<Job> addJob(@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body);
-
-	
 
 	@ApiOperation(value = "Delete existing Job", nickname = "deleteJobById", notes = "", response = Job.class, tags = {
 			"job", })
@@ -47,18 +44,16 @@ public interface JobsApi {
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/stages/{stageId}/jobs/{jobId}", method = RequestMethod.DELETE)
 	ResponseEntity<Job> deleteJobById(
-			
+
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId);
 
-	
 	@ApiOperation(value = "Retrieve Existing Job", nickname = "getJobById", notes = "", response = Job.class, tags = {
 			"job", })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Job.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/stages/{stageId}/jobs/{jobId}", method = RequestMethod.GET)
-	ResponseEntity<Job> getJobById(
-			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+	ResponseEntity<Job> getJobById(@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId);
 
 	@ApiOperation(value = "Retrieve All Jobs", nickname = "getJobs", notes = "", response = Job.class, responseContainer = "List", tags = {
@@ -66,21 +61,16 @@ public interface JobsApi {
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK", response = Job.class, responseContainer = "List") })
 	@RequestMapping(value = "/projects/{projectId}/plans/{planId}/stages/{stageId}/jobs", method = RequestMethod.GET)
-	ResponseEntity<List<Job>> getJobs(
-			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId);
+	ResponseEntity<List<Job>> getJobs(@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId);
 
-	
 	@ApiOperation(value = "Update existing job", nickname = "updateJobById", notes = "", response = Job.class, tags = {
 			"job", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Job.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/stages/{stageId}/jobs/{jobId}", method = RequestMethod.PUT)
-	ResponseEntity<Job> updateJobById(
-			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
+	ResponseEntity<Job> updateJobById(@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body);
-
-	
 
 }

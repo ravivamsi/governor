@@ -17,22 +17,20 @@ import io.swagger.annotations.ApiModelProperty;
  *
  */
 public class Group {
-	
-	
+
 	@Id
 	@JsonProperty("id")
 	private String id = null;
 
 	@JsonProperty("name")
 	private String name = null;
-	
+
 	@JsonProperty("roles")
 	private List<String> roles = null;
 
 	@JsonProperty("users")
 	private List<String> users = null;
-	
-	
+
 	public Group id(String id) {
 		this.id = id;
 		return this;
@@ -72,13 +70,12 @@ public class Group {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
+
 	public Group roles(List<String> roles) {
 		this.roles = roles;
 		return this;
 	}
-	
+
 	/**
 	 * Get roles
 	 * 
@@ -93,14 +90,12 @@ public class Group {
 	public void setRoles(List<String> roles) {
 		this.roles = roles;
 	}
-	
-	
-	
+
 	public Group users(List<String> users) {
 		this.users = users;
 		return this;
 	}
-	
+
 	/**
 	 * Get users
 	 * 
@@ -115,7 +110,6 @@ public class Group {
 	public void setUsers(List<String> users) {
 		this.users = users;
 	}
-	
 
 	@Override
 	public boolean equals(java.lang.Object o) {
@@ -158,5 +152,5 @@ public class Group {
 		}
 		return o.toString().replace("\n", "\n    ");
 	}
-	
+
 }

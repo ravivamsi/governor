@@ -33,7 +33,7 @@ public class Plan {
 
 	@JsonProperty("name")
 	private String name = null;
-	
+
 	@JsonProperty("groups")
 	private List<String> groups = null;
 
@@ -325,13 +325,11 @@ public class Plan {
 		this.enabled = enabled;
 	}
 
-	
-	
 	public Plan groups(List<String> groups) {
 		this.groups = groups;
 		return this;
 	}
-	
+
 	/**
 	 * Get groups
 	 * 
@@ -347,7 +345,6 @@ public class Plan {
 		this.groups = groups;
 	}
 
-	
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {

@@ -39,7 +39,7 @@ public class Project {
 	@JsonProperty("variables")
 	@Valid
 	private List<Variable> variables = null;
-	
+
 	@JsonProperty("groups")
 	private List<String> groups = null;
 
@@ -185,13 +185,12 @@ public class Project {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
-	
+
 	public Project groups(List<String> groups) {
 		this.groups = groups;
 		return this;
 	}
-	
+
 	/**
 	 * Get groups
 	 * 
@@ -206,7 +205,6 @@ public class Project {
 	public void setGroups(List<String> groups) {
 		this.groups = groups;
 	}
-
 
 	@Override
 	public boolean equals(java.lang.Object o) {

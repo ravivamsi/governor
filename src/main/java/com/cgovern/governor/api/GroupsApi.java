@@ -36,8 +36,7 @@ public interface GroupsApi {
 			@ApiResponse(code = 409, message = "Conflict") })
 	@RequestMapping(value = "/groups", produces = { "application/json" }, consumes = {
 			"application/json" }, method = RequestMethod.POST)
-	ResponseEntity<Group> addGroup(
-			@ApiParam(value = "Group object", required = true) @Valid @RequestBody Group body);
+	ResponseEntity<Group> addGroup(@ApiParam(value = "Group object", required = true) @Valid @RequestBody Group body);
 
 	@ApiOperation(value = "Delete existing Group", nickname = "deleteGroupById", notes = "", response = Group.class, tags = {
 			"group", })
@@ -52,8 +51,7 @@ public interface GroupsApi {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Group.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/groups/{groupId}", method = RequestMethod.GET)
-	ResponseEntity<Group> getGroupById(
-			@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId);
+	ResponseEntity<Group> getGroupById(@ApiParam(value = "", required = true) @PathVariable("groupId") String groupId);
 
 	@ApiOperation(value = "Retrieve All Groups", nickname = "getGroups", notes = "", response = Group.class, responseContainer = "List", tags = {
 			"group", })

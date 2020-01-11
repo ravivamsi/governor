@@ -35,13 +35,9 @@ public class Pipeline {
 
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
-	
+
 	@JsonProperty("groups")
 	private List<String> groups = null;
-	
-	
-	
-
 
 	public Pipeline id(String id) {
 		this.id = id;
@@ -134,12 +130,12 @@ public class Pipeline {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
-	
+
 	public Pipeline groups(List<String> groups) {
 		this.groups = groups;
 		return this;
 	}
-	
+
 	/**
 	 * Get groups
 	 * 
@@ -154,7 +150,6 @@ public class Pipeline {
 	public void setGroups(List<String> groups) {
 		this.groups = groups;
 	}
-	
 
 	@Override
 	public boolean equals(java.lang.Object o) {

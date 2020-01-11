@@ -39,7 +39,6 @@ public interface PlansApi {
 	ResponseEntity<Plan> addPlan(@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body);
 
-	
 	@ApiOperation(value = "Delete existing plan", nickname = "deletePlanById", notes = "", response = Plan.class, tags = {
 			"plan", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Plan.class),
@@ -64,7 +63,6 @@ public interface PlansApi {
 	@RequestMapping(value = "/projects/{projectId}/plans", method = RequestMethod.GET)
 	ResponseEntity<List<Plan>> getPlans(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId);
-
 
 	@ApiOperation(value = "Update existing Plan", nickname = "updatePlanById", notes = "", response = Plan.class, tags = {
 			"plan", })

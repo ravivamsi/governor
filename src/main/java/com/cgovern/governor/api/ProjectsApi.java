@@ -31,8 +31,6 @@ import io.swagger.annotations.ApiResponses;
 @Api(value = "projects", description = "the projects API")
 public interface ProjectsApi {
 
-	
-
 	@ApiOperation(value = "Create New Project", nickname = "addProject", notes = "", response = Project.class, tags = {
 			"project", })
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Created", response = Project.class),
@@ -43,16 +41,12 @@ public interface ProjectsApi {
 	ResponseEntity<Project> addProject(
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body);
 
-	
-
 	@ApiOperation(value = "Retrieve All Projects", nickname = "getProjects", notes = "", response = Project.class, responseContainer = "List", tags = {
 			"project", })
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "OK", response = Project.class, responseContainer = "List") })
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException;
-
-	
 
 	@ApiOperation(value = "Delete existing Project", nickname = "projectsProjectIdDelete", notes = "", response = Project.class, tags = {
 			"project", })
@@ -70,8 +64,6 @@ public interface ProjectsApi {
 	ResponseEntity<Project> projectsProjectIdGet(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId);
 
-	
-
 	@ApiOperation(value = "Update existing Project", nickname = "projectsProjectIdPut", notes = "", response = Project.class, tags = {
 			"project", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Project.class),
@@ -81,7 +73,5 @@ public interface ProjectsApi {
 	ResponseEntity<Project> projectsProjectIdPut(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body);
-
-	
 
 }

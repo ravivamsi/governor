@@ -35,8 +35,7 @@ public class GroupsApiController implements GroupsApi {
 	private final GroupRepository groupRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public GroupsApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			GroupRepository groupRepository) {
+	public GroupsApiController(ObjectMapper objectMapper, HttpServletRequest request, GroupRepository groupRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.groupRepository = groupRepository;

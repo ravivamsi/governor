@@ -36,18 +36,14 @@ public class ProjectsApiController implements ProjectsApi {
 
 	private final ProjectRepository projectRepository;
 
-	
-
 	@org.springframework.beans.factory.annotation.Autowired
 	public ProjectsApiController(ObjectMapper objectMapper, HttpServletRequest request,
 			ProjectRepository projectRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.projectRepository = projectRepository;
-		
-	}
 
-	
+	}
 
 	public ResponseEntity<Project> addProject(
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
@@ -60,8 +56,6 @@ public class ProjectsApiController implements ProjectsApi {
 		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	
-
 	public ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
@@ -70,8 +64,6 @@ public class ProjectsApiController implements ProjectsApi {
 		}
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Project> projectsProjectIdDelete(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId) {
@@ -111,8 +103,6 @@ public class ProjectsApiController implements ProjectsApi {
 
 		return new ResponseEntity<Project>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Project> projectsProjectIdPut(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
