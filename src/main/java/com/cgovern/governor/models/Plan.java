@@ -33,6 +33,9 @@ public class Plan {
 
 	@JsonProperty("name")
 	private String name = null;
+	
+	@JsonProperty("groups")
+	private List<String> groups = null;
 
 	/**
 	 * Gets or Sets type
@@ -322,6 +325,29 @@ public class Plan {
 		this.enabled = enabled;
 	}
 
+	
+	
+	public Plan groups(List<String> groups) {
+		this.groups = groups;
+		return this;
+	}
+	
+	/**
+	 * Get groups
+	 * 
+	 * @return groups
+	 **/
+	@ApiModelProperty(value = "")
+
+	public List<String> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<String> groups) {
+		this.groups = groups;
+	}
+
+	
 	@Override
 	public boolean equals(java.lang.Object o) {
 		if (this == o) {
@@ -335,12 +361,12 @@ public class Plan {
 				&& Objects.equals(this.name, plan.name) && Objects.equals(this.type, plan.type)
 				&& Objects.equals(this.environment, plan.environment) && Objects.equals(this.shortname, plan.shortname)
 				&& Objects.equals(this.stages, plan.stages) && Objects.equals(this.variables, plan.variables)
-				&& Objects.equals(this.enabled, plan.enabled);
+				&& Objects.equals(this.enabled, plan.enabled && Objects.equals(this.groups, plan.groups));
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, projectid, name, type, environment, shortname, stages, variables, enabled);
+		return Objects.hash(id, projectid, name, type, environment, shortname, stages, variables, enabled, groups);
 	}
 
 	@Override
@@ -357,6 +383,7 @@ public class Plan {
 		sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+		sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

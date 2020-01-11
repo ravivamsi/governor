@@ -35,6 +35,13 @@ public class Pipeline {
 
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
+	
+	@JsonProperty("groups")
+	private List<String> groups = null;
+	
+	
+	
+
 
 	public Pipeline id(String id) {
 		this.id = id;
@@ -127,6 +134,27 @@ public class Pipeline {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	public Pipeline groups(List<String> groups) {
+		this.groups = groups;
+		return this;
+	}
+	
+	/**
+	 * Get groups
+	 * 
+	 * @return groups
+	 **/
+	@ApiModelProperty(value = "")
+
+	public List<String> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<String> groups) {
+		this.groups = groups;
+	}
+	
 
 	@Override
 	public boolean equals(java.lang.Object o) {
@@ -139,12 +167,12 @@ public class Pipeline {
 		Pipeline pipeline = (Pipeline) o;
 		return Objects.equals(this.id, pipeline.id) && Objects.equals(this.name, pipeline.name)
 				&& Objects.equals(this.components, pipeline.components)
-				&& Objects.equals(this.enabled, pipeline.enabled);
+				&& Objects.equals(this.enabled, pipeline.enabled) && Objects.equals(this.groups, pipeline.groups);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, components, enabled);
+		return Objects.hash(id, name, components, enabled, groups);
 	}
 
 	@Override
@@ -156,6 +184,7 @@ public class Pipeline {
 		sb.append("    name: ").append(toIndentedString(name)).append("\n");
 		sb.append("    components: ").append(toIndentedString(components)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+		sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

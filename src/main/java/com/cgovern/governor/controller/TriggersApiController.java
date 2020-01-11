@@ -58,9 +58,9 @@ public class TriggersApiController implements TriggersApi {
 		Trigger trigger = new Trigger();
 		if (accept != null && accept.contains("application/json")) {
 
-			Optional<Trigger> optionalDImage = triggerRepository.findById(triggerId);
-			if (optionalDImage.isPresent()) {
-				trigger = optionalDImage.get();
+			Optional<Trigger> optionalTrigger = triggerRepository.findById(triggerId);
+			if (optionalTrigger.isPresent()) {
+				trigger = optionalTrigger.get();
 			}
 			triggerRepository.deleteById(triggerId);
 			return new ResponseEntity<Trigger>(trigger, HttpStatus.ACCEPTED);

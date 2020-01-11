@@ -39,6 +39,9 @@ public class Project {
 	@JsonProperty("variables")
 	@Valid
 	private List<Variable> variables = null;
+	
+	@JsonProperty("groups")
+	private List<String> groups = null;
 
 	@JsonProperty("enabled")
 	private Boolean enabled = null;
@@ -182,6 +185,28 @@ public class Project {
 	public void setEnabled(Boolean enabled) {
 		this.enabled = enabled;
 	}
+	
+	
+	public Project groups(List<String> groups) {
+		this.groups = groups;
+		return this;
+	}
+	
+	/**
+	 * Get groups
+	 * 
+	 * @return groups
+	 **/
+	@ApiModelProperty(value = "")
+
+	public List<String> getGroups() {
+		return groups;
+	}
+
+	public void setGroups(List<String> groups) {
+		this.groups = groups;
+	}
+
 
 	@Override
 	public boolean equals(java.lang.Object o) {
@@ -194,12 +219,13 @@ public class Project {
 		Project project = (Project) o;
 		return Objects.equals(this.id, project.id) && Objects.equals(this.name, project.name)
 				&& Objects.equals(this.shortname, project.shortname) && Objects.equals(this.plans, project.plans)
-				&& Objects.equals(this.variables, project.variables) && Objects.equals(this.enabled, project.enabled);
+				&& Objects.equals(this.variables, project.variables) && Objects.equals(this.enabled, project.enabled)
+				&& Objects.equals(this.groups, project.groups);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, shortname, plans, variables, enabled);
+		return Objects.hash(id, name, shortname, plans, variables, enabled, groups);
 	}
 
 	@Override
@@ -213,6 +239,7 @@ public class Project {
 		sb.append("    plans: ").append(toIndentedString(plans)).append("\n");
 		sb.append("    variables: ").append(toIndentedString(variables)).append("\n");
 		sb.append("    enabled: ").append(toIndentedString(enabled)).append("\n");
+		sb.append("    groups: ").append(toIndentedString(groups)).append("\n");
 		sb.append("}");
 		return sb.toString();
 	}

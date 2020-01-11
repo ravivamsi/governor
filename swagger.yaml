@@ -42,10 +42,109 @@ tags:
   description: "Details of Workers"
 - name: "taskconfig"
   description: "Task Configuration"
+- name: "group"
+  description: "User Group"
 schemes:
 - "https"
 - "http"
 paths:
+  /groups:
+    post:
+      tags: 
+      - "group"
+      summary: "Create New Group"
+      operationId: "addGroup"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Group object"
+        required: true
+        schema:
+          $ref: "#/definitions/Group"
+      responses:
+        201:
+          description: "Created"
+          schema:
+            $ref: "#/definitions/Group"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+        409:
+          description: "Conflict"
+    get:
+      tags:
+      - "group"
+      summary: "Retrieve All Groupa"
+      operationId: "getGroups"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Group"
+  /groups/{groupId}:
+    put:
+      tags:
+      - "group"
+      summary: "Update existing Group"
+      operationId: "updateGroupById"
+      parameters:
+      - name: "groupId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Group"
+        400: 
+          description: "Bad Request"
+          schema: 
+            $ref: "#/definitions/BadRequest"
+        404: 
+          description: "Not Found"
+    delete:
+      tags:
+      - "group"
+      summary: "Delete existing Group"
+      operationId: "deleteGroupById"
+      parameters:
+      - name: "groupId"
+        in: "path"
+        description: ""
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "No Content"
+          schema:
+            $ref: "#/definitions/Group"
+        404: 
+          description: "Not Found"
+    get:
+      tags:
+      - "group"
+      summary: "Retrieve Existing Group"
+      operationId: "getGroupById"
+      parameters:
+      - name: "groupId"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Group"
+        404: 
+          description: "Not Found"
   /triggers:
     post:
       tags: 
@@ -1648,6 +1747,10 @@ definitions:
           $ref: "#/definitions/Component"
       enabled:
         type: "boolean"
+      groups:
+        type: "array"
+        items: 
+          type: "string"
   Component:
     type: "object"
     required:
@@ -1736,8 +1839,8 @@ definitions:
         - "edit"
         - "view"
         - "run"
-        - "prodedit"
-        - "prodrun"
+        - "create"
+        - "clone"
       status:
         type: "string"
         description: "Role Status"
@@ -1746,6 +1849,21 @@ definitions:
         - "pending"
         - "suspended"
         - "inactive"
+  Group:
+    type: "object"
+    properties:
+      id: 
+        type: "string"
+      name:
+        type: "string"
+      roles:
+        type: "array"
+        items:
+          type: "string"
+      users:
+        type: "array"
+        items:
+          type: "string"
   DImage:
     type: "object"
     properties:
@@ -1808,6 +1926,10 @@ definitions:
           $ref: "#/definitions/Variable"
       enabled:
         type: "boolean"
+      groups:
+        type: "array"
+        items: 
+          type: "string"
   Index:
     type: "object"
     properties:
@@ -1859,6 +1981,10 @@ definitions:
           $ref: "#/definitions/Variable"
       enabled:
         type: "boolean"
+      groups:
+        type: "array"
+        items: 
+          type: "string"
   Stage:
     type: "object"
     properties:
