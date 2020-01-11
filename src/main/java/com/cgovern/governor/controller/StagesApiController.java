@@ -63,26 +63,45 @@ public class StagesApiController implements StagesApi {
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
+		Plan plan = new Plan();
+		Stage stage = new Stage();
 		if (accept != null && accept.contains("application/json")) {
-//			Test
-			Plan plan = new Plan();
+//			TODO
+			
 			List<Index> stageIndexList = new ArrayList<Index>();
+			
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
 			if (optionalPlan.isPresent()) {
 				plan = optionalPlan.get();
+				
+				
+				
+				stageIndexList = plan.getStages();
+				Index stageIndex = new Index();
+					
+				body.setPlanid(planId);
+				body.setProjectid(plan.getProjectid());
+				
+				stage = stageRepository.save(body);
+
+				stageIndex.setId(stage.getId());
+				stageIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(stageIndexList)));
+
+				if (stageIndexList == null) {
+					stageIndexList = new ArrayList<Index>();
+					stageIndexList.add(stageIndex);
+				} else {
+					stageIndexList.add(stageIndex);
+				}
+
+				plan.setStages(stageIndexList);
+				planRepository.save(plan);
+
+				return new ResponseEntity<Stage>(stage, HttpStatus.CREATED);
+				
+			}else {
+				return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 			}
-			stageIndexList = plan.getStages();
-			Index stageIndex = new Index();
-
-			Stage stage = stageRepository.save(body);
-
-			stageIndex.setId(plan.getId());
-			stageIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(stageIndexList)));
-			stageIndexList.add(stageIndex);
-			plan.setStages(stageIndexList);
-			planRepository.save(plan);
-
-			return new ResponseEntity<Stage>(stage, HttpStatus.CREATED);
 
 		}
 

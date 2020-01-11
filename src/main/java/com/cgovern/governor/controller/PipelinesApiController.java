@@ -46,9 +46,8 @@ public class PipelinesApiController implements PipelinesApi {
 			@ApiParam(value = "Pipeline object", required = true) @Valid @RequestBody Pipeline body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-
+//			TODO - Test
 			return new ResponseEntity<Pipeline>(pipelineRepository.save(body), HttpStatus.CREATED);
-
 		}
 
 		return new ResponseEntity<Pipeline>(HttpStatus.NOT_IMPLEMENTED);
@@ -57,9 +56,8 @@ public class PipelinesApiController implements PipelinesApi {
 	public ResponseEntity<List<Pipeline>> getPipelines() {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-
+//			TODO - Test
 			return new ResponseEntity<List<Pipeline>>(pipelineRepository.findAll(), HttpStatus.OK);
-
 		}
 
 		return new ResponseEntity<List<Pipeline>>(HttpStatus.NOT_IMPLEMENTED);
@@ -70,14 +68,15 @@ public class PipelinesApiController implements PipelinesApi {
 		String accept = request.getHeader("Accept");
 		Pipeline pipeline = new Pipeline();
 		if (accept != null && accept.contains("application/json")) {
-
+//			TODO - Test
 			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
 			if (optionalPipeline.isPresent()) {
 				pipeline = optionalPipeline.get();
+			}else {
+				return new ResponseEntity<Pipeline>(pipeline, HttpStatus.NOT_FOUND);
 			}
 			pipelineRepository.deleteById(pipelineId);
 			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.ACCEPTED);
-
 		}
 
 		return new ResponseEntity<Pipeline>(HttpStatus.NOT_IMPLEMENTED);
@@ -88,10 +87,12 @@ public class PipelinesApiController implements PipelinesApi {
 		String accept = request.getHeader("Accept");
 		Pipeline pipeline = new Pipeline();
 		if (accept != null && accept.contains("application/json")) {
-
+//			TODO - Test
 			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
 			if (optionalPipeline.isPresent()) {
 				pipeline = optionalPipeline.get();
+			}else {
+				return new ResponseEntity<Pipeline>(pipeline, HttpStatus.NOT_FOUND);
 			}
 
 			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.OK);
@@ -107,15 +108,18 @@ public class PipelinesApiController implements PipelinesApi {
 		String accept = request.getHeader("Accept");
 		Pipeline pipeline = new Pipeline();
 		if (accept != null && accept.contains("application/json")) {
-
+//			TODO - Test
 			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
 			if (optionalPipeline.isPresent()) {
 				pipeline = optionalPipeline.get();
+			}else {
+				return new ResponseEntity<Pipeline>(pipeline, HttpStatus.NOT_FOUND);
 			}
 
 			pipeline.setName(body.getName());
 			pipeline.setEnabled(body.isEnabled());
 			pipeline.setComponents(body.getComponents());
+			pipeline.setGroups(body.getGroups());
 
 			pipelineRepository.save(pipeline);
 			return new ResponseEntity<Pipeline>(pipeline, HttpStatus.OK);

@@ -49,7 +49,7 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			Test
+//			TODO - Test
 			return new ResponseEntity<Project>(projectRepository.save(body), HttpStatus.CREATED);
 		}
 
@@ -59,7 +59,7 @@ public class ProjectsApiController implements ProjectsApi {
 	public ResponseEntity<List<Project>> getProjects() throws JsonMappingException, JsonProcessingException {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			Test
+//			TODO - Test
 			return new ResponseEntity<List<Project>>(projectRepository.findAll(), HttpStatus.OK);
 		}
 		return new ResponseEntity<List<Project>>(HttpStatus.NOT_IMPLEMENTED);
@@ -71,12 +71,15 @@ public class ProjectsApiController implements ProjectsApi {
 		Project project = new Project();
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			Test
+//			TODO - Test
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
+			}else {
+				return new ResponseEntity<Project>(new Project(), HttpStatus.NOT_FOUND);
 			}
 
+//			TODO - Check if you need to delete plans in project.getPlans()
 			projectRepository.deleteById(projectId);
 			return new ResponseEntity<Project>(project, HttpStatus.ACCEPTED);
 
@@ -91,7 +94,7 @@ public class ProjectsApiController implements ProjectsApi {
 		Project project = new Project();
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			Test
+//			TODO - Test
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -109,20 +112,23 @@ public class ProjectsApiController implements ProjectsApi {
 			@ApiParam(value = "Project object", required = true) @Valid @RequestBody Project body) {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
-//			Test
+//			TODO - Test
 
 			Project project = new Project();
 
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
+			}else {
+				return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
 			}
 
 			project.setEnabled(body.isEnabled());
 			project.setName(body.getName());
 			project.setShortname(body.getShortname());
-			project.setPlans(body.getPlans());
+//			project.setPlans(body.getPlans());
 			project.setVariables(body.getVariables());
+			project.setGroups(body.getGroups());
 
 			projectRepository.save(project);
 
