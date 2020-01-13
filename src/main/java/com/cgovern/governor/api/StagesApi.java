@@ -51,7 +51,7 @@ public interface StagesApi {
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Stage.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/plans/{planId}/stages/{stageId}", method = RequestMethod.DELETE)
-	ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdDelete(
+	ResponseEntity<Stage> deleteStageByPlanIdAndId(
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId);
 
@@ -60,18 +60,18 @@ public interface StagesApi {
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Stage.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/plans/{planId}/stages/{stageId}", method = RequestMethod.GET)
-	ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdGet(
+	ResponseEntity<Stage> plansPlanIdStagesStageIdGet(
 
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId);
 
-	@ApiOperation(value = "Update existing Stage", nickname = "projectsProjectIdPlansPlanIdStagesStageIdPut", notes = "", response = Stage.class, tags = {
+	@ApiOperation(value = "Update existing Stage", nickname = "plansPlanIdStagesStageIdPut", notes = "", response = Stage.class, tags = {
 			"stage", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Stage.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/plans/{planId}/stages/{stageId}", method = RequestMethod.PUT)
-	ResponseEntity<Stage> projectsProjectIdPlansPlanIdStagesStageIdPut(
+	ResponseEntity<Stage> plansPlanIdStagesStageIdPut(
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body);

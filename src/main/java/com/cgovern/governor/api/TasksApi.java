@@ -46,32 +46,32 @@ public interface TasksApi {
 	@RequestMapping(value = "/jobs/{jobId}/tasks", method = RequestMethod.GET)
 	ResponseEntity<List<Task>> getTasks(@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId);
 
-	@ApiOperation(value = "Delete existing Task", nickname = "projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdDelete", notes = "", response = Task.class, tags = {
+	@ApiOperation(value = "Delete existing Task", nickname = "jobsJobIdTasksTaskIdDelete", notes = "", response = Task.class, tags = {
 			"task", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Task.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/jobs/{jobId}/tasks/{taskId}", method = RequestMethod.DELETE)
-	ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdDelete(
+	ResponseEntity<Task> jobsJobIdTasksTaskIdDelete(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId);
 
-	@ApiOperation(value = "Retrieve Existing Task", nickname = "projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdGet", notes = "", response = Task.class, tags = {
+	@ApiOperation(value = "Retrieve Existing Task", nickname = "jobsJobIdTasksTaskIdGet", notes = "", response = Task.class, tags = {
 			"task", })
 	@ApiResponses(value = { @ApiResponse(code = 200, message = "OK", response = Task.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/jobs/{jobId}/tasks/{taskId}", method = RequestMethod.GET)
-	ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdGet(
+	ResponseEntity<Task> jobsJobIdTasksTaskIdGet(
 
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId);
 
-	@ApiOperation(value = "Update existing Task", nickname = "projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdPut", notes = "", response = Task.class, tags = {
+	@ApiOperation(value = "Update existing Task", nickname = "jobsJobIdTasksTaskIdPut", notes = "", response = Task.class, tags = {
 			"task", })
 	@ApiResponses(value = { @ApiResponse(code = 204, message = "No Content", response = Task.class),
 			@ApiResponse(code = 400, message = "Bad Request", response = BadRequest.class),
 			@ApiResponse(code = 404, message = "Not Found") })
 	@RequestMapping(value = "/jobs/{jobId}/tasks/{taskId}", method = RequestMethod.PUT)
-	ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdPut(
+	ResponseEntity<Task> jobsJobIdTasksTaskIdPut(
 
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId,

@@ -45,25 +45,16 @@ public class TasksApiController implements TasksApi {
 
 	private final HttpServletRequest request;
 
-	private final ProjectRepository projectRepository;
-
-	private final PlanRepository planRepository;
-
-	private final StageRepository stageRepository;
-
 	private final JobRepository jobRepository;
 
 	private final TaskRepository taskRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public TasksApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			ProjectRepository projectRepository, PlanRepository planRepository, StageRepository stageRepository,
+			
 			JobRepository jobRepository, TaskRepository taskRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
-		this.projectRepository = projectRepository;
-		this.planRepository = planRepository;
-		this.stageRepository = stageRepository;
 		this.jobRepository = jobRepository;
 		this.taskRepository = taskRepository;
 	}
@@ -71,26 +62,50 @@ public class TasksApiController implements TasksApi {
 	public ResponseEntity<Task> addTask(@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
+		
+		Job job = new Job();
+		
+		Task task = new Task();
+		
 		if (accept != null && accept.contains("application/json")) {
-//			Test
-			Job job = new Job();
+//			TODO - Test
+			
 			List<Index> taskIndexList = new ArrayList<Index>();
+			
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 			if (optionalJob.isPresent()) {
+				
 				job = optionalJob.get();
+			
+				taskIndexList = job.getTasks();
+				Index taskIndex = new Index();
+				
+				body.setProjectid(job.getProjectid());
+				body.setPlanid(job.getPlanid());
+				body.setStageid(job.getStageid());
+				body.setJobid(jobId);
+				
+				task = taskRepository.save(body);
+				
+				
+				taskIndex.setId(task.getId());
+				taskIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(taskIndexList)));
+				
+				if(taskIndexList == null) {
+					taskIndexList = new ArrayList<Index>();
+					taskIndexList.add(taskIndex);
+				}else {
+					taskIndexList.add(taskIndex);
+				}
+				
+				job.setTasks(taskIndexList);
+				jobRepository.save(job);
+				
+				return new ResponseEntity<Task>(task, HttpStatus.CREATED);
+			
+			}else {
+				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
-			taskIndexList = job.getTasks();
-			Index taskIndex = new Index();
-
-			Task task = taskRepository.save(body);
-
-			taskIndex.setId(job.getId());
-			taskIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(taskIndexList)));
-			taskIndexList.add(taskIndex);
-			job.setTasks(taskIndexList);
-			jobRepository.save(job);
-
-			return new ResponseEntity<Task>(task, HttpStatus.CREATED);
 
 		}
 
@@ -100,37 +115,42 @@ public class TasksApiController implements TasksApi {
 	public ResponseEntity<List<Task>> getTasks(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
+		
 		List<Task> taskList = new ArrayList<Task>();
 		Job job = new Job();
 
 		if (accept != null && accept.contains("application/json")) {
 
-//			Test
+//			TODO - Test
 
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
-			}
+			
+			
+				if (!job.getTasks().isEmpty()) {
+					List<Index> taskListIndex = job.getTasks();
 
-			if (!job.getTasks().isEmpty()) {
-				List<Index> taskListIndex = job.getTasks();
+					for (Index currentTaskIndex : taskListIndex) {
+						Task task = new Task();
+						Optional<Task> optionalTask = taskRepository.findById(currentTaskIndex.getId());
 
-				for (Index currentTaskIndex : taskListIndex) {
-					Task task = new Task();
-					Optional<Task> optionalTask = taskRepository.findById(currentTaskIndex.getId());
+						if (optionalTask.isPresent()) {
+							task = optionalTask.get();
 
-					if (optionalTask.isPresent()) {
-						task = optionalTask.get();
+							taskList.add(task);
+						}
 
-						taskList.add(task);
 					}
 
+					return new ResponseEntity<List<Task>>(taskList, HttpStatus.OK);
+
+				} else {
+					return new ResponseEntity<List<Task>>(HttpStatus.NOT_FOUND);
 				}
-
-				return new ResponseEntity<List<Task>>(taskList, HttpStatus.OK);
-
-			} else {
+			
+			}else {
 				return new ResponseEntity<List<Task>>(HttpStatus.NOT_FOUND);
 			}
 
@@ -139,341 +159,173 @@ public class TasksApiController implements TasksApi {
 		return new ResponseEntity<List<Task>>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
-	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdDelete(
+	public ResponseEntity<Task> jobsJobIdTasksTaskIdDelete(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
 		String accept = request.getHeader("Accept");
 
-		Project project = new Project();
-		Plan plan = new Plan();
-		Stage stage = new Stage();
-		Job job = new Job();
-		Task task = new Task();
 		if (accept != null && accept.contains("application/json")) {
-//			TEST
-			Optional<Project> optionalProject = projectRepository
-					.findById(taskRepository.findById(jobId).get().getProjectid());
-
-			if (optionalProject.isPresent()) {
-				project = optionalProject.get();
-			}
-
-			Boolean isPlanIdexPresent = false;
-			if (project.getPlans() != null) {
-
-				for (Index currentIndex : project.getPlans()) {
-					if (currentIndex.getId().equalsIgnoreCase(taskRepository.findById(jobId).get().getPlanid())) {
-						isPlanIdexPresent = true;
-					}
-
-				}
-
-				if (isPlanIdexPresent) {
-					Optional<Plan> optionalPlan = planRepository
-							.findById(taskRepository.findById(jobId).get().getPlanid());
-					if (optionalPlan.isPresent()) {
-						plan = optionalPlan.get();
-					}
-
-					Boolean isStageIndexPresent = false;
-
-					if (plan.getStages() != null) {
-						for (Index currentStageIndex : plan.getStages()) {
-
-							if (currentStageIndex.getId()
-									.equalsIgnoreCase(taskRepository.findById(jobId).get().getStageid())) {
-								isStageIndexPresent = true;
-							}
-
-						}
-						if (isStageIndexPresent) {
-
-							Optional<Stage> optionalStage = stageRepository
-									.findById(taskRepository.findById(jobId).get().getStageid());
-							if (optionalStage.isPresent()) {
-								stage = optionalStage.get();
-
-							} else {
-								return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-							}
-
-							Boolean isJobIndexPresent = false;
-
-							if (stage.getJobs() != null) {
-
-								for (Index currentJobIndex : stage.getJobs()) {
-									if (currentJobIndex.getId().equalsIgnoreCase(jobId)) {
-										isJobIndexPresent = true;
-
-									}
-								}
-
-								if (isJobIndexPresent) {
-
-									Optional<Job> optionalJob = jobRepository.findById(jobId);
-
-									if (optionalJob.isPresent()) {
-
-										job = optionalJob.get();
-									} else {
-										return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-									}
-								} else {
-									return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-								}
-
-								Boolean isTaskIndexPresent = false;
-								if (job.getTasks() != null) {
-
-									for (Index currentTaskIndex : job.getTasks()) {
-
-										if (currentTaskIndex.getId().equalsIgnoreCase(taskId)) {
-											isTaskIndexPresent = true;
-
-											job.getTasks().remove(currentTaskIndex);
-										}
-
-									}
-
-									if (job.getTasks() == null) {
-										job.setTasks(new ArrayList<Index>());
-										jobRepository.save(job);
-									} else {
-										jobRepository.save(job);
-									}
-
-									if (isTaskIndexPresent) {
-										taskRepository.deleteById(taskId);
-										return new ResponseEntity<Task>(task, HttpStatus.OK);
-									} else {
-										return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-									}
-
-								}
-
-							}
-
-						} else {
-							return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-						}
-
-					} else {
-						return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-					}
-				} else {
-					return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-				}
-
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-			}
-
-		}
-
-		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdGet(
-			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
-			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
-		String accept = request.getHeader("Accept");
-
-		Project project = new Project();
-		Plan plan = new Plan();
-		Stage stage = new Stage();
-		Job job = new Job();
-		Task task = new Task();
-		if (accept != null && accept.contains("application/json")) {
-//			TEST
-			Optional<Project> optionalProject = projectRepository
-					.findById(taskRepository.findById(jobId).get().getProjectid());
-
-			if (optionalProject.isPresent()) {
-				project = optionalProject.get();
-			}
-
-			Boolean isPlanIdexPresent = false;
-			if (project.getPlans() != null) {
-
-				for (Index currentIndex : project.getPlans()) {
-					if (currentIndex.getId().equalsIgnoreCase(taskRepository.findById(jobId).get().getProjectid())) {
-						isPlanIdexPresent = true;
-					}
-
-				}
-
-				if (isPlanIdexPresent) {
-					Optional<Plan> optionalPlan = planRepository
-							.findById(taskRepository.findById(jobId).get().getProjectid());
-					if (optionalPlan.isPresent()) {
-						plan = optionalPlan.get();
-					}
-
-					Boolean isStageIndexPresent = false;
-
-					if (plan.getStages() != null) {
-						for (Index currentStageIndex : plan.getStages()) {
-
-							if (currentStageIndex.getId()
-									.equalsIgnoreCase(taskRepository.findById(jobId).get().getProjectid())) {
-								isStageIndexPresent = true;
-							}
-
-						}
-						if (isStageIndexPresent) {
-
-							Optional<Stage> optionalStage = stageRepository
-									.findById(taskRepository.findById(jobId).get().getProjectid());
-							if (optionalStage.isPresent()) {
-								stage = optionalStage.get();
-
-							} else {
-								return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-							}
-
-							Boolean isJobIndexPresent = false;
-
-							if (stage.getJobs() != null) {
-
-								for (Index currentJobIndex : stage.getJobs()) {
-									if (currentJobIndex.getId().equalsIgnoreCase(jobId)) {
-										isJobIndexPresent = true;
-
-									}
-								}
-
-								if (isJobIndexPresent) {
-
-									Optional<Job> optionalJob = jobRepository.findById(jobId);
-
-									if (optionalJob.isPresent()) {
-
-										job = optionalJob.get();
-									} else {
-										return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-									}
-								} else {
-									return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-								}
-
-								Boolean isTaskIndexPresent = false;
-								if (job.getTasks() != null) {
-
-									for (Index currentTaskIndex : job.getTasks()) {
-
-										if (currentTaskIndex.getId().equalsIgnoreCase(taskId)) {
-											isTaskIndexPresent = true;
-
-										}
-
-										if (isTaskIndexPresent) {
-											Optional<Task> optionalTask = taskRepository.findById(taskId);
-
-											if (optionalTask.isPresent()) {
-												task = optionalTask.get();
-												return new ResponseEntity<Task>(task, HttpStatus.OK);
-
-											} else {
-												return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-											}
-
-										}
-
-									}
-
-								}
-
-							}
-
-						} else {
-							return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-						}
-
-					} else {
-						return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-					}
-				} else {
-					return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-				}
-
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-			}
-
-		}
-
-		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
-	}
-
-	public ResponseEntity<Task> projectsProjectIdPlansPlanIdStagesStageIdJobsJobIdTasksTaskIdPut(
-			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
-			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId,
-			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
-		String accept = request.getHeader("Accept");
-		if (accept != null && accept.contains("application/json")) {
-			Project project = new Project();
-
-			Optional<Project> optionalProject = projectRepository
-					.findById(taskRepository.findById(jobId).get().getProjectid());
-			if (optionalProject.isPresent()) {
-				project = optionalProject.get();
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-			}
-
-			Plan plan = new Plan();
-			Optional<Plan> optionalPlan = planRepository.findById(taskRepository.findById(jobId).get().getProjectid());
-
-			if (optionalPlan.isPresent()) {
-				plan = optionalPlan.get();
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-			}
-
-			Stage stage = new Stage();
-			Optional<Stage> optionalStage = stageRepository
-					.findById(taskRepository.findById(jobId).get().getProjectid());
-
-			if (optionalStage.isPresent()) {
-				stage = optionalStage.get();
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
-			}
-
+//			TODO - Test
 			Job job = new Job();
+			Task task = new Task();
+			
+			List<Index> taskIndexList = new ArrayList<Index>();
+
+			Optional<Job> optionalJob = jobRepository.findById(jobId);
+			if (optionalJob.isPresent()) {
+				job = optionalJob.get();
+
+				if(!job.getTasks().isEmpty()) {
+					
+					taskIndexList = job.getTasks();
+					
+					
+					for (Index currentIndex: taskIndexList) {
+						
+						if(currentIndex.getId().equalsIgnoreCase(taskId)) {
+							taskIndexList.remove(currentIndex);
+						}
+					
+					}
+					
+					Optional<Task> optionalTask = taskRepository.findById(taskId);
+					
+					if(optionalTask.isPresent()) {
+						
+						task = optionalTask.get();
+						
+						if(taskIndexList == null) {
+							taskIndexList = new ArrayList<Index>();
+							job.setTasks(taskIndexList);
+							jobRepository.save(job);
+						}else {
+							job.setTasks(taskIndexList);
+							jobRepository.save(job);
+						}
+						
+						taskRepository.deleteById(taskId);
+						
+						return new ResponseEntity<Task>(task, HttpStatus.ACCEPTED);
+						
+					}else {
+						return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
+					}
+					
+					
+					
+				}else {
+					return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
+				}
+			
+			}else {
+				return new ResponseEntity<Task>(new Task(),HttpStatus.NOT_FOUND);
+			}
+			
+		}
+
+		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
+	}
+
+	public ResponseEntity<Task> jobsJobIdTasksTaskIdGet(
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId) {
+		String accept = request.getHeader("Accept");
+
+		Job job = new Job();
+		Task task = new Task();
+		if (accept != null && accept.contains("application/json")) {
+			
+//			TODO - Test
+			
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
-
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+			
+				if(!job.getTasks().isEmpty()) {
+					
+					Optional<Task> optionalTask = taskRepository.findById(taskId);
+					
+					if(optionalTask.isPresent()) {
+						
+						task = optionalTask.get();
+						
+						return new ResponseEntity<Task>(task, HttpStatus.OK);
+						
+					}else {
+						return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
+					}
+					
+				}else {
+					return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
+				}
+							
+			}else {
+				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
 
-			Task task = new Task();
-			Optional<Task> optionalTask = taskRepository.findById(taskId);
+		}
 
-			if (optionalTask.isPresent()) {
-				task = optionalTask.get();
+		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
-				task.setEnabled(body.isEnabled());
-				task.setJobid(jobId);
-				task.setPlanid(taskRepository.findById(jobId).get().getProjectid());
-				task.setName(body.getName());
-				task.setProjectid(taskRepository.findById(jobId).get().getProjectid());
-				task.setSequence(body.getSequence());
-				task.setShortname(body.getShortname());
-				task.setStageid(taskRepository.findById(jobId).get().getProjectid());
-				task.setVariables(body.getVariables());
+	public ResponseEntity<Task> jobsJobIdTasksTaskIdPut(
+			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
+			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId,
+			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
+		String accept = request.getHeader("Accept");
+		
+		Job job = new Job();
+		
+		Task task = new Task();
+		
+		
+		if (accept != null && accept.contains("application/json")) {
+			
+//			TODO - Test
+			
+			List<Index> taskListIndex = new ArrayList<Index>();
+			
+			Optional<Job> optionalJob = jobRepository.findById(jobId);
+			
+			if(optionalJob.isPresent()) {
+				
+				job = optionalJob.get();
+				
+				if(!job.getTasks().isEmpty()) {
+					
+					taskListIndex = job.getTasks();
+					
+					Optional<Task> optionalTask = taskRepository.findById(taskId);
+					
+					if(optionalTask.isPresent()) {
+						
+						task = optionalTask.get();
+						
+						task.setCondition(body.getCondition());
+						task.setConfiguration(body.getConfiguration());
+						task.setEnabled(body.isEnabled());
+						task.setName(body.getName());
+						task.setSequence(body.getSequence());
+						task.setShortname(body.getShortname());
+						task.setVariables(body.getVariables());
 
-				taskRepository.save(task);
+						taskRepository.save(task);
 
-				return new ResponseEntity<Task>(task, HttpStatus.ACCEPTED);
-
-			} else {
-				return new ResponseEntity<Task>(HttpStatus.NOT_FOUND);
+						return new ResponseEntity<Task>(task, HttpStatus.ACCEPTED);
+						
+					}else {
+						return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
+					}
+	
+				}else {
+					return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
+				}
+				
+			}else {
+				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
-
+						
 		}
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);

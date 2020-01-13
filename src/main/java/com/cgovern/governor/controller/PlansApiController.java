@@ -41,8 +41,6 @@ public class PlansApiController implements PlansApi {
 
 	private final PlanRepository planRepository;
 
-//	TODO - Fix Implementation
-
 	@org.springframework.beans.factory.annotation.Autowired
 	public PlansApiController(ObjectMapper objectMapper, HttpServletRequest request,
 			ProjectRepository projectRepository, PlanRepository planRepository) {
@@ -109,30 +107,33 @@ public class PlansApiController implements PlansApi {
 
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
+				
+				
+				if (!project.getPlans().isEmpty()) {
+					List<Index> planListIndex = project.getPlans();
+
+					for (Index currentPlanIndex : planListIndex) {
+						Plan plan = new Plan();
+						Optional<Plan> optionalPlan = planRepository.findById(currentPlanIndex.getId());
+
+						if (optionalPlan.isPresent()) {
+							plan = optionalPlan.get();
+
+							planList.add(plan);
+						}
+
+					}
+					return new ResponseEntity<List<Plan>>(planList, HttpStatus.OK);
+
+				} else {
+					return new ResponseEntity<List<Plan>>(HttpStatus.NOT_FOUND);
+				}
+				
 			}else {
 				return new ResponseEntity<List<Plan>>(HttpStatus.NOT_FOUND);
 			}
 
-			if (!project.getPlans().isEmpty()) {
-				List<Index> planListIndex = project.getPlans();
-
-				for (Index currentPlanIndex : planListIndex) {
-					Plan plan = new Plan();
-					Optional<Plan> optionalPlan = planRepository.findById(currentPlanIndex.getId());
-
-					if (optionalPlan.isPresent()) {
-						plan = optionalPlan.get();
-
-						planList.add(plan);
-					}
-
-				}
-
-				return new ResponseEntity<List<Plan>>(planList, HttpStatus.OK);
-
-			} else {
-				return new ResponseEntity<List<Plan>>(HttpStatus.NOT_FOUND);
-			}
+			
 
 		}
 
@@ -213,8 +214,6 @@ public class PlansApiController implements PlansApi {
 		if (accept != null && accept.contains("application/json")) {
 			
 //			TODO - Test
-			
-			List<Index> planIndexList = new ArrayList<Index>();
 
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			
@@ -223,7 +222,6 @@ public class PlansApiController implements PlansApi {
 				project = optionalProject.get();
 				
 				if(!project.getPlans().isEmpty()) {
-					planIndexList = project.getPlans();
 					
 					Optional<Plan> optionalPlan = planRepository.findById(planId);
 					
@@ -253,8 +251,6 @@ public class PlansApiController implements PlansApi {
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
 	}
-
-	
 
 	public ResponseEntity<Plan> updatePlanById(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
