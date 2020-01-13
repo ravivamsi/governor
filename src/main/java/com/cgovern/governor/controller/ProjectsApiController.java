@@ -75,7 +75,7 @@ public class ProjectsApiController implements ProjectsApi {
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
-			}else {
+			} else {
 				return new ResponseEntity<Project>(new Project(), HttpStatus.NOT_FOUND);
 			}
 
@@ -119,7 +119,7 @@ public class ProjectsApiController implements ProjectsApi {
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
-			}else {
+			} else {
 				return new ResponseEntity<Project>(project, HttpStatus.NOT_FOUND);
 			}
 

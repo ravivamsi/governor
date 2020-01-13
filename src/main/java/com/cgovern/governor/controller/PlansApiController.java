@@ -63,12 +63,12 @@ public class PlansApiController implements PlansApi {
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
-				
+
 				planIndexList = project.getPlans();
 				Index planIndex = new Index();
-					
+
 				body.setProjectid(projectId);
-				
+
 				Plan plan = planRepository.save(body);
 
 				planIndex.setId(plan.getId());
@@ -85,11 +85,10 @@ public class PlansApiController implements PlansApi {
 				projectRepository.save(project);
 
 				return new ResponseEntity<Plan>(plan, HttpStatus.CREATED);
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 			}
-			
 
 		}
 
@@ -107,8 +106,7 @@ public class PlansApiController implements PlansApi {
 
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
-				
-				
+
 				if (!project.getPlans().isEmpty()) {
 					List<Index> planListIndex = project.getPlans();
 
@@ -128,18 +126,16 @@ public class PlansApiController implements PlansApi {
 				} else {
 					return new ResponseEntity<List<Plan>>(HttpStatus.NOT_FOUND);
 				}
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<List<Plan>>(HttpStatus.NOT_FOUND);
 			}
-
-			
 
 		}
 
 		return new ResponseEntity<List<Plan>>(HttpStatus.NOT_IMPLEMENTED);
 	}
-	
+
 	public ResponseEntity<Plan> deletePlanById(
 			@ApiParam(value = "", required = true) @PathVariable("projectId") String projectId,
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId) {
@@ -148,29 +144,27 @@ public class PlansApiController implements PlansApi {
 //			TODO - Test
 			Project project = new Project();
 			Plan plan = new Plan();
-			
+
 			List<Index> planIndexList = new ArrayList<Index>();
 
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
-				
+
 				project = optionalProject.get();
-				
-				
-				if(!project.getPlans().isEmpty()) {
+
+				if (!project.getPlans().isEmpty()) {
 					planIndexList = project.getPlans();
-					
+
 					for (Index currentIndex : planIndexList) {
 						if (currentIndex.getId().equalsIgnoreCase(planId)) {
 							planIndexList.remove(currentIndex);
 						}
 					}
-					
+
 					Optional<Plan> optionalPlan = planRepository.findById(planId);
 					if (optionalPlan.isPresent()) {
 						plan = optionalPlan.get();
-						
-						
+
 						if (planIndexList == null) {
 							planIndexList = new ArrayList<Index>();
 							project.setPlans(planIndexList);
@@ -179,27 +173,23 @@ public class PlansApiController implements PlansApi {
 							project.setPlans(planIndexList);
 							projectRepository.save(project);
 						}
-										
+
 						planRepository.deleteById(planId);
 
 						return new ResponseEntity<Plan>(plan, HttpStatus.ACCEPTED);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 					}
 
-					
-				}else {
+				} else {
 					return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 				}
-			
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 			}
-			
-			
-			
+
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -212,41 +202,37 @@ public class PlansApiController implements PlansApi {
 		Plan plan = new Plan();
 		Project project = new Project();
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
 
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
-			
+
 			if (optionalProject.isPresent()) {
-				
+
 				project = optionalProject.get();
-				
-				if(!project.getPlans().isEmpty()) {
-					
+
+				if (!project.getPlans().isEmpty()) {
+
 					Optional<Plan> optionalPlan = planRepository.findById(planId);
-					
-					if (optionalPlan.isPresent() ) {
-						
+
+					if (optionalPlan.isPresent()) {
+
 						plan = optionalPlan.get();
-						
+
 						return new ResponseEntity<Plan>(plan, HttpStatus.OK);
-												
-					}else {
+
+					} else {
 						return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 					}
 
-					
-				}else {
+				} else {
 					return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 				}
-			
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 			}
-			
-			
-			
+
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);
@@ -258,30 +244,30 @@ public class PlansApiController implements PlansApi {
 			@ApiParam(value = "Plan object", required = true) @Valid @RequestBody Plan body) {
 		String accept = request.getHeader("Accept");
 		Project project = new Project();
-		
+
 		Plan plan = new Plan();
-		
+
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
-			
+
 			List<Index> planIndexList = new ArrayList<Index>();
 
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
-			
+
 			if (optionalProject.isPresent()) {
-				
+
 				project = optionalProject.get();
-				
-				if(!project.getPlans().isEmpty()) {
+
+				if (!project.getPlans().isEmpty()) {
 					planIndexList = project.getPlans();
-					
+
 					Optional<Plan> optionalPlan = planRepository.findById(planId);
-					
-					if (optionalPlan.isPresent() ) {
-						
+
+					if (optionalPlan.isPresent()) {
+
 						plan = optionalPlan.get();
-						
+
 						plan.setEnabled(body.isEnabled());
 						plan.setName(body.getName());
 						plan.setEnvironment(body.getEnvironment());
@@ -290,23 +276,21 @@ public class PlansApiController implements PlansApi {
 						plan.setVariables(body.getVariables());
 						plan.setType(body.getType());
 						planRepository.save(plan);
-						
+
 						return new ResponseEntity<Plan>(plan, HttpStatus.OK);
-												
-					}else {
+
+					} else {
 						return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 					}
 
-					
-				}else {
+				} else {
 					return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 				}
-			
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Plan>(new Plan(), HttpStatus.NOT_FOUND);
 			}
-		
+
 		}
 
 		return new ResponseEntity<Plan>(HttpStatus.NOT_IMPLEMENTED);

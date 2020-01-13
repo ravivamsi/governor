@@ -20,12 +20,6 @@ import com.cgovern.governor.commons.Sequence;
 import com.cgovern.governor.models.Index;
 import com.cgovern.governor.models.Job;
 import com.cgovern.governor.models.JobRepository;
-import com.cgovern.governor.models.Plan;
-import com.cgovern.governor.models.PlanRepository;
-import com.cgovern.governor.models.Project;
-import com.cgovern.governor.models.ProjectRepository;
-import com.cgovern.governor.models.Stage;
-import com.cgovern.governor.models.StageRepository;
 import com.cgovern.governor.models.Task;
 import com.cgovern.governor.models.TaskRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -51,7 +45,7 @@ public class TasksApiController implements TasksApi {
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public TasksApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			
+
 			JobRepository jobRepository, TaskRepository taskRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
@@ -62,48 +56,47 @@ public class TasksApiController implements TasksApi {
 	public ResponseEntity<Task> addTask(@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
-		
+
 		Job job = new Job();
-		
+
 		Task task = new Task();
-		
+
 		if (accept != null && accept.contains("application/json")) {
 //			TODO - Test
-			
+
 			List<Index> taskIndexList = new ArrayList<Index>();
-			
+
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 			if (optionalJob.isPresent()) {
-				
+
 				job = optionalJob.get();
-			
+
 				taskIndexList = job.getTasks();
 				Index taskIndex = new Index();
-				
+
 				body.setProjectid(job.getProjectid());
 				body.setPlanid(job.getPlanid());
 				body.setStageid(job.getStageid());
 				body.setJobid(jobId);
-				
+
 				task = taskRepository.save(body);
-				
-				
+
 				taskIndex.setId(task.getId());
 				taskIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(taskIndexList)));
-				
-				if(taskIndexList == null) {
+
+				if (taskIndexList == null) {
 					taskIndexList = new ArrayList<Index>();
 					taskIndexList.add(taskIndex);
-				}else {
+				} else {
 					taskIndexList.add(taskIndex);
 				}
-				
+
 				job.setTasks(taskIndexList);
 				jobRepository.save(job);
-				
+
 				return new ResponseEntity<Task>(task, HttpStatus.CREATED);
-			
-			}else {
+
+			} else {
 				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
 
@@ -115,7 +108,7 @@ public class TasksApiController implements TasksApi {
 	public ResponseEntity<List<Task>> getTasks(
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
-		
+
 		List<Task> taskList = new ArrayList<Task>();
 		Job job = new Job();
 
@@ -127,8 +120,7 @@ public class TasksApiController implements TasksApi {
 
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
-			
-			
+
 				if (!job.getTasks().isEmpty()) {
 					List<Index> taskListIndex = job.getTasks();
 
@@ -149,8 +141,8 @@ public class TasksApiController implements TasksApi {
 				} else {
 					return new ResponseEntity<List<Task>>(HttpStatus.NOT_FOUND);
 				}
-			
-			}else {
+
+			} else {
 				return new ResponseEntity<List<Task>>(HttpStatus.NOT_FOUND);
 			}
 
@@ -168,59 +160,56 @@ public class TasksApiController implements TasksApi {
 //			TODO - Test
 			Job job = new Job();
 			Task task = new Task();
-			
+
 			List<Index> taskIndexList = new ArrayList<Index>();
 
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
 
-				if(!job.getTasks().isEmpty()) {
-					
+				if (!job.getTasks().isEmpty()) {
+
 					taskIndexList = job.getTasks();
-					
-					
-					for (Index currentIndex: taskIndexList) {
-						
-						if(currentIndex.getId().equalsIgnoreCase(taskId)) {
+
+					for (Index currentIndex : taskIndexList) {
+
+						if (currentIndex.getId().equalsIgnoreCase(taskId)) {
 							taskIndexList.remove(currentIndex);
 						}
-					
+
 					}
-					
+
 					Optional<Task> optionalTask = taskRepository.findById(taskId);
-					
-					if(optionalTask.isPresent()) {
-						
+
+					if (optionalTask.isPresent()) {
+
 						task = optionalTask.get();
-						
-						if(taskIndexList == null) {
+
+						if (taskIndexList == null) {
 							taskIndexList = new ArrayList<Index>();
 							job.setTasks(taskIndexList);
 							jobRepository.save(job);
-						}else {
+						} else {
 							job.setTasks(taskIndexList);
 							jobRepository.save(job);
 						}
-						
+
 						taskRepository.deleteById(taskId);
-						
+
 						return new ResponseEntity<Task>(task, HttpStatus.ACCEPTED);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 					}
-					
-					
-					
-				}else {
+
+				} else {
 					return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 				}
-			
-			}else {
-				return new ResponseEntity<Task>(new Task(),HttpStatus.NOT_FOUND);
+
+			} else {
+				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
-			
+
 		}
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);
@@ -234,33 +223,33 @@ public class TasksApiController implements TasksApi {
 		Job job = new Job();
 		Task task = new Task();
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
-			
+
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
 
 			if (optionalJob.isPresent()) {
 				job = optionalJob.get();
-			
-				if(!job.getTasks().isEmpty()) {
-					
+
+				if (!job.getTasks().isEmpty()) {
+
 					Optional<Task> optionalTask = taskRepository.findById(taskId);
-					
-					if(optionalTask.isPresent()) {
-						
+
+					if (optionalTask.isPresent()) {
+
 						task = optionalTask.get();
-						
+
 						return new ResponseEntity<Task>(task, HttpStatus.OK);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 					}
-					
-				}else {
+
+				} else {
 					return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 				}
-							
-			}else {
+
+			} else {
 				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
 
@@ -274,34 +263,33 @@ public class TasksApiController implements TasksApi {
 			@ApiParam(value = "", required = true) @PathVariable("taskId") String taskId,
 			@ApiParam(value = "Task object", required = true) @Valid @RequestBody Task body) {
 		String accept = request.getHeader("Accept");
-		
+
 		Job job = new Job();
-		
+
 		Task task = new Task();
-		
-		
+
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
-			
+
 			List<Index> taskListIndex = new ArrayList<Index>();
-			
+
 			Optional<Job> optionalJob = jobRepository.findById(jobId);
-			
-			if(optionalJob.isPresent()) {
-				
+
+			if (optionalJob.isPresent()) {
+
 				job = optionalJob.get();
-				
-				if(!job.getTasks().isEmpty()) {
-					
+
+				if (!job.getTasks().isEmpty()) {
+
 					taskListIndex = job.getTasks();
-					
+
 					Optional<Task> optionalTask = taskRepository.findById(taskId);
-					
-					if(optionalTask.isPresent()) {
-						
+
+					if (optionalTask.isPresent()) {
+
 						task = optionalTask.get();
-						
+
 						task.setCondition(body.getCondition());
 						task.setConfiguration(body.getConfiguration());
 						task.setEnabled(body.isEnabled());
@@ -313,19 +301,19 @@ public class TasksApiController implements TasksApi {
 						taskRepository.save(task);
 
 						return new ResponseEntity<Task>(task, HttpStatus.ACCEPTED);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 					}
-	
-				}else {
+
+				} else {
 					return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 				}
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Task>(new Task(), HttpStatus.NOT_FOUND);
 			}
-						
+
 		}
 
 		return new ResponseEntity<Task>(HttpStatus.NOT_IMPLEMENTED);

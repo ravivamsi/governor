@@ -72,7 +72,7 @@ public class PipelinesApiController implements PipelinesApi {
 			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
 			if (optionalPipeline.isPresent()) {
 				pipeline = optionalPipeline.get();
-			}else {
+			} else {
 				return new ResponseEntity<Pipeline>(pipeline, HttpStatus.NOT_FOUND);
 			}
 			pipelineRepository.deleteById(pipelineId);
@@ -91,7 +91,7 @@ public class PipelinesApiController implements PipelinesApi {
 			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
 			if (optionalPipeline.isPresent()) {
 				pipeline = optionalPipeline.get();
-			}else {
+			} else {
 				return new ResponseEntity<Pipeline>(pipeline, HttpStatus.NOT_FOUND);
 			}
 
@@ -112,7 +112,7 @@ public class PipelinesApiController implements PipelinesApi {
 			Optional<Pipeline> optionalPipeline = pipelineRepository.findById(pipelineId);
 			if (optionalPipeline.isPresent()) {
 				pipeline = optionalPipeline.get();
-			}else {
+			} else {
 				return new ResponseEntity<Pipeline>(pipeline, HttpStatus.NOT_FOUND);
 			}
 

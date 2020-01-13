@@ -42,8 +42,8 @@ public class StagesApiController implements StagesApi {
 	private final StageRepository stageRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
-	public StagesApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			 PlanRepository planRepository, StageRepository stageRepository) {
+	public StagesApiController(ObjectMapper objectMapper, HttpServletRequest request, PlanRepository planRepository,
+			StageRepository stageRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.planRepository = planRepository;
@@ -60,22 +60,20 @@ public class StagesApiController implements StagesApi {
 		Stage stage = new Stage();
 		if (accept != null && accept.contains("application/json")) {
 //			TODO - Test
-			
+
 			List<Index> stageIndexList = new ArrayList<Index>();
-			
+
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
 			if (optionalPlan.isPresent()) {
 				plan = optionalPlan.get();
-				
-				
-				
+
 				stageIndexList = plan.getStages();
 				Index stageIndex = new Index();
-					
+
 				body.setPlanid(planId);
 				body.setProjectid(plan.getProjectid());
 				body.setPlanid(plan.getId());
-				
+
 				stage = stageRepository.save(body);
 
 				stageIndex.setId(stage.getId());
@@ -92,8 +90,8 @@ public class StagesApiController implements StagesApi {
 				planRepository.save(plan);
 
 				return new ResponseEntity<Stage>(stage, HttpStatus.CREATED);
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 			}
 
@@ -118,7 +116,7 @@ public class StagesApiController implements StagesApi {
 
 			if (optionalPlan.isPresent()) {
 				plan = optionalPlan.get();
-				
+
 				if (!plan.getStages().isEmpty()) {
 					List<Index> stageListIndex = plan.getStages();
 
@@ -139,17 +137,15 @@ public class StagesApiController implements StagesApi {
 				} else {
 					return new ResponseEntity<List<Stage>>(HttpStatus.NOT_FOUND);
 				}
-			}else {
+			} else {
 				return new ResponseEntity<List<Stage>>(HttpStatus.NOT_FOUND);
 			}
-
-			
 
 		}
 
 		return new ResponseEntity<List<Stage>>(HttpStatus.NOT_IMPLEMENTED);
 	}
-	
+
 	public ResponseEntity<Stage> deleteStageByPlanIdAndId(
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
@@ -159,28 +155,27 @@ public class StagesApiController implements StagesApi {
 //			TODO - Test
 			Plan plan = new Plan();
 			Stage stage = new Stage();
-			
+
 			List<Index> stageIndexList = new ArrayList<Index>();
-			
+
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
 
 			if (optionalPlan.isPresent()) {
 				plan = optionalPlan.get();
 
-				if(!plan.getStages().isEmpty()) {
+				if (!plan.getStages().isEmpty()) {
 					stageIndexList = plan.getStages();
-					
+
 					for (Index currentIndex : stageIndexList) {
 						if (currentIndex.getId().equalsIgnoreCase(stageId)) {
 							stageIndexList.remove(currentIndex);
 						}
 					}
-					
+
 					Optional<Stage> optionalStage = stageRepository.findById(stageId);
 					if (optionalStage.isPresent()) {
 						stage = optionalStage.get();
-						
-						
+
 						if (stageIndexList == null) {
 							stageIndexList = new ArrayList<Index>();
 							plan.setStages(stageIndexList);
@@ -189,20 +184,19 @@ public class StagesApiController implements StagesApi {
 							plan.setStages(stageIndexList);
 							planRepository.save(plan);
 						}
-										
+
 						stageRepository.deleteById(stageId);
 
 						return new ResponseEntity<Stage>(stage, HttpStatus.ACCEPTED);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 					}
 
-					
-				}else {
+				} else {
 					return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 				}
-				
+
 			} else {
 				return new ResponseEntity<Stage>(HttpStatus.NOT_FOUND);
 			}
@@ -211,51 +205,48 @@ public class StagesApiController implements StagesApi {
 
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
 	}
-	
+
 	public ResponseEntity<Stage> plansPlanIdStagesStageIdGet(
 
 			@ApiParam(value = "", required = true) @PathVariable("planId") String planId,
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 		String accept = request.getHeader("Accept");
-		
+
 		Plan plan = new Plan();
 		Stage stage = new Stage();
-		
+
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
 
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
-			
+
 			if (optionalPlan.isPresent()) {
-				
+
 				plan = optionalPlan.get();
-				
-				if(!plan.getStages().isEmpty()) {
-					
-					
+
+				if (!plan.getStages().isEmpty()) {
+
 					Optional<Stage> optionalStage = stageRepository.findById(stageId);
-					
-					if (optionalStage.isPresent() ) {
-						
+
+					if (optionalStage.isPresent()) {
+
 						stage = optionalStage.get();
-						
+
 						return new ResponseEntity<Stage>(stage, HttpStatus.OK);
-												
-					}else {
+
+					} else {
 						return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 					}
 
-					
-				}else {
+				} else {
 					return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 				}
-			
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 			}
-			
+
 		}
 
 		return new ResponseEntity<Stage>(HttpStatus.NOT_IMPLEMENTED);
@@ -267,31 +258,31 @@ public class StagesApiController implements StagesApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Stage object", required = true) @Valid @RequestBody Stage body) {
 		String accept = request.getHeader("Accept");
-		
+
 		Plan plan = new Plan();
 		Stage stage = new Stage();
-		
+
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
 
 			List<Index> stageIndexList = new ArrayList<Index>();
-			
+
 			Optional<Plan> optionalPlan = planRepository.findById(planId);
 
 			if (optionalPlan.isPresent()) {
 				plan = optionalPlan.get();
-				
-				if(!plan.getStages().isEmpty()) {
-					
+
+				if (!plan.getStages().isEmpty()) {
+
 					stageIndexList = plan.getStages();
-					
+
 					Optional<Stage> optionalStage = stageRepository.findById(stageId);
-					
-					if(optionalStage.isPresent()) {
-						
+
+					if (optionalStage.isPresent()) {
+
 						stage = optionalStage.get();
-						
+
 						stage.setEnabled(body.isEnabled());
 						stage.setJobs(body.getJobs());
 						stage.setName(body.getName());
@@ -302,16 +293,15 @@ public class StagesApiController implements StagesApi {
 						stage.setVariables(body.getVariables());
 
 						stageRepository.save(stage);
-		
-					}else {
+
+					} else {
 						return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 					}
-					
-				}else {
+
+				} else {
 					return new ResponseEntity<Stage>(new Stage(), HttpStatus.NOT_FOUND);
 				}
 
-				
 			} else {
 				return new ResponseEntity<Stage>(HttpStatus.NOT_FOUND);
 			}

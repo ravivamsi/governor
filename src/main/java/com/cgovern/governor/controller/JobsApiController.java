@@ -41,9 +41,9 @@ public class JobsApiController implements JobsApi {
 
 	private final JobRepository jobRepository;
 
-
 	@org.springframework.beans.factory.annotation.Autowired
-	public JobsApiController(ObjectMapper objectMapper, HttpServletRequest request, StageRepository stageRepository, JobRepository jobRepository) {
+	public JobsApiController(ObjectMapper objectMapper, HttpServletRequest request, StageRepository stageRepository,
+			JobRepository jobRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.stageRepository = stageRepository;
@@ -55,26 +55,26 @@ public class JobsApiController implements JobsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
-		
+
 		Stage stage = new Stage();
 		Job job = new Job();
-		
+
 		if (accept != null && accept.contains("application/json")) {
 //			TODO - Test
-			
+
 			List<Index> jobIndexList = new ArrayList<Index>();
-			
+
 			Optional<Stage> optionalStage = stageRepository.findById(stageId);
 			if (optionalStage.isPresent()) {
 				stage = optionalStage.get();
-					
+
 				jobIndexList = stage.getJobs();
 				Index jobIndex = new Index();
-					
+
 				body.setStageid(stageId);
 				body.setProjectid(stage.getProjectid());
 				body.setPlanid(stage.getPlanid());
-				
+
 				job = jobRepository.save(body);
 
 				jobIndex.setId(job.getId());
@@ -91,8 +91,8 @@ public class JobsApiController implements JobsApi {
 				stageRepository.save(stage);
 
 				return new ResponseEntity<Job>(job, HttpStatus.CREATED);
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 			}
 
@@ -105,10 +105,10 @@ public class JobsApiController implements JobsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId) {
 
 		String accept = request.getHeader("Accept");
-		
+
 		List<Job> jobList = new ArrayList<Job>();
 		Stage stage = new Stage();
-		
+
 		if (accept != null && accept.contains("application/json")) {
 
 //			TODO - Test
@@ -117,7 +117,7 @@ public class JobsApiController implements JobsApi {
 
 			if (optionalStage.isPresent()) {
 				stage = optionalStage.get();
-				
+
 				if (!stage.getJobs().isEmpty()) {
 					List<Index> jobListIndex = stage.getJobs();
 
@@ -138,11 +138,9 @@ public class JobsApiController implements JobsApi {
 				} else {
 					return new ResponseEntity<List<Job>>(HttpStatus.NOT_FOUND);
 				}
-			}else {
+			} else {
 				return new ResponseEntity<List<Job>>(HttpStatus.NOT_FOUND);
 			}
-
-			
 
 		}
 
@@ -157,59 +155,56 @@ public class JobsApiController implements JobsApi {
 //			TODO - Test
 			Stage stage = new Stage();
 			Job job = new Job();
-			
+
 			List<Index> jobIndexList = new ArrayList<Index>();
 
 			Optional<Stage> optionalStage = stageRepository.findById(stageId);
 			if (optionalStage.isPresent()) {
 				stage = optionalStage.get();
 
-				if(!stage.getJobs().isEmpty()) {
-					
+				if (!stage.getJobs().isEmpty()) {
+
 					jobIndexList = stage.getJobs();
-					
-					
-					for (Index currentIndex: jobIndexList) {
-						
-						if(currentIndex.getId().equalsIgnoreCase(jobId)) {
+
+					for (Index currentIndex : jobIndexList) {
+
+						if (currentIndex.getId().equalsIgnoreCase(jobId)) {
 							jobIndexList.remove(currentIndex);
 						}
-					
+
 					}
-					
+
 					Optional<Job> optionalJob = jobRepository.findById(jobId);
-					
-					if(optionalJob.isPresent()) {
-						
+
+					if (optionalJob.isPresent()) {
+
 						job = optionalJob.get();
-						
-						if(jobIndexList == null) {
+
+						if (jobIndexList == null) {
 							jobIndexList = new ArrayList<Index>();
 							stage.setJobs(jobIndexList);
 							stageRepository.save(stage);
-						}else {
+						} else {
 							stage.setJobs(jobIndexList);
 							stageRepository.save(stage);
 						}
-						
+
 						jobRepository.deleteById(jobId);
-						
+
 						return new ResponseEntity<Job>(job, HttpStatus.ACCEPTED);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 					}
-					
-					
-					
-				}else {
+
+				} else {
 					return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 				}
-			
-			}else {
-				return new ResponseEntity<Job>(new Job(),HttpStatus.NOT_FOUND);
+
+			} else {
+				return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 			}
-			
+
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
@@ -219,40 +214,38 @@ public class JobsApiController implements JobsApi {
 			@ApiParam(value = "", required = true) @PathVariable("stageId") String stageId,
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId) {
 		String accept = request.getHeader("Accept");
-		
+
 		Stage stage = new Stage();
 		Job job = new Job();
-		
+
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
-			
+
 			Optional<Stage> optionalStage = stageRepository.findById(stageId);
 
 			if (optionalStage.isPresent()) {
 				stage = optionalStage.get();
-			
-				if(!stage.getJobs().isEmpty()) {
-					
-					
-					
+
+				if (!stage.getJobs().isEmpty()) {
+
 					Optional<Job> optionalJob = jobRepository.findById(jobId);
-					
-					if(optionalJob.isPresent()) {
-						
+
+					if (optionalJob.isPresent()) {
+
 						job = optionalJob.get();
-						
+
 						return new ResponseEntity<Job>(job, HttpStatus.OK);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 					}
-					
-				}else {
+
+				} else {
 					return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 				}
-							
-			}else {
+
+			} else {
 				return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 			}
 
@@ -266,33 +259,33 @@ public class JobsApiController implements JobsApi {
 			@ApiParam(value = "", required = true) @PathVariable("jobId") String jobId,
 			@ApiParam(value = "Job object", required = true) @Valid @RequestBody Job body) {
 		String accept = request.getHeader("Accept");
-		
+
 		Stage stage = new Stage();
-		
+
 		Job job = new Job();
-		
+
 		if (accept != null && accept.contains("application/json")) {
-			
+
 //			TODO - Test
-			
+
 			List<Index> jobListIndex = new ArrayList<Index>();
-			
+
 			Optional<Stage> optionalStage = stageRepository.findById(stageId);
-			
-			if(optionalStage.isPresent()) {
-				
+
+			if (optionalStage.isPresent()) {
+
 				stage = optionalStage.get();
-				
-				if(!stage.getJobs().isEmpty()) {
-					
+
+				if (!stage.getJobs().isEmpty()) {
+
 					jobListIndex = stage.getJobs();
-					
+
 					Optional<Job> optionalJob = jobRepository.findById(jobId);
-					
-					if(optionalJob.isPresent()) {
-						
+
+					if (optionalJob.isPresent()) {
+
 						job = optionalJob.get();
-						
+
 						job.setEnabled(body.isEnabled());
 						job.setName(body.getName());
 						job.setPlanid(body.getPlanid());
@@ -305,19 +298,19 @@ public class JobsApiController implements JobsApi {
 						jobRepository.save(job);
 
 						return new ResponseEntity<Job>(job, HttpStatus.ACCEPTED);
-						
-					}else {
+
+					} else {
 						return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 					}
-	
-				}else {
+
+				} else {
 					return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 				}
-				
-			}else {
+
+			} else {
 				return new ResponseEntity<Job>(new Job(), HttpStatus.NOT_FOUND);
 			}
-						
+
 		}
 
 		return new ResponseEntity<Job>(HttpStatus.NOT_IMPLEMENTED);
