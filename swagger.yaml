@@ -44,10 +44,61 @@ tags:
   description: "Task Configuration"
 - name: "group"
   description: "User Group"
+- name: "audit"
+  description: "Audit"
 schemes:
 - "https"
 - "http"
 paths:
+  /audit/{auditId}:
+    get:
+      tags:
+      - "audit"
+      summary: "Add a new pet to the store"
+      description: ""
+      operationId: "retrieveAudit"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "auditId"
+        type: "string"
+        description: "AuditId object that needs to retrieved"
+        required: true
+      responses:
+        200:
+          description: "Invalid input"
+          schema:
+            $ref: "#/definitions/Audit"
+        400:
+          description: "Audit Not Found"
+    put:
+      tags:
+      - "audit"
+      summary: "Update an existing Audit Log"
+      description: ""
+      operationId: "updateAudit"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "path"
+        name: "auditId"
+        type: "string"
+        description: "AuditId object that needs to retrieved"
+        required: true
+      - in: "body"
+        name: "body"
+        description: "Pet object that needs to be added to the store"
+        required: true
+        schema:
+          $ref: "#/definitions/Audit"
+      responses:
+        204:
+          description: "Accepted"
+        404:
+          description: "Audit not found"
   /groups:
     post:
       tags: 
@@ -1954,6 +2005,8 @@ definitions:
         type: "string"
       projectid: 
         type: "string"
+      auditid:
+        type: "string"
       name:
         type: "string"
       type:
@@ -2158,6 +2211,50 @@ definitions:
         - "active"
         - "pending"
         - "suspended"
+  Audit:
+    type: "object"
+    required:
+    - "id"
+    - "planId"
+    properties:
+      id:
+        type: "string"
+      planId:
+        type: "string"
+      change:
+        type: "array"
+        items:
+          $ref: "#/definitions/Change"
+  Change:
+    type: "object"
+    properties:
+      username:
+        type: "string"
+      sequence:
+        type: integer
+        format: "int64"
+      key:
+        type: "string"
+      old:
+        type: "string"
+      new:
+        type: "string"
+      type:
+        type: "string"
+        enum: 
+        - "create"
+        - "modify"
+        - "delete"
+      level:
+        type: "string"
+        enum: 
+        - "plan"
+        - "stage"
+        - "job"
+        - "task"
+        - "variables"
+      timestamp:
+        type: "string"
   User:
     type: "object"
     properties:
