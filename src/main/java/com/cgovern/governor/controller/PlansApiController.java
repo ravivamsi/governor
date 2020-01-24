@@ -1,5 +1,6 @@
 package com.cgovern.governor.controller;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -17,6 +18,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.cgovern.governor.api.PlansApi;
 import com.cgovern.governor.commons.Sequence;
+import com.cgovern.governor.models.Audit;
+import com.cgovern.governor.models.AuditRepository;
+import com.cgovern.governor.models.Change;
+import com.cgovern.governor.models.Change.LevelEnum;
+import com.cgovern.governor.models.Change.TypeEnum;
 import com.cgovern.governor.models.Index;
 import com.cgovern.governor.models.Plan;
 import com.cgovern.governor.models.PlanRepository;
@@ -40,15 +46,17 @@ public class PlansApiController implements PlansApi {
 	private final ProjectRepository projectRepository;
 
 	private final PlanRepository planRepository;
+	
+	private final AuditRepository auditRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
 	public PlansApiController(ObjectMapper objectMapper, HttpServletRequest request,
-			ProjectRepository projectRepository, PlanRepository planRepository) {
+			ProjectRepository projectRepository, PlanRepository planRepository, AuditRepository auditRepository) {
 		this.objectMapper = objectMapper;
 		this.request = request;
 		this.projectRepository = projectRepository;
 		this.planRepository = planRepository;
-
+		this.auditRepository = auditRepository;
 	}
 
 	public ResponseEntity<Plan> addPlan(
@@ -59,7 +67,9 @@ public class PlansApiController implements PlansApi {
 //			TODO - Test
 			Project project = new Project();
 			List<Index> planIndexList = new ArrayList<Index>();
-
+			Audit audit = new Audit();
+			List<Change> changeList = new ArrayList<Change>();
+			Change change = new Change();
 			Optional<Project> optionalProject = projectRepository.findById(projectId);
 			if (optionalProject.isPresent()) {
 				project = optionalProject.get();
@@ -68,9 +78,31 @@ public class PlansApiController implements PlansApi {
 				Index planIndex = new Index();
 
 				body.setProjectid(projectId);
-
+				
 				Plan plan = planRepository.save(body);
 
+				
+//				TODO - Test 
+				
+				change.setType(TypeEnum.CREATE);
+				change.setSequence(1l);
+				change.setTimestamp(new Timestamp(System.currentTimeMillis()).toString());
+				change.setLevel(LevelEnum.PLAN);
+				change.setOldValue(null);
+				change.setNewValue(plan.getName());
+				change.setKey("name");
+				
+				
+				changeList.add(change);
+				
+				
+				audit.setPlanId(plan.getId());
+				audit.setChange(changeList);
+				audit = auditRepository.save(audit);
+				
+				plan.setAuditid(audit.getId());
+				planRepository.save(plan);
+				
 				planIndex.setId(plan.getId());
 				planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
 

@@ -32,11 +32,11 @@ public class Change {
 	  @JsonProperty("key")
 	  private String key = null;
 
-	  @JsonProperty("old")
-	  private String old = null;
+	  @JsonProperty("oldvalue")
+	  private String oldvalue = null;
 
-	  @JsonProperty("new")
-	  private String _new = null;
+	  @JsonProperty("newvalue")
+	  private String newvalue = null;
 
 	  /**
 	   * Gets or Sets type
@@ -45,6 +45,8 @@ public class Change {
 	    CREATE("create"),
 	    
 	    MODIFY("modify"),
+	    
+	    CLONE("clone"),
 	    
 	    DELETE("delete");
 
@@ -157,8 +159,8 @@ public class Change {
 	    this.key = key;
 	  }
 
-	  public Change old(String old) {
-	    this.old = old;
+	  public Change oldvalue(String oldvalue) {
+	    this.oldvalue = oldvalue;
 	    return this;
 	  }
 
@@ -169,32 +171,32 @@ public class Change {
 	  @ApiModelProperty(value = "")
 
 
-	  public String getOld() {
-	    return old;
+	  public String getOldValue() {
+	    return oldvalue;
 	  }
 
-	  public void setOld(String old) {
-	    this.old = old;
+	  public void setOldValue(String oldvalue) {
+	    this.oldvalue = oldvalue;
 	  }
 
-	  public Change _new(String _new) {
-	    this._new = _new;
+	  public Change newvalue(String newvalue) {
+	    this.newvalue = newvalue;
 	    return this;
 	  }
 
 	  /**
-	   * Get _new
-	   * @return _new
+	   * Get newvalue
+	   * @return newvalue
 	  **/
 	  @ApiModelProperty(value = "")
 
 
 	  public String getNew() {
-	    return _new;
+	    return newvalue;
 	  }
 
-	  public void setNew(String _new) {
-	    this._new = _new;
+	  public void setNewValue(String newvalue) {
+	    this.newvalue = newvalue;
 	  }
 
 	  public Change type(TypeEnum type) {
@@ -269,8 +271,8 @@ public class Change {
 	    Change change = (Change) o;
 	    return Objects.equals(this.sequence, change.sequence) &&
 	        Objects.equals(this.key, change.key) &&
-	        Objects.equals(this.old, change.old) &&
-	        Objects.equals(this._new, change._new) &&
+	        Objects.equals(this.oldvalue, change.oldvalue) &&
+	        Objects.equals(this.newvalue, change.newvalue) &&
 	        Objects.equals(this.type, change.type) &&
 	        Objects.equals(this.level, change.level) &&
 	        Objects.equals(this.timestamp, change.timestamp);
@@ -278,7 +280,7 @@ public class Change {
 
 	  @Override
 	  public int hashCode() {
-	    return Objects.hash(sequence, key, old, _new, type, level, timestamp);
+	    return Objects.hash(sequence, key, oldvalue, newvalue, type, level, timestamp);
 	  }
 
 	  @Override
@@ -288,8 +290,8 @@ public class Change {
 	    
 	    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
 	    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-	    sb.append("    old: ").append(toIndentedString(old)).append("\n");
-	    sb.append("    _new: ").append(toIndentedString(_new)).append("\n");
+	    sb.append("    oldvalue: ").append(toIndentedString(oldvalue)).append("\n");
+	    sb.append("    newvalue: ").append(toIndentedString(newvalue)).append("\n");
 	    sb.append("    type: ").append(toIndentedString(type)).append("\n");
 	    sb.append("    level: ").append(toIndentedString(level)).append("\n");
 	    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
