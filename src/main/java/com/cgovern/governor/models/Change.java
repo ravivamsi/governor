@@ -8,7 +8,6 @@ package com.cgovern.governor.models;
  *
  */
 
-
 import java.util.Objects;
 
 import org.springframework.validation.annotation.Validated;
@@ -26,288 +25,284 @@ import io.swagger.annotations.ApiModelProperty;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-20T04:35:39.958Z")
 
 public class Change {
-	  @JsonProperty("sequence")
-	  private Long sequence = null;
+	@JsonProperty("sequence")
+	private Long sequence = null;
 
-	  @JsonProperty("key")
-	  private String key = null;
+	@JsonProperty("key")
+	private String key = null;
 
-	  @JsonProperty("oldvalue")
-	  private String oldvalue = null;
+	@JsonProperty("oldvalue")
+	private String oldvalue = null;
 
-	  @JsonProperty("newvalue")
-	  private String newvalue = null;
+	@JsonProperty("newvalue")
+	private String newvalue = null;
 
-	  /**
-	   * Gets or Sets type
-	   */
-	  public enum TypeEnum {
-	    CREATE("create"),
-	    
-	    MODIFY("modify"),
-	    
-	    CLONE("clone"),
-	    
-	    DELETE("delete");
+	/**
+	 * Gets or Sets type
+	 */
+	public enum TypeEnum {
+		CREATE("create"),
 
-	    private String value;
+		MODIFY("modify"),
 
-	    TypeEnum(String value) {
-	      this.value = value;
-	    }
+		CLONE("clone"),
 
-	    @Override
-	    @JsonValue
-	    public String toString() {
-	      return String.valueOf(value);
-	    }
+		DELETE("delete");
 
-	    @JsonCreator
-	    public static TypeEnum fromValue(String text) {
-	      for (TypeEnum b : TypeEnum.values()) {
-	        if (String.valueOf(b.value).equals(text)) {
-	          return b;
-	        }
-	      }
-	      return null;
-	    }
-	  }
+		private String value;
 
-	  @JsonProperty("type")
-	  private TypeEnum type = null;
+		TypeEnum(String value) {
+			this.value = value;
+		}
 
-	  /**
-	   * Gets or Sets level
-	   */
-	  public enum LevelEnum {
-	    PLAN("plan"),
-	    
-	    STAGE("stage"),
-	    
-	    JOB("job"),
-	    
-	    TASK("task"),
-	    
-	    VARIABLES("variables");
+		@Override
+		@JsonValue
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-	    private String value;
+		@JsonCreator
+		public static TypeEnum fromValue(String text) {
+			for (TypeEnum b : TypeEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
+	}
 
-	    LevelEnum(String value) {
-	      this.value = value;
-	    }
+	@JsonProperty("type")
+	private TypeEnum type = null;
 
-	    @Override
-	    @JsonValue
-	    public String toString() {
-	      return String.valueOf(value);
-	    }
+	/**
+	 * Gets or Sets level
+	 */
+	public enum LevelEnum {
+		PLAN("plan"),
 
-	    @JsonCreator
-	    public static LevelEnum fromValue(String text) {
-	      for (LevelEnum b : LevelEnum.values()) {
-	        if (String.valueOf(b.value).equals(text)) {
-	          return b;
-	        }
-	      }
-	      return null;
-	    }
-	  }
+		STAGE("stage"),
 
-	  @JsonProperty("level")
-	  private LevelEnum level = null;
+		JOB("job"),
 
-	  @JsonProperty("timestamp")
-	  private String timestamp = null;
+		TASK("task"),
 
-	  public Change sequence(Long sequence) {
-	    this.sequence = sequence;
-	    return this;
-	  }
+		VARIABLES("variables");
 
-	  /**
-	   * Get sequence
-	   * @return sequence
-	  **/
-	  @ApiModelProperty(value = "")
+		private String value;
 
+		LevelEnum(String value) {
+			this.value = value;
+		}
 
-	  public Long getSequence() {
-	    return sequence;
-	  }
+		@Override
+		@JsonValue
+		public String toString() {
+			return String.valueOf(value);
+		}
 
-	  public void setSequence(Long sequence) {
-	    this.sequence = sequence;
-	  }
+		@JsonCreator
+		public static LevelEnum fromValue(String text) {
+			for (LevelEnum b : LevelEnum.values()) {
+				if (String.valueOf(b.value).equals(text)) {
+					return b;
+				}
+			}
+			return null;
+		}
+	}
 
-	  public Change key(String key) {
-	    this.key = key;
-	    return this;
-	  }
+	@JsonProperty("level")
+	private LevelEnum level = null;
 
-	  /**
-	   * Get key
-	   * @return key
-	  **/
-	  @ApiModelProperty(value = "")
+	@JsonProperty("timestamp")
+	private String timestamp = null;
 
+	public Change sequence(Long sequence) {
+		this.sequence = sequence;
+		return this;
+	}
 
-	  public String getKey() {
-	    return key;
-	  }
+	/**
+	 * Get sequence
+	 * 
+	 * @return sequence
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setKey(String key) {
-	    this.key = key;
-	  }
+	public Long getSequence() {
+		return sequence;
+	}
 
-	  public Change oldvalue(String oldvalue) {
-	    this.oldvalue = oldvalue;
-	    return this;
-	  }
+	public void setSequence(Long sequence) {
+		this.sequence = sequence;
+	}
 
-	  /**
-	   * Get old
-	   * @return old
-	  **/
-	  @ApiModelProperty(value = "")
+	public Change key(String key) {
+		this.key = key;
+		return this;
+	}
 
+	/**
+	 * Get key
+	 * 
+	 * @return key
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public String getOldValue() {
-	    return oldvalue;
-	  }
+	public String getKey() {
+		return key;
+	}
 
-	  public void setOldValue(String oldvalue) {
-	    this.oldvalue = oldvalue;
-	  }
+	public void setKey(String key) {
+		this.key = key;
+	}
 
-	  public Change newvalue(String newvalue) {
-	    this.newvalue = newvalue;
-	    return this;
-	  }
+	public Change oldvalue(String oldvalue) {
+		this.oldvalue = oldvalue;
+		return this;
+	}
 
-	  /**
-	   * Get newvalue
-	   * @return newvalue
-	  **/
-	  @ApiModelProperty(value = "")
+	/**
+	 * Get old
+	 * 
+	 * @return old
+	 **/
+	@ApiModelProperty(value = "")
 
+	public String getOldValue() {
+		return oldvalue;
+	}
 
-	  public String getNew() {
-	    return newvalue;
-	  }
+	public void setOldValue(String oldvalue) {
+		this.oldvalue = oldvalue;
+	}
 
-	  public void setNewValue(String newvalue) {
-	    this.newvalue = newvalue;
-	  }
+	public Change newvalue(String newvalue) {
+		this.newvalue = newvalue;
+		return this;
+	}
 
-	  public Change type(TypeEnum type) {
-	    this.type = type;
-	    return this;
-	  }
+	/**
+	 * Get newvalue
+	 * 
+	 * @return newvalue
+	 **/
+	@ApiModelProperty(value = "")
 
-	  /**
-	   * Get type
-	   * @return type
-	  **/
-	  @ApiModelProperty(value = "")
+	public String getNew() {
+		return newvalue;
+	}
 
+	public void setNewValue(String newvalue) {
+		this.newvalue = newvalue;
+	}
 
-	  public TypeEnum getType() {
-	    return type;
-	  }
+	public Change type(TypeEnum type) {
+		this.type = type;
+		return this;
+	}
 
-	  public void setType(TypeEnum type) {
-	    this.type = type;
-	  }
+	/**
+	 * Get type
+	 * 
+	 * @return type
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public Change level(LevelEnum level) {
-	    this.level = level;
-	    return this;
-	  }
+	public TypeEnum getType() {
+		return type;
+	}
 
-	  /**
-	   * Get level
-	   * @return level
-	  **/
-	  @ApiModelProperty(value = "")
+	public void setType(TypeEnum type) {
+		this.type = type;
+	}
 
+	public Change level(LevelEnum level) {
+		this.level = level;
+		return this;
+	}
 
-	  public LevelEnum getLevel() {
-	    return level;
-	  }
+	/**
+	 * Get level
+	 * 
+	 * @return level
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public void setLevel(LevelEnum level) {
-	    this.level = level;
-	  }
+	public LevelEnum getLevel() {
+		return level;
+	}
 
-	  public Change timestamp(String timestamp) {
-	    this.timestamp = timestamp;
-	    return this;
-	  }
+	public void setLevel(LevelEnum level) {
+		this.level = level;
+	}
 
-	  /**
-	   * Get timestamp
-	   * @return timestamp
-	  **/
-	  @ApiModelProperty(value = "")
+	public Change timestamp(String timestamp) {
+		this.timestamp = timestamp;
+		return this;
+	}
 
+	/**
+	 * Get timestamp
+	 * 
+	 * @return timestamp
+	 **/
+	@ApiModelProperty(value = "")
 
-	  public String getTimestamp() {
-	    return timestamp;
-	  }
+	public String getTimestamp() {
+		return timestamp;
+	}
 
-	  public void setTimestamp(String timestamp) {
-	    this.timestamp = timestamp;
-	  }
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
 
+	@Override
+	public boolean equals(java.lang.Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		Change change = (Change) o;
+		return Objects.equals(this.sequence, change.sequence) && Objects.equals(this.key, change.key)
+				&& Objects.equals(this.oldvalue, change.oldvalue) && Objects.equals(this.newvalue, change.newvalue)
+				&& Objects.equals(this.type, change.type) && Objects.equals(this.level, change.level)
+				&& Objects.equals(this.timestamp, change.timestamp);
+	}
 
-	  @Override
-	  public boolean equals(java.lang.Object o) {
-	    if (this == o) {
-	      return true;
-	    }
-	    if (o == null || getClass() != o.getClass()) {
-	      return false;
-	    }
-	    Change change = (Change) o;
-	    return Objects.equals(this.sequence, change.sequence) &&
-	        Objects.equals(this.key, change.key) &&
-	        Objects.equals(this.oldvalue, change.oldvalue) &&
-	        Objects.equals(this.newvalue, change.newvalue) &&
-	        Objects.equals(this.type, change.type) &&
-	        Objects.equals(this.level, change.level) &&
-	        Objects.equals(this.timestamp, change.timestamp);
-	  }
+	@Override
+	public int hashCode() {
+		return Objects.hash(sequence, key, oldvalue, newvalue, type, level, timestamp);
+	}
 
-	  @Override
-	  public int hashCode() {
-	    return Objects.hash(sequence, key, oldvalue, newvalue, type, level, timestamp);
-	  }
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("class Change {\n");
 
-	  @Override
-	  public String toString() {
-	    StringBuilder sb = new StringBuilder();
-	    sb.append("class Change {\n");
-	    
-	    sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
-	    sb.append("    key: ").append(toIndentedString(key)).append("\n");
-	    sb.append("    oldvalue: ").append(toIndentedString(oldvalue)).append("\n");
-	    sb.append("    newvalue: ").append(toIndentedString(newvalue)).append("\n");
-	    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-	    sb.append("    level: ").append(toIndentedString(level)).append("\n");
-	    sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
-	    sb.append("}");
-	    return sb.toString();
-	  }
+		sb.append("    sequence: ").append(toIndentedString(sequence)).append("\n");
+		sb.append("    key: ").append(toIndentedString(key)).append("\n");
+		sb.append("    oldvalue: ").append(toIndentedString(oldvalue)).append("\n");
+		sb.append("    newvalue: ").append(toIndentedString(newvalue)).append("\n");
+		sb.append("    type: ").append(toIndentedString(type)).append("\n");
+		sb.append("    level: ").append(toIndentedString(level)).append("\n");
+		sb.append("    timestamp: ").append(toIndentedString(timestamp)).append("\n");
+		sb.append("}");
+		return sb.toString();
+	}
 
-	  /**
-	   * Convert the given object to string with each line indented by 4 spaces
-	   * (except the first line).
-	   */
-	  private String toIndentedString(java.lang.Object o) {
-	    if (o == null) {
-	      return "null";
-	    }
-	    return o.toString().replace("\n", "\n    ");
-	  }
-	  
+	/**
+	 * Convert the given object to string with each line indented by 4 spaces
+	 * (except the first line).
+	 */
+	private String toIndentedString(java.lang.Object o) {
+		if (o == null) {
+			return "null";
+		}
+		return o.toString().replace("\n", "\n    ");
+	}
+
 }

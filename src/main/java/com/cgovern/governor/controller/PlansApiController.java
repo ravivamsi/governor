@@ -46,7 +46,7 @@ public class PlansApiController implements PlansApi {
 	private final ProjectRepository projectRepository;
 
 	private final PlanRepository planRepository;
-	
+
 	private final AuditRepository auditRepository;
 
 	@org.springframework.beans.factory.annotation.Autowired
@@ -78,12 +78,11 @@ public class PlansApiController implements PlansApi {
 				Index planIndex = new Index();
 
 				body.setProjectid(projectId);
-				
+
 				Plan plan = planRepository.save(body);
 
-				
 //				TODO - Test 
-				
+
 				change.setType(TypeEnum.CREATE);
 				change.setSequence(1l);
 				change.setTimestamp(new Timestamp(System.currentTimeMillis()).toString());
@@ -91,18 +90,16 @@ public class PlansApiController implements PlansApi {
 				change.setOldValue(null);
 				change.setNewValue(plan.getName());
 				change.setKey("name");
-				
-				
+
 				changeList.add(change);
-				
-				
+
 				audit.setPlanId(plan.getId());
 				audit.setChange(changeList);
 				audit = auditRepository.save(audit);
-				
+
 				plan.setAuditid(audit.getId());
 				planRepository.save(plan);
-				
+
 				planIndex.setId(plan.getId());
 				planIndex.setSequence(Sequence.generateNextSequence(Sequence.getLastUsed(planIndexList)));
 

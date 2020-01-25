@@ -55,7 +55,7 @@ public class UserApiController implements UserApi {
 
 			User user = userRepository.findByTheUsersUsername(body.getUsername());
 
-//			Test Functionality
+//			TODO - Test
 
 			if (Crypt.decodeCreds(body.getUsername(), user.getPassword()).equals(body.getPassword())) {
 
@@ -66,10 +66,13 @@ public class UserApiController implements UserApi {
 				} else {
 
 					Date currentDate = new Date();
+					Long currenttimeinmillis = System.currentTimeMillis();
+					Long onehourinmillis = 3600000l;
+					Long currenttimeinmillisplushour = currenttimeinmillis + onehourinmillis;
 					session = new Session();
-					session.setEndtime(currentDate.toString());
-					session.setExpires(900);
-					session.setStarttime(currentDate.toString());
+					session.setEndtime(currenttimeinmillisplushour.toString());
+					session.setExpires(3600);
+					session.setStarttime(currenttimeinmillis.toString());
 					session.setStatus(StatusEnum.ACTIVE);
 					session.setToken(Crypt.encodeCreds(body.getUsername(), user.getEmail() + currentDate.toString()));
 					session.setUsername(body.getUsername());
@@ -92,7 +95,7 @@ public class UserApiController implements UserApi {
 		String accept = request.getHeader("Accept");
 		if (accept != null && accept.contains("application/json")) {
 
-//			Test Functionality
+//			TODO - Test 
 			User user = userRepository.findByTheUsersUsername(username);
 
 			if (user != null) {

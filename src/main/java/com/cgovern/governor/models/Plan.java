@@ -30,7 +30,7 @@ public class Plan {
 
 	@JsonProperty("projectid")
 	private String projectid = null;
-	
+
 	@JsonProperty("auditid")
 	private String auditid = null;
 
@@ -148,7 +148,6 @@ public class Plan {
 		this.id = id;
 	}
 
-	
 	public Plan auditid(String auditid) {
 		this.auditid = auditid;
 		return this;
@@ -168,9 +167,7 @@ public class Plan {
 	public void setAuditid(String auditid) {
 		this.auditid = auditid;
 	}
-	
-	
-	
+
 	public Plan projectid(String projectid) {
 		this.projectid = projectid;
 		return this;
@@ -381,16 +378,17 @@ public class Plan {
 		}
 		Plan plan = (Plan) o;
 		return Objects.equals(this.id, plan.id) && Objects.equals(this.projectid, plan.projectid)
-				&& Objects.equals(this.auditid, plan.auditid)
-				&& Objects.equals(this.name, plan.name) && Objects.equals(this.type, plan.type)
-				&& Objects.equals(this.environment, plan.environment) && Objects.equals(this.shortname, plan.shortname)
-				&& Objects.equals(this.stages, plan.stages) && Objects.equals(this.variables, plan.variables)
+				&& Objects.equals(this.auditid, plan.auditid) && Objects.equals(this.name, plan.name)
+				&& Objects.equals(this.type, plan.type) && Objects.equals(this.environment, plan.environment)
+				&& Objects.equals(this.shortname, plan.shortname) && Objects.equals(this.stages, plan.stages)
+				&& Objects.equals(this.variables, plan.variables)
 				&& Objects.equals(this.enabled, plan.enabled && Objects.equals(this.groups, plan.groups));
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, projectid, auditid, name, type, environment, shortname, stages, variables, enabled, groups);
+		return Objects.hash(id, projectid, auditid, name, type, environment, shortname, stages, variables, enabled,
+				groups);
 	}
 
 	@Override

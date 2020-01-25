@@ -62,6 +62,8 @@ public class UsersApiController implements UsersApi {
 			@ApiParam(value = "The name that needs to be deleted", required = true) @PathVariable("username") String username) {
 		String accept = request.getHeader("Accept");
 
+//		TODO - Test 
+
 		User user = new User();
 		if (accept != null && accept.contains("application/json")) {
 			List<User> userList = userRepository.findAll();
@@ -72,13 +74,18 @@ public class UsersApiController implements UsersApi {
 				}
 			}
 
-			userRepository.deleteById(user.getId());
-			;
+			if (user.getId().isEmpty()) {
+				userRepository.deleteById(user.getId());
+			} else {
+				return new ResponseEntity<User>(user, HttpStatus.NOT_FOUND);
+			}
+
 			return new ResponseEntity<User>(user, HttpStatus.ACCEPTED);
 
+		} else {
+			return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<User> getUserByName(
@@ -95,10 +102,16 @@ public class UsersApiController implements UsersApi {
 				}
 			}
 
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			if (user.getId().isEmpty()) {
+				return new ResponseEntity<User>(user, HttpStatus.NOT_FOUND);
+			} else {
+				return new ResponseEntity<User>(user, HttpStatus.OK);
+			}
+
+		} else {
+			return new ResponseEntity<User>(user, HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity<User>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 	public ResponseEntity<User> updateUser(
@@ -154,9 +167,10 @@ public class UsersApiController implements UsersApi {
 				return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 			}
 
+		} else {
+			return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 		}
 
-		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
 	}
 
 }

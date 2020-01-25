@@ -24,38 +24,43 @@ import io.swagger.annotations.ApiParam;
 @Controller
 public class AuditApiController implements AuditApi {
 
-    private static final Logger log = LoggerFactory.getLogger(AuditApiController.class);
+	private static final Logger log = LoggerFactory.getLogger(AuditApiController.class);
 
-    private final ObjectMapper objectMapper;
+	private final ObjectMapper objectMapper;
 
-    private final HttpServletRequest request;
+	private final HttpServletRequest request;
 
-    @org.springframework.beans.factory.annotation.Autowired
-    public AuditApiController(ObjectMapper objectMapper, HttpServletRequest request) {
-        this.objectMapper = objectMapper;
-        this.request = request;
-    }
+	@org.springframework.beans.factory.annotation.Autowired
+	public AuditApiController(ObjectMapper objectMapper, HttpServletRequest request) {
+		this.objectMapper = objectMapper;
+		this.request = request;
+	}
 
-    public ResponseEntity<Audit> retrieveAudit(@ApiParam(value = "AuditId object that needs to retrieved",required=true) @PathVariable("auditId") String auditId) {
-        String accept = request.getHeader("Accept");
-        if (accept != null && accept.contains("application/json")) {
-            try {
+	public ResponseEntity<Audit> retrieveAudit(
+			@ApiParam(value = "AuditId object that needs to retrieved", required = true) @PathVariable("auditId") String auditId) {
+		String accept = request.getHeader("Accept");
+		if (accept != null && accept.contains("application/json")) {
+			try {
 //            	TODO
-                return new ResponseEntity<Audit>(objectMapper.readValue("{  \"change\" : [ {    \"sequence\" : 0,    \"new\" : \"new\",    \"level\" : \"plan\",    \"old\" : \"old\",    \"type\" : \"create\",    \"key\" : \"key\",    \"timestamp\" : \"timestamp\"  }, {    \"sequence\" : 0,    \"new\" : \"new\",    \"level\" : \"plan\",    \"old\" : \"old\",    \"type\" : \"create\",    \"key\" : \"key\",    \"timestamp\" : \"timestamp\"  } ],  \"planId\" : \"planId\",  \"id\" : \"id\"}", Audit.class), HttpStatus.NOT_IMPLEMENTED);
-            } catch (IOException e) {
-                log.error("Couldn't serialize response for content type application/json", e);
-                return new ResponseEntity<Audit>(HttpStatus.INTERNAL_SERVER_ERROR);
-            }
-        }
+				return new ResponseEntity<Audit>(objectMapper.readValue(
+						"{  \"change\" : [ {    \"sequence\" : 0,    \"new\" : \"new\",    \"level\" : \"plan\",    \"old\" : \"old\",    \"type\" : \"create\",    \"key\" : \"key\",    \"timestamp\" : \"timestamp\"  }, {    \"sequence\" : 0,    \"new\" : \"new\",    \"level\" : \"plan\",    \"old\" : \"old\",    \"type\" : \"create\",    \"key\" : \"key\",    \"timestamp\" : \"timestamp\"  } ],  \"planId\" : \"planId\",  \"id\" : \"id\"}",
+						Audit.class), HttpStatus.NOT_IMPLEMENTED);
+			} catch (IOException e) {
+				log.error("Couldn't serialize response for content type application/json", e);
+				return new ResponseEntity<Audit>(HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+		}
 
-        return new ResponseEntity<Audit>(HttpStatus.NOT_IMPLEMENTED);
-    }
+		return new ResponseEntity<Audit>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
-    public ResponseEntity<Void> updateAudit(@ApiParam(value = "AuditId object that needs to retrieved",required=true) @PathVariable("auditId") String auditId,@ApiParam(value = "Pet object that needs to be added to the store" ,required=true )  @Valid @RequestBody Audit body) {
-        String accept = request.getHeader("Accept");
-        
+	public ResponseEntity<Void> updateAudit(
+			@ApiParam(value = "AuditId object that needs to retrieved", required = true) @PathVariable("auditId") String auditId,
+			@ApiParam(value = "Pet object that needs to be added to the store", required = true) @Valid @RequestBody Audit body) {
+		String accept = request.getHeader("Accept");
+
 //        TODO
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
-    }
+		return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+	}
 
 }
